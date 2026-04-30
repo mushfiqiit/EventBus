@@ -21,6 +21,7 @@ import java.lang.reflect.Constructor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 
 /**
  * Executes an {@link RunnableEx} using a thread pool. Thrown exceptions are propagated by posting failure events.
@@ -39,9 +40,9 @@ import java.util.logging.Level;
 public class AsyncExecutor {
 
     public static class Builder {
-        private Executor threadPool;
-        private Class<?> failureEventType;
-        private EventBus eventBus;
+        @Nullable private Executor threadPool;
+        @Nullable private Class<?> failureEventType;
+        @Nullable private EventBus eventBus;
 
         private Builder() {
         }
@@ -65,7 +66,7 @@ public class AsyncExecutor {
             return buildForScope(null);
         }
 
-        public AsyncExecutor buildForScope(Object executionContext) {
+        public AsyncExecutor buildForScope(@Nullable Object executionContext) {
             if (eventBus == null) {
                 eventBus = EventBus.getDefault();
             }
@@ -95,9 +96,9 @@ public class AsyncExecutor {
     private final Executor threadPool;
     private final Constructor<?> failureEventConstructor;
     private final EventBus eventBus;
-    private final Object scope;
+    @Nullable private final Object scope;
 
-    private AsyncExecutor(Executor threadPool, EventBus eventBus, Class<?> failureEventType, Object scope) {
+    private AsyncExecutor(Executor threadPool, EventBus eventBus, Class<?> failureEventType, @Nullable Object scope) {
         this.threadPool = threadPool;
         this.eventBus = eventBus;
         this.scope = scope;

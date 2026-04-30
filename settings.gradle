@@ -1,10 +1,7 @@
 include ':EventBus'
 include ':EventBusAnnotationProcessor'
 include ':EventBusTestJava'
-include ':EventBusTest'
 include ':EventBusTestSubscriberInJar'
-include ':EventBusPerformance'
-include ':eventbus-android'
 
 project(":EventBus").name = "eventbus-java"
 project(":EventBusAnnotationProcessor").name = "eventbus-annotation-processor"

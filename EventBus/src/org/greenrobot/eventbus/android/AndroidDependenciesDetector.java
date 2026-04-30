@@ -2,6 +2,7 @@ package org.greenrobot.eventbus.android;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import javax.annotation.Nullable;
 
 @SuppressWarnings("TryWithIdenticalCatches")
 public class AndroidDependenciesDetector {
@@ -35,7 +36,7 @@ public class AndroidDependenciesDetector {
         }
     }
 
-    public static AndroidComponents instantiateAndroidComponents() {
+    @Nullable public static AndroidComponents instantiateAndroidComponents() {
 
         try {
             Class<?> impl = Class.forName(ANDROID_COMPONENTS_IMPLEMENTATION_CLASS_NAME);

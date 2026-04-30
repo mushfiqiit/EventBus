@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import com.uber.nullaway.annotations.Initializer;
+import javax.annotation.Nullable;
+import org.jspecify.annotations.NullUnmarked;
 
 class SubscriberMethodFinder {
     /*
@@ -38,14 +41,14 @@ class SubscriberMethodFinder {
     private static final int MODIFIERS_IGNORE = Modifier.ABSTRACT | Modifier.STATIC | BRIDGE | SYNTHETIC;
     private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE = new ConcurrentHashMap<>();
 
-    private List<SubscriberInfoIndex> subscriberInfoIndexes;
+    @Nullable private List<SubscriberInfoIndex> subscriberInfoIndexes;
     private final boolean strictMethodVerification;
     private final boolean ignoreGeneratedIndex;
 
     private static final int POOL_SIZE = 4;
     private static final FindState[] FIND_STATE_POOL = new FindState[POOL_SIZE];
 
-    SubscriberMethodFinder(List<SubscriberInfoIndex> subscriberInfoIndexes, boolean strictMethodVerification,
+    SubscriberMethodFinder(@Nullable List<SubscriberInfoIndex> subscriberInfoIndexes, boolean strictMethodVerification,
                            boolean ignoreGeneratedIndex) {
         this.subscriberInfoIndexes = subscriberInfoIndexes;
         this.strictMethodVerification = strictMethodVerification;
@@ -119,7 +122,7 @@ class SubscriberMethodFinder {
         return new FindState();
     }
 
-    private SubscriberInfo getSubscriberInfo(FindState findState) {
+    @Nullable private SubscriberInfo getSubscriberInfo(FindState findState) {
         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
             if (findState.clazz == superclassInfo.getSubscriberClass()) {
@@ -204,18 +207,18 @@ class SubscriberMethodFinder {
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
-        Class<?> subscriberClass;
+        @Nullable Class<?> subscriberClass;
         Class<?> clazz;
         boolean skipSuperClasses;
-        SubscriberInfo subscriberInfo;
+        @Nullable SubscriberInfo subscriberInfo;
 
-        void initForSubscriber(Class<?> subscriberClass) {
+        @Initializer void initForSubscriber(Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;
             subscriberInfo = null;
         }
 
-        void recycle() {
+        @NullUnmarked void recycle() {
             subscriberMethods.clear();
             anyMethodByEventType.clear();
             subscriberClassByMethodKey.clear();
@@ -263,7 +266,7 @@ class SubscriberMethodFinder {
             }
         }
 
-        void moveToSuperclass() {
+        @NullUnmarked void moveToSuperclass() {
             if (skipSuperClasses) {
                 clazz = null;
             } else {

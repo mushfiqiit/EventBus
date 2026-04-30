@@ -2,10 +2,12 @@ package org.greenrobot.eventbus.android;
 
 import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.MainThreadSupport;
+import javax.annotation.Nullable;
+import org.jspecify.annotations.NullUnmarked;
 
 public abstract class AndroidComponents {
 
-    private static final AndroidComponents implementation;
+    @Nullable private static final AndroidComponents implementation;
 
     static {
         implementation = AndroidDependenciesDetector.isAndroidSDKAvailable()
@@ -17,7 +19,7 @@ public abstract class AndroidComponents {
         return implementation != null;
     }
 
-    public static AndroidComponents get() {
+    @NullUnmarked public static AndroidComponents get() {
         return implementation;
     }
 

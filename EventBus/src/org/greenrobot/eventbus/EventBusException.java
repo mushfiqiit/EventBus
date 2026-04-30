@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
 
 /**
  * An {@link RuntimeException} thrown in cases something went wrong inside EventBus.
@@ -33,7 +34,7 @@ public class EventBusException extends RuntimeException {
         super(throwable);
     }
 
-    public EventBusException(String detailMessage, Throwable throwable) {
+    public EventBusException(String detailMessage, @Nullable Throwable throwable) {
         super(detailMessage, throwable);
     }
 

@@ -1,5 +1,7 @@
-apply plugin: 'java'
+import net.ltgt.gradle.errorprone.CheckSeverity
 
+apply plugin: 'java'
+apply plugin: 'net.ltgt.errorprone'
 group = rootProject.group
 version = rootProject.version
 
@@ -12,6 +14,30 @@ sourceSets {
             srcDir 'src'
             // exclude 'de/greenrobot/event/util/**'
         }
+    }
+}
+
+def annotatorOutDir = "${rootProject.projectDir.absolutePath}/annotator-out"
+dependencies {
+    errorprone "com.google.errorprone:error_prone_core:2.14.0"
+    annotationProcessor "com.uber.nullaway:nullaway:0.10.10"
+    annotationProcessor "edu.ucr.cs.riple.annotator:annotator-scanner:1.3.15"
+    compileOnly "com.uber.nullaway:nullaway-annotations:0.10.10"
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+    compileOnly "org.jspecify:jspecify:0.3.0"
+}
+tasks.withType(JavaCompile).configureEach {
+    if (!name.toLowerCase().contains("test")) {
+        options.errorprone {
+            check("NullAway", CheckSeverity.WARN)
+            check("AnnotatorScanner", CheckSeverity.ERROR)
+            option("NullAway:AnnotatedPackages", "org.greenrobot.eventbus")
+            option("NullAway:SerializeFixMetadata", "true")
+            option("NullAway:FixSerializationConfigPath", "${annotatorOutDir}/nullaway.xml")
+            option("AnnotatorScanner:ConfigPath", "${annotatorOutDir}/scanner.xml")
+        }
+        options.compilerArgs << "-Xmaxerrs" << "100000"
+        options.compilerArgs << "-Xmaxwarns" << "100000"
     }
 }
 

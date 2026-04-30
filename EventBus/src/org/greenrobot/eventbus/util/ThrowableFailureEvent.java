@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus.util;
+import javax.annotation.Nullable;
 
 /**
  * A generic failure event, which can be used by apps to propagate thrown exceptions.
@@ -22,7 +23,7 @@ package org.greenrobot.eventbus.util;
 public class ThrowableFailureEvent implements HasExecutionScope {
     protected final Throwable throwable;
     protected final boolean suppressErrorUi;
-    private Object executionContext;
+    @Nullable private Object executionContext;
 
     public ThrowableFailureEvent(Throwable throwable) {
         this.throwable = throwable;
@@ -46,11 +47,11 @@ public class ThrowableFailureEvent implements HasExecutionScope {
         return suppressErrorUi;
     }
 
-    public Object getExecutionScope() {
+    @Nullable public Object getExecutionScope() {
         return executionContext;
     }
 
-    public void setExecutionScope(Object executionContext) {
+    public void setExecutionScope(@Nullable Object executionContext) {
         this.executionContext = executionContext;
     }
     
