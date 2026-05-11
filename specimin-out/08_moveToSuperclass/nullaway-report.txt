@@ -1,0 +1,21 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:7: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+        Class<?> clazz;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                clazz = null;
+                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:18: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                    clazz = null;
+                          ^
+    (see http://t.uber.com/nullaway )
+3 warnings
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_moveToSuperclass/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

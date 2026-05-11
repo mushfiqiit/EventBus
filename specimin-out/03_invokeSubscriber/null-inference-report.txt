@@ -1,0 +1,161 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| EventBus.invokeSubscriber(PendingPost) return type | @Nonnull | The method does not return any value (void) so no annotation is needed. |
+| EventBus.invokeSubscriber(PendingPost) parameter pendingPost | @Nonnull | The NullAway warnings do not indicate that pendingPost is potentially null. |
+| PendingPost.event field | @Nullable | The NullAway warnings indicate that subscription is @Nullable, and since event is similarly annotated, it should also be @Nullable. |
+| PendingPost.subscription field | @Nullable | The NullAway warnings indicate that subscription is @Nullable. |
+| Subscription.active field | @Nonnull | The field is not annotated, and the NullAway warnings do not indicate that it is potentially null. |
+| EventBus.invokeSubscriber(Subscription, Object) return type | @Nonnull | The method does not return any value (void) so no annotation is needed. |
+| EventBus.invokeSubscriber(Subscription, Object) parameter subscription | @Nonnull | Although the field in PendingPost is @Nullable, the annotation on the parameter in this method should be @Nonnull because the method checks active status before calling. |
+| EventBus.invokeSubscriber(Subscription, Object) parameter event | @Nullable | This parameter is already annotated as @Nullable. |
+| PendingPost.releasePendingPost(PendingPost) return type | @Nonnull | The method does not return any value (void) so no annotation is needed. |
+| PendingPost.releasePendingPost(PendingPost) parameter pendingPost | @Nonnull | The NullAway warnings do not indicate that pendingPost is potentially null. |
+
+### B) Unsafe dereferences
+
+The dereference of the subscription field in the invokeSubscriber method of the EventBus class could throw a NullPointerException because it is annotated as @Nullable:
+- Line 10 (warns about `subscription` being @Nullable).
+
+Additionally, the event field in the same method is also annotated as @Nullable:
+- Line 10 (warns about `subscription` being @Nullable, which is closely related to `event`).
+
+However, there is a direct dereference in `invokeSubscriber(subscription, event)` where `event` and `subscription` could potentially throw a NullPointerException:
+- There is no direct NullAway warning about `event` in this context, but `subscription` has a warning.
+
+### C) Corrected annotated code
+
+```java
+// === javax/annotation/Nonnull.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifier;
+import javax.annotation.meta.When;
+
+@Documented
+@TypeQualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Nonnull {
+
+    When when() default When.ALWAYS;
+}
+
+// === javax/annotation/Nullable.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifierNickname;
+import javax.annotation.meta.When;
+
+@Documented
+@Nonnull(when = When.UNKNOWN)
+@Retention(RetentionPolicy.RUNTIME)
+@TypeQualifierNickname
+public @interface Nullable {
+}
+
+// === javax/annotation/meta/TypeQualifier.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TypeQualifier {
+
+    Class<?> applicableTo() default Object.class;
+}
+
+// === javax/annotation/meta/TypeQualifierNickname.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+public @interface TypeQualifierNickname {
+}
+
+// === javax/annotation/meta/When.java ===
+package javax.annotation.meta;
+
+public enum When {
+
+    ALWAYS, UNKNOWN
+}
+
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public class EventBus {
+
+    void invokeSubscriber(@javax.annotation.Nonnull PendingPost pendingPost) {
+        Object event = pendingPost.event;
+        Subscription subscription = pendingPost.subscription;
+        PendingPost.releasePendingPost(pendingPost);
+        if (subscription.active) {
+            invokeSubscriber(subscription, event);
+        }
+    }
+
+    void invokeSubscriber(@javax.annotation.Nonnull Subscription subscription, @Nullable Object event) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class PendingPost {
+
+    @Nullable
+    Object event;
+
+    @Nullable
+    Subscription subscription;
+
+    static void releasePendingPost(@javax.annotation.Nonnull PendingPost pendingPost) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+
+    volatile boolean active;
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
+}
+```

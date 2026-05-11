@@ -1,0 +1,248 @@
+### Annotation Decisions
+The following table outlines the inferred annotations for each parameter, return type, and field in the code, based on the NullAway warnings and logical analysis of the code.
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| EventBus.mainThreadPoster | @Nullable | Because NullAway warns about dereferencing this potentially null value. |
+| EventBus.backgroundPoster | @Nullable | NullAway warns about assigning a nullable expression to this field, and it is initialized to null. |
+| EventBus.asyncPoster | @Nullable | NullAway warns about assigning a nullable expression to this field, and it is initialized to null. |
+| Subscription.subscriberMethod | @Nullable | Subscription.subscriberMethod is initialized to null. |
+| SubscriberMethod.threadMode | @Nullable | SubscriberMethod.threadMode is initialized to null. |
+| EventBus.postToSubscription | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
+| Poster.enqueue | @Nonnull | Since the method doesn't return any value and its parameters are not flagged by NullAway as potential null issues. |
+| AsyncPoster.enqueue | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
+| BackgroundPoster.enqueue | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
+| EventBus.invokeSubscriber | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
+| SubscriberMethod.subscriber | Not present in provided code | Not present in provided code. |
+| Subscription.event | Not present in provided code | Not present in provided code. |
+
+### Unsafe Dereferences
+1. `mainThreadPoster.enqueue(subscription, event);` in `EventBus.java:22` - could throw a `NullPointerException` because `mainThreadPoster` is `@Nullable`.
+2. `backgroundPoster.enqueue(subscription, event);` in `EventBus.java` - could throw a `NullPointerException` because `backgroundPoster` is `@Nullable`.
+3. `asyncPoster.enqueue(subscription, event);` in `EventBus.java` - could throw a `NullPointerException` because `asyncPoster` is `@Nullable`.
+4. `subscription.subscriberMethod.threadMode` in `EventBus.java` - could throw a `NullPointerException` because `subscription.subscriberMethod` is `@Nullable`.
+5. `mainThreadPoster.enqueue(subscription, event);` in `EventBus.java` - could throw a `NullPointerException` because `mainThreadPoster` is `@Nullable`.
+
+### Corrected Annotated Code
+```java
+// === javax/annotation/Nonnull.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifier;
+import javax.annotation.meta.When;
+
+@Documented
+@TypeQualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Nonnull {
+
+    When when() default When.ALWAYS;
+}
+
+// === javax/annotation/Nullable.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifierNickname;
+import javax.annotation.meta.When;
+
+@Documented
+@Nonnull(when = When.UNKNOWN)
+@Retention(RetentionPolicy.RUNTIME)
+@TypeQualifierNickname
+public @interface Nullable {
+}
+
+// === javax/annotation/meta/TypeQualifier.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TypeQualifier {
+
+    Class<?> applicableTo() default Object.class;
+}
+
+// === javax/annotation/meta/TypeQualifierNickname.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+public @interface TypeQualifierNickname {
+}
+
+// === javax/annotation/meta/When.java ===
+package javax.annotation.meta;
+
+public enum When {
+
+    ALWAYS, UNKNOWN
+}
+
+// === org/greenrobot/eventbus/AsyncPoster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+class AsyncPoster implements Poster {
+
+    @Override
+    public void enqueue(@Nullable Subscription subscription, @Nullable Object event) {
+        throw new java.lang.Error();
+    }
+
+    public void run() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/BackgroundPoster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class BackgroundPoster implements Poster {
+
+    @Override
+    public void enqueue(@Nullable Subscription subscription, @Nullable Object event) {
+        throw new java.lang.Error();
+    }
+
+    public void run() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public class EventBus {
+
+    @Nullable
+    private final Poster mainThreadPoster = null;
+
+    @Nullable
+    private final BackgroundPoster backgroundPoster = null;
+
+    @Nullable
+    private final AsyncPoster asyncPoster = null;
+
+    private void postToSubscription(@Nullable Subscription subscription, @Nullable Object event, boolean isMainThread) {
+        if (subscription != null && subscription.subscriberMethod != null) {
+            switch(subscription.subscriberMethod.threadMode) {
+                case POSTING:
+                    invokeSubscriber(subscription, event);
+                    break;
+                case MAIN:
+                    if (isMainThread) {
+                        invokeSubscriber(subscription, event);
+                    } else if (mainThreadPoster != null) {
+                        mainThreadPoster.enqueue(subscription, event);
+                    }
+                    break;
+                case MAIN_ORDERED:
+                    if (mainThreadPoster != null) {
+                        mainThreadPoster.enqueue(subscription, event);
+                    } else {
+                        invokeSubscriber(subscription, event);
+                    }
+                    break;
+                case BACKGROUND:
+                    if (isMainThread) {
+                        if (backgroundPoster != null) {
+                            backgroundPoster.enqueue(subscription, event);
+                        }
+                    } else {
+                        invokeSubscriber(subscription, event);
+                    }
+                    break;
+                case ASYNC:
+                    if (asyncPoster != null) {
+                        asyncPoster.enqueue(subscription, event);
+                    }
+                    break;
+                default:
+                    throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);
+            }
+        }
+    }
+
+    void invokeSubscriber(@Nullable Subscription subscription, @Nullable Object event) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/Poster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public interface Poster {
+
+    default void enqueue(@Nullable Subscription subscription, @Nullable Object event) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public class SubscriberMethod {
+
+    @Nullable
+    final ThreadMode threadMode = null;
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class Subscription {
+
+    @Nullable
+    final SubscriberMethod subscriberMethod = null;
+}
+
+// === org/greenrobot/eventbus/ThreadMode.java ===
+package org.greenrobot.eventbus;
+
+public enum ThreadMode {
+
+    POSTING, MAIN, MAIN_ORDERED, BACKGROUND, ASYNC
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
+}
+```

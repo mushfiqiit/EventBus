@@ -1,0 +1,191 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `SubscriberMethodFinder.FindState.subscriberMethods` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
+| `SubscriberMethodFinder.FindState.anyMethodByEventType` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
+| `SubscriberMethodFinder.FindState.subscriberClassByMethodKey` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
+| `SubscriberMethodFinder.FindState.methodKeyBuilder` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
+| `SubscriberMethodFinder.FindState.subscriberClass` | `@Nullable` (already annotated) | This field is already annotated as `@Nullable`. |
+| `SubscriberMethodFinder.FindState.clazz` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
+| `SubscriberMethodFinder.FindState.skipSuperClasses` | `@Nonnull` (no annotation needed) | This is a primitive type and cannot be null. |
+| `SubscriberMethodFinder.FindState.subscriberInfo` | `@Nullable` | This field is already annotated as `@Nullable`. |
+| `SubscriberMethodFinder` class | no annotations needed | The class itself does not have any fields or methods that need annotation. |
+| `SubscriberMethod` class | no annotations needed | The class itself does not have any fields or methods that need annotation. |
+| `SubscriberInfo` interface | no annotations needed | The interface itself does not have any methods or fields that need annotation. |
+
+### B) Unsafe dereferences
+
+Based on the provided NullAway warnings, the following are potential unsafe dereferences:
+- Line 11: Assigning `@Nullable` expression to `@NonNull` field `subscriberMethods` in `FindState`.
+- Line 13: Assigning `@Nullable` expression to `@NonNull` field `anyMethodByEventType` in `FindState`.
+- Line 15: Assigning `@Nullable` expression to `@NonNull` field `subscriberClassByMethodKey` in `FindState`.
+- Line 17: Assigning `@Nullable` expression to `@NonNull` field `methodKeyBuilder` in `FindState`.
+- Line 22: `@NonNull` field `clazz` not initialized.
+- Line 35: Assigning `@Nullable` expression to `@NonNull` field.
+
+These lines indicate potential null pointer exceptions if the expressions being assigned or used are null.
+
+### C) Corrected annotated code
+```java
+// === javax/annotation/Nonnull.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifier;
+import javax.annotation.meta.When;
+
+@Documented
+@TypeQualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Nonnull {
+
+    When when() default When.ALWAYS;
+}
+
+// === javax/annotation/Nullable.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifierNickname;
+import javax.annotation.meta.When;
+
+@Documented
+@Nonnull(when = When.UNKNOWN)
+@Retention(RetentionPolicy.RUNTIME)
+@TypeQualifierNickname
+public @interface Nullable {
+}
+
+// === javax/annotation/meta/TypeQualifier.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TypeQualifier {
+
+    Class<?> applicableTo() default Object.class;
+}
+
+// === javax/annotation/meta/TypeQualifierNickname.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+public @interface TypeQualifierNickname {
+}
+
+// === javax/annotation/meta/When.java ===
+package javax.annotation.meta;
+
+public enum When {
+
+    ALWAYS, UNKNOWN
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+public class SubscriberMethod {
+}
+
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nullable
+        final List<SubscriberMethod> subscriberMethods;
+
+        @Nullable
+        final Map<Class, Object> anyMethodByEventType;
+
+        @Nullable
+        final Map<String, Class> subscriberClassByMethodKey;
+
+        @Nullable
+        final StringBuilder methodKeyBuilder;
+
+        @Nullable
+        Class<?> subscriberClass;
+
+        @Nullable
+        Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        @Nullable
+        SubscriberInfo subscriberInfo;
+
+        public FindState() {
+            this.subscriberMethods = new java.util.ArrayList<>();
+            this.anyMethodByEventType = new java.util.HashMap<>();
+            this.subscriberClassByMethodKey = new java.util.HashMap<>();
+            this.methodKeyBuilder = new StringBuilder();
+        }
+
+        void recycle() {
+            if (subscriberMethods != null) {
+                subscriberMethods.clear();
+            }
+            if (anyMethodByEventType != null) {
+                anyMethodByEventType.clear();
+            }
+            if (subscriberClassByMethodKey != null) {
+                subscriberClassByMethodKey.clear();
+            }
+            if (methodKeyBuilder != null) {
+                methodKeyBuilder.setLength(0);
+            }
+            subscriberClass = null;
+            clazz = null;
+            skipSuperClasses = false;
+            subscriberInfo = null;
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfo {
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
+}
+```

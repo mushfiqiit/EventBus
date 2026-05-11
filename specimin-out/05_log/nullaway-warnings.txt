@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_log/org/greenrobot/eventbus/Logger.java:13: warning: [MissingOverride] log implements method in Logger; expected @Override
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_log/org/greenrobot/eventbus/Logger.java:15: warning: [NullAway] dereferenced expression th is @Nullable

@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/org/greenrobot/eventbus/android/AndroidComponents.java:10: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

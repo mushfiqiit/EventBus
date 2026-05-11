@@ -1,0 +1,213 @@
+### Annotation Decisions
+
+The following table presents the annotation decisions based on the NullAway warnings:
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `EventBus.logger` | @Nullable | NullAway warns about assigning a @Nullable expression to a @NonNull field, so `logger` should be @Nullable. |
+| `handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause)` - `event` | @Nullable | The method already annotates `event` as @Nullable, which matches the NullAway warning about dereferencing a @Nullable expression. |
+| `handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause)` - `cause` | @Nullable | Similar to `event`, `cause` is also annotated as @Nullable, aligning with the NullAway warnings. |
+| `SubscriberExceptionEvent.throwable` | @Nullable | NullAway warns about assigning a @Nullable expression to a @NonNull field, so `throwable` should be @Nullable, though it's already annotated. |
+| `SubscriberExceptionEvent.causingEvent` | @Nullable | It is already annotated as @Nullable, matching the NullAway warning pattern. |
+| `SubscriberExceptionEvent.causingSubscriber` | @NonNull | There is no NullAway warning about this field being null, suggesting it is intended to be non-null. |
+| `Subscription.subscriber` | @Nullable | Since `subscriber` is initialized to `null`, it should be @Nullable to reflect its potential nullity. |
+| `EventBus.post(Object event)` - `event` | @Nullable | Although not directly warned by NullAway, for consistency with other event handling, `event` could be considered @Nullable, but since it's not flagged by NullAway, we'll leave it as is ( effectively @NonNull by default). |
+| `EventBusException(String detailMessage, @Nullable Throwable throwable)` - `throwable` | @Nullable | It's already annotated as @Nullable, matching the pattern of potentially being null. |
+| `Logger.log(Level level, String msg, @Nullable Throwable th)` - `th` | @Nullable | Already annotated as @Nullable, aligning with the possibility of being null. |
+
+### Unsafe Dereferences
+
+Based on the NullAway warnings and the annotation decisions:
+
+1. **EventBus.java:31**: The expression `event` is dereferenced without a null check in the line `if (event instanceof SubscriberExceptionEvent)`. This could throw a NullPointerException if `event` is null.
+2. **EventBus.java:13**: The `logger` field is used without a null check in the lines `logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass() + " threw an exception", cause);` and `logger.log(Level.SEVERE, "Initial event " + exEvent.causingEvent + " caused exception in " + exEvent.causingSubscriber, exEvent.throwable);`. This could throw a NullPointerException if `logger` is null.
+3. **SubscriberExceptionEvent.java:13**: In the constructor, `eventBus`, `throwable`, `causingEvent`, and `causingSubscriber` are used without null checks. However, since `causingSubscriber` is determined to be @NonNull, only `throwable` and `causingEvent` could potentially cause NullPointerExceptions if they are null.
+
+### Corrected Annotated Code
+
+```java
+// === javax/annotation/Nonnull.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifier;
+import javax.annotation.meta.When;
+
+@Documented
+@TypeQualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Nonnull {
+
+    When when() default When.ALWAYS;
+}
+
+// === javax/annotation/Nullable.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifierNickname;
+import javax.annotation.meta.When;
+
+@Documented
+@Nonnull(when = When.UNKNOWN)
+@Retention(RetentionPolicy.RUNTIME)
+@TypeQualifierNickname
+public @interface Nullable {
+}
+
+// === javax/annotation/meta/TypeQualifier.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TypeQualifier {
+
+    Class<?> applicableTo() default Object.class;
+}
+
+// === javax/annotation/meta/TypeQualifierNickname.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+public @interface TypeQualifierNickname {
+}
+
+// === javax/annotation/meta/When.java ===
+package javax.annotation.meta;
+
+public enum When {
+
+    ALWAYS, UNKNOWN
+}
+
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import java.util.logging.Level;
+import javax.annotation.Nullable;
+
+public class EventBus {
+
+    private final boolean throwSubscriberException = false;
+
+    private final boolean logSubscriberExceptions = false;
+
+    private final boolean sendSubscriberExceptionEvent = false;
+
+    private final javax.annotation.Nullable Logger logger;
+
+    public void post(@javax.annotation.Nullable Object event) {
+        throw new java.lang.Error();
+    }
+
+    private void handleSubscriberException(Subscription subscription, @javax.annotation.Nullable Object event, @javax.annotation.Nullable Throwable cause) {
+        if (event instanceof SubscriberExceptionEvent) {
+            if (logSubscriberExceptions) {
+                if (logger != null) {
+                    logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass() + " threw an exception", cause);
+                    SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
+                    logger.log(Level.SEVERE, "Initial event " + exEvent.causingEvent + " caused exception in " + exEvent.causingSubscriber, exEvent.throwable);
+                }
+            }
+        } else {
+            if (throwSubscriberException) {
+                throw new EventBusException("Invoking subscriber failed", cause);
+            }
+            if (logSubscriberExceptions) {
+                if (logger != null) {
+                    logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class " + subscription.subscriber.getClass(), cause);
+                }
+            }
+            if (sendSubscriberExceptionEvent) {
+                SubscriberExceptionEvent exEvent = new SubscriberExceptionEvent(this, cause, event, subscription.subscriber);
+                post(exEvent);
+            }
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/EventBusException.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public class EventBusException extends RuntimeException {
+
+    public EventBusException(String detailMessage, @Nullable Throwable throwable) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/Logger.java ===
+package org.greenrobot.eventbus;
+
+import java.util.logging.Level;
+import javax.annotation.Nullable;
+
+public interface Logger {
+
+    default void log(Level level, String msg, @Nullable Throwable th) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberExceptionEvent.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public final class SubscriberExceptionEvent {
+
+    @Nullable
+    public final Throwable throwable;
+
+    @Nullable
+    public final Object causingEvent;
+
+    public final Object causingSubscriber;
+
+    public SubscriberExceptionEvent(EventBus eventBus, @Nullable Throwable throwable, @Nullable Object causingEvent, Object causingSubscriber) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+
+    @javax.annotation.Nullable
+    final Object subscriber;
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
+}
+```

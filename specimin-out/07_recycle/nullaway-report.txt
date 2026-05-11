@@ -1,0 +1,33 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+        Class<?> clazz;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        final List<SubscriberMethod> subscriberMethods = null;
+                                     ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        final Map<Class, Object> anyMethodByEventType = null;
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        final Map<String, Class> subscriberClassByMethodKey = null;
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        final StringBuilder methodKeyBuilder = null;
+                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:35: warning: [NullAway] assigning @Nullable expression to @NonNull field
+            clazz = null;
+                  ^
+    (see http://t.uber.com/nullaway )
+6 warnings
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

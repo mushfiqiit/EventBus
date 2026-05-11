@@ -1,0 +1,18 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_log/org/greenrobot/eventbus/Logger.java:13: warning: [MissingOverride] log implements method in Logger; expected @Override
+        public void log(Level level, String msg, @Nullable Throwable th) {
+                    ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public void log(Level level, String msg, @Nullable Throwable th) {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_log/org/greenrobot/eventbus/Logger.java:15: warning: [NullAway] dereferenced expression th is @Nullable
+            th.printStackTrace(System.out);
+              ^
+    (see http://t.uber.com/nullaway )
+2 warnings
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_log/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

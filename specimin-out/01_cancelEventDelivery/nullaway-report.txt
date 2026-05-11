@@ -1,0 +1,25 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    final ThreadMode threadMode = null;
+                     ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/EventBus.java:6: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    private final ThreadLocal<PostingThreadState> currentPostingThreadState = null;
+                                                  ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/EventBus.java:16: warning: [NullAway] dereferenced expression postingState.subscription is @Nullable
+        } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+                                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    final SubscriberMethod subscriberMethod = null;
+                           ^
+    (see http://t.uber.com/nullaway )
+4 warnings
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

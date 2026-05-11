@@ -1,0 +1,13 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/org/greenrobot/eventbus/android/AndroidComponents.java:10: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return implementation;
+        ^
+    (see http://t.uber.com/nullaway )
+1 warning
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

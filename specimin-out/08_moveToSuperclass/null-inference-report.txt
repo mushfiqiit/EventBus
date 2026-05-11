@@ -1,0 +1,62 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| Class<?> clazz | @Nullable | NullAway warning at line 7 indicates that clazz may be null. |
+| boolean skipSuperClasses | (unannotated/@Nonnull) | No NullAway warnings or indications that skipSuperClasses can be null. |
+| void moveToSuperclass() return type | (unannotated/@Nonnull) | Void return type is guaranteed non-null. |
+| FindState() constructor parameters | N/A | There is no explicit constructor defined, hence no parameters to annotate. |
+
+### B) Unsafe dereferences
+
+The following dereferences could throw a NullPointerException:
+1. `clazz.getSuperclass()` at line 13: This dereference is flagged by NullAway as potentially null because `clazz` is @Nullable and `getSuperclass()` is called without a null check.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nullable
+        Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        void moveToSuperclass() {
+            if (skipSuperClasses) {
+                clazz = null;
+            } else {
+                clazz = clazz.getSuperclass();
+                if (clazz != null) {
+                    String clazzName = clazz.getName();
+                    if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+                        clazz = null;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
+}
+```

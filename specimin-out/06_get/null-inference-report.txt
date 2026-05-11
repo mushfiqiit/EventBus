@@ -1,0 +1,116 @@
+### A) Annotation Decisions
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `AndroidComponents.get()` return type | `@Nullable` | NullAway warns about returning a `@Nullable` expression from a method with a `@NonNull` return type. |
+| `AndroidComponents.implementation` field | `@Nullable` | The field is initialized to `null`, making it potentially null. |
+| `AndroidComponents` class and its methods | `@Nonnull` | No explicit nullability annotations are given, and by default, NullAway assumes types are non-null if not annotated otherwise. |
+
+### B) Unsafe Dereferences
+
+1. The dereference of `implementation` in `AndroidComponents.get()` could throw a `NullPointerException` because `implementation` is `@Nullable`. This corresponds to the NullAway warning on line 10.
+
+### C) Corrected Annotated Code
+
+```java
+// === javax/annotation/Nonnull.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifier;
+import javax.annotation.meta.When;
+
+@Documented
+@TypeQualifier
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Nonnull {
+
+    When when() default When.ALWAYS;
+}
+
+// === javax/annotation/Nullable.java ===
+package javax.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import javax.annotation.meta.TypeQualifierNickname;
+import javax.annotation.meta.When;
+
+@Documented
+@Nonnull(when = When.UNKNOWN)
+@Retention(RetentionPolicy.RUNTIME)
+@TypeQualifierNickname
+public @interface Nullable {
+}
+
+// === javax/annotation/meta/TypeQualifier.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TypeQualifier {
+
+    Class<?> applicableTo() default Object.class;
+}
+
+// === javax/annotation/meta/TypeQualifierNickname.java ===
+package javax.annotation.meta;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+@Documented
+@Target({ ElementType.ANNOTATION_TYPE })
+public @interface TypeQualifierNickname {
+}
+
+// === javax/annotation/meta/When.java ===
+package javax.annotation.meta;
+
+public enum When {
+
+    ALWAYS, UNKNOWN
+}
+
+// === org/greenrobot/eventbus/android/AndroidComponents.java ===
+package org.greenrobot.eventbus.android;
+
+import javax.annotation.Nullable;
+
+public abstract class AndroidComponents {
+
+    @Nullable
+    private static final AndroidComponents implementation = null;
+
+    @Nullable
+    public static AndroidComponents get() {
+        return implementation;
+    }
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
+}
+```
