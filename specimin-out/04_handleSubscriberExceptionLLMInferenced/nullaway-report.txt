@@ -1,0 +1,30 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:19: warning: [UnusedMethod] Method 'handleSubscriberException' is never used.
+    private void handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
+                 ^
+    (see https://errorprone.info/bugpattern/UnusedMethod)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:23: warning: [NullAway] dereferenced expression subscription.subscriber is @Nullable
+                    logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass() + " threw an exception", cause);
+                                                                                                             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:34: warning: [NullAway] dereferenced expression event is @Nullable
+                    logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class " + subscription.subscriber.getClass(), cause);
+                                                                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:34: warning: [NullAway] dereferenced expression subscription.subscriber is @Nullable
+                    logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class " + subscription.subscriber.getClass(), cause);
+                                                                                                                                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:38: warning: [NullAway] passing @Nullable parameter 'subscription.subscriber' where @NonNull is required
+                SubscriberExceptionEvent exEvent = new SubscriberExceptionEvent(this, cause, event, subscription.subscriber);
+                                                                                                                ^
+    (see http://t.uber.com/nullaway )
+5 warnings
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

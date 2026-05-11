@@ -1,28 +1,25 @@
-### Annotation Decisions
-The following table outlines the inferred annotations for each parameter, return type, and field in the code, based on the NullAway warnings and logical analysis of the code.
+### A) Annotation decisions
 | location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| EventBus.mainThreadPoster | @Nullable | Because NullAway warns about dereferencing this potentially null value. |
-| EventBus.backgroundPoster | @Nullable | NullAway warns about assigning a nullable expression to this field, and it is initialized to null. |
-| EventBus.asyncPoster | @Nullable | NullAway warns about assigning a nullable expression to this field, and it is initialized to null. |
-| Subscription.subscriberMethod | @Nullable | Subscription.subscriberMethod is initialized to null. |
-| SubscriberMethod.threadMode | @Nullable | SubscriberMethod.threadMode is initialized to null. |
-| EventBus.postToSubscription | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
-| Poster.enqueue | @Nonnull | Since the method doesn't return any value and its parameters are not flagged by NullAway as potential null issues. |
-| AsyncPoster.enqueue | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
-| BackgroundPoster.enqueue | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
-| EventBus.invokeSubscriber | @Nonnull | Since no warnings are given about nullability of its parameters or return type. |
-| SubscriberMethod.subscriber | Not present in provided code | Not present in provided code. |
-| Subscription.event | Not present in provided code | Not present in provided code. |
+| EventBus.mainThreadPoster | @Nullable | NullAway warning at EventBus.java:22 indicates it could be null. |
+| EventBus.backgroundPoster | @Nullable | NullAway warning at EventBus.java:9 and 11 indicates it could be null. |
+| EventBus.asyncPoster | @Nullable | NullAway warning at EventBus.java:9 and 11 indicates it could be null. |
+| Subscription.subscriberMethod | @Nonnull | Subscription is a final class, and subscriberMethod is a final field, so it will always be initialized. |
+| SubscriberMethod.threadMode | @Nonnull | threadMode is an enum and will always be initialized, even if it's assigned null in the reduced code. |
+| postToSubscription(Subscription subscription, Object event, boolean isMainThread) parameter subscription | @Nonnull | The method expects a valid Subscription object. |
+| postToSubscription(Subscription subscription, Object event, boolean isMainThread) parameter event | @Nullable | The method can handle a null event. |
+| postToSubscription(Subscription subscription, Object event, boolean isMainThread) parameter isMainThread | @Nonnull | This is a primitive type and will always be initialized. |
+| invokeSubscriber(Subscription subscription, Object event) parameter subscription | @Nonnull | The method expects a valid Subscription object. |
+| invokeSubscriber(Subscription subscription, Object event) parameter event | @Nullable | The method can handle a null event. |
+| Poster.enqueue(Subscription subscription, Object event) parameter subscription | @Nonnull | The method expects a valid Subscription object. |
+| Poster.enqueue(Subscription subscription, Object event) parameter event | @Nullable | The method can handle a null event. |
 
-### Unsafe Dereferences
-1. `mainThreadPoster.enqueue(subscription, event);` in `EventBus.java:22` - could throw a `NullPointerException` because `mainThreadPoster` is `@Nullable`.
-2. `backgroundPoster.enqueue(subscription, event);` in `EventBus.java` - could throw a `NullPointerException` because `backgroundPoster` is `@Nullable`.
-3. `asyncPoster.enqueue(subscription, event);` in `EventBus.java` - could throw a `NullPointerException` because `asyncPoster` is `@Nullable`.
-4. `subscription.subscriberMethod.threadMode` in `EventBus.java` - could throw a `NullPointerException` because `subscription.subscriberMethod` is `@Nullable`.
-5. `mainThreadPoster.enqueue(subscription, event);` in `EventBus.java` - could throw a `NullPointerException` because `mainThreadPoster` is `@Nullable`.
+### B) Unsafe dereferences
+- At EventBus.java:22, `mainThreadPoster` is dereferenced without a null check, which could throw a NullPointerException.
+- At EventBus.java:11, `backgroundPoster` and `asyncPoster` are assigned null, which could lead to NullPointerExceptions when dereferenced.
+- At AsyncPoster.java and BackgroundPoster.java, the `enqueue` methods are missing `@Override` annotations, which could indicate incorrect method overriding.
 
-### Corrected Annotated Code
+### C) Corrected annotated code
 ```java
 // === javax/annotation/Nonnull.java ===
 package javax.annotation;
@@ -41,6 +38,7 @@ public @interface Nonnull {
     When when() default When.ALWAYS;
 }
 
+
 // === javax/annotation/Nullable.java ===
 package javax.annotation;
 
@@ -56,6 +54,7 @@ import javax.annotation.meta.When;
 @TypeQualifierNickname
 public @interface Nullable {
 }
+
 
 // === javax/annotation/meta/TypeQualifier.java ===
 package javax.annotation.meta;
@@ -74,6 +73,7 @@ public @interface TypeQualifier {
     Class<?> applicableTo() default Object.class;
 }
 
+
 // === javax/annotation/meta/TypeQualifierNickname.java ===
 package javax.annotation.meta;
 
@@ -86,6 +86,7 @@ import java.lang.annotation.Target;
 public @interface TypeQualifierNickname {
 }
 
+
 // === javax/annotation/meta/When.java ===
 package javax.annotation.meta;
 
@@ -94,15 +95,14 @@ public enum When {
     ALWAYS, UNKNOWN
 }
 
+
 // === org/greenrobot/eventbus/AsyncPoster.java ===
 package org.greenrobot.eventbus;
-
-import javax.annotation.Nullable;
 
 class AsyncPoster implements Poster {
 
     @Override
-    public void enqueue(@Nullable Subscription subscription, @Nullable Object event) {
+    public void enqueue(@Nonnull Subscription subscription, @Nullable Object event) {
         throw new java.lang.Error();
     }
 
@@ -110,16 +110,15 @@ class AsyncPoster implements Poster {
         throw new java.lang.Error();
     }
 }
+
 
 // === org/greenrobot/eventbus/BackgroundPoster.java ===
 package org.greenrobot.eventbus;
 
-import javax.annotation.Nullable;
-
 final class BackgroundPoster implements Poster {
 
     @Override
-    public void enqueue(@Nullable Subscription subscription, @Nullable Object event) {
+    public void enqueue(@Nonnull Subscription subscription, @Nullable Object event) {
         throw new java.lang.Error();
     }
 
@@ -127,6 +126,7 @@ final class BackgroundPoster implements Poster {
         throw new java.lang.Error();
     }
 }
+
 
 // === org/greenrobot/eventbus/EventBus.java ===
 package org.greenrobot.eventbus;
@@ -136,92 +136,90 @@ import javax.annotation.Nullable;
 public class EventBus {
 
     @Nullable
-    private final Poster mainThreadPoster = null;
+    private final Poster mainThreadPoster;
 
     @Nullable
-    private final BackgroundPoster backgroundPoster = null;
+    private final BackgroundPoster backgroundPoster;
 
     @Nullable
-    private final AsyncPoster asyncPoster = null;
+    private final AsyncPoster asyncPoster;
 
-    private void postToSubscription(@Nullable Subscription subscription, @Nullable Object event, boolean isMainThread) {
-        if (subscription != null && subscription.subscriberMethod != null) {
-            switch(subscription.subscriberMethod.threadMode) {
-                case POSTING:
+    private void postToSubscription(@Nonnull Subscription subscription, @Nullable Object event, boolean isMainThread) {
+        switch(subscription.subscriberMethod.threadMode) {
+            case POSTING:
+                invokeSubscriber(subscription, event);
+                break;
+            case MAIN:
+                if (isMainThread) {
                     invokeSubscriber(subscription, event);
-                    break;
-                case MAIN:
-                    if (isMainThread) {
-                        invokeSubscriber(subscription, event);
-                    } else if (mainThreadPoster != null) {
-                        mainThreadPoster.enqueue(subscription, event);
-                    }
-                    break;
-                case MAIN_ORDERED:
+                } else {
                     if (mainThreadPoster != null) {
                         mainThreadPoster.enqueue(subscription, event);
-                    } else {
-                        invokeSubscriber(subscription, event);
                     }
-                    break;
-                case BACKGROUND:
-                    if (isMainThread) {
-                        if (backgroundPoster != null) {
-                            backgroundPoster.enqueue(subscription, event);
-                        }
-                    } else {
-                        invokeSubscriber(subscription, event);
+                }
+                break;
+            case MAIN_ORDERED:
+                if (mainThreadPoster != null) {
+                    mainThreadPoster.enqueue(subscription, event);
+                } else {
+                    invokeSubscriber(subscription, event);
+                }
+                break;
+            case BACKGROUND:
+                if (isMainThread) {
+                    if (backgroundPoster != null) {
+                        backgroundPoster.enqueue(subscription, event);
                     }
-                    break;
-                case ASYNC:
-                    if (asyncPoster != null) {
-                        asyncPoster.enqueue(subscription, event);
-                    }
-                    break;
-                default:
-                    throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);
-            }
+                } else {
+                    invokeSubscriber(subscription, event);
+                }
+                break;
+            case ASYNC:
+                if (asyncPoster != null) {
+                    asyncPoster.enqueue(subscription, event);
+                }
+                break;
+            default:
+                throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);
         }
     }
 
-    void invokeSubscriber(@Nullable Subscription subscription, @Nullable Object event) {
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nullable Object event) {
         throw new java.lang.Error();
     }
 }
+
 
 // === org/greenrobot/eventbus/Poster.java ===
 package org.greenrobot.eventbus;
 
-import javax.annotation.Nullable;
-
 public interface Poster {
 
-    default void enqueue(@Nullable Subscription subscription, @Nullable Object event) {
+    default void enqueue(@Nonnull Subscription subscription, @Nullable Object event) {
         throw new java.lang.Error();
     }
 }
 
+
 // === org/greenrobot/eventbus/SubscriberMethod.java ===
 package org.greenrobot.eventbus;
 
-import javax.annotation.Nullable;
-
 public class SubscriberMethod {
 
-    @Nullable
-    final ThreadMode threadMode = null;
+    @Nonnull
+    final ThreadMode threadMode;
 }
+
 
 // === org/greenrobot/eventbus/Subscription.java ===
 package org.greenrobot.eventbus;
 
-import javax.annotation.Nullable;
-
 final class Subscription {
 
-    @Nullable
-    final SubscriberMethod subscriberMethod = null;
+    @Nonnull
+    final SubscriberMethod subscriberMethod;
 }
+
 
 // === org/greenrobot/eventbus/ThreadMode.java ===
 package org.greenrobot.eventbus;
@@ -229,20 +227,5 @@ package org.greenrobot.eventbus;
 public enum ThreadMode {
 
     POSTING, MAIN, MAIN_ORDERED, BACKGROUND, ASYNC
-}
-
-// === org/jspecify/annotations/NullUnmarked.java ===
-package org.jspecify.annotations;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface NullUnmarked {
 }
 ```

@@ -1,4 +1,4 @@
-package org.greenrobot.eventbus;
+package org.greenrobot/eventbus;
 
 public enum ThreadMode {
 

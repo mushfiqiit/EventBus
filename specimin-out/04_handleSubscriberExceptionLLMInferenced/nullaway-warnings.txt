@@ -1,0 +1,5 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:19: warning: [UnusedMethod] Method 'handleSubscriberException' is never used.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:23: warning: [NullAway] dereferenced expression subscription.subscriber is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:34: warning: [NullAway] dereferenced expression event is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:34: warning: [NullAway] dereferenced expression subscription.subscriber is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberExceptionLLMInferenced/org/greenrobot/eventbus/EventBus.java:38: warning: [NullAway] passing @Nullable parameter 'subscription.subscriber' where @NonNull is required

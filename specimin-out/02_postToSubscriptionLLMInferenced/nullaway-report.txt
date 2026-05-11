@@ -1,0 +1,26 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_postToSubscriptionLLMInferenced/org/greenrobot/eventbus/Subscription.java:7: error: variable subscriberMethod not initialized in the default constructor
+    final SubscriberMethod subscriberMethod;
+                           ^
+1 error
+
+[Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_postToSubscriptionLLMInferenced/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_postToSubscriptionLLMInferenced/org/greenrobot/eventbus/Subscription.java:7: error: variable subscriberMethod not initialized in the default constructor
+      final SubscriberMethod subscriberMethod;
+                             ^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

@@ -4,23 +4,21 @@ import org.greenrobot.eventbus.meta.SubscriberInfo;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
-
 class SubscriberMethodFinder {
 
     static class FindState {
 
         @Nullable
-        final List<SubscriberMethod> subscriberMethods;
+        List<SubscriberMethod> subscriberMethods = null;
 
         @Nullable
-        final Map<Class, Object> anyMethodByEventType;
+        Map<Class, Object> anyMethodByEventType = null;
 
         @Nullable
-        final Map<String, Class> subscriberClassByMethodKey;
+        Map<String, Class> subscriberClassByMethodKey = null;
 
         @Nullable
-        final StringBuilder methodKeyBuilder;
+        StringBuilder methodKeyBuilder = null;
 
         @Nullable
         Class<?> subscriberClass;
@@ -28,17 +26,11 @@ class SubscriberMethodFinder {
         @Nullable
         Class<?> clazz;
 
+        @javax.annotation.Nonnull
         boolean skipSuperClasses;
 
         @Nullable
         SubscriberInfo subscriberInfo;
-
-        public FindState() {
-            this.subscriberMethods = new java.util.ArrayList<>();
-            this.anyMethodByEventType = new java.util.HashMap<>();
-            this.subscriberClassByMethodKey = new java.util.HashMap<>();
-            this.methodKeyBuilder = new StringBuilder();
-        }
 
         void recycle() {
             if (subscriberMethods != null) {

@@ -15,7 +15,7 @@ class SubscriberMethodFinder {
             if (skipSuperClasses) {
                 clazz = null;
             } else {
-                clazz = clazz.getSuperclass();
+                clazz = clazz == null ? null : clazz.getSuperclass();
                 if (clazz != null) {
                     String clazzName = clazz.getName();
                     if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {

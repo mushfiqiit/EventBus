@@ -1,31 +1,26 @@
 ### A) Annotation decisions
+Here are the annotation decisions:
 
 | location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| EventBus.invokeSubscriber(PendingPost) return type | @Nonnull | The method does not return any value (void) so no annotation is needed. |
-| EventBus.invokeSubscriber(PendingPost) parameter pendingPost | @Nonnull | The NullAway warnings do not indicate that pendingPost is potentially null. |
-| PendingPost.event field | @Nullable | The NullAway warnings indicate that subscription is @Nullable, and since event is similarly annotated, it should also be @Nullable. |
-| PendingPost.subscription field | @Nullable | The NullAway warnings indicate that subscription is @Nullable. |
-| Subscription.active field | @Nonnull | The field is not annotated, and the NullAway warnings do not indicate that it is potentially null. |
-| EventBus.invokeSubscriber(Subscription, Object) return type | @Nonnull | The method does not return any value (void) so no annotation is needed. |
-| EventBus.invokeSubscriber(Subscription, Object) parameter subscription | @Nonnull | Although the field in PendingPost is @Nullable, the annotation on the parameter in this method should be @Nonnull because the method checks active status before calling. |
-| EventBus.invokeSubscriber(Subscription, Object) parameter event | @Nullable | This parameter is already annotated as @Nullable. |
-| PendingPost.releasePendingPost(PendingPost) return type | @Nonnull | The method does not return any value (void) so no annotation is needed. |
-| PendingPost.releasePendingPost(PendingPost) parameter pendingPost | @Nonnull | The NullAway warnings do not indicate that pendingPost is potentially null. |
+| org/greenrobot/eventbus/EventBus#invokeSubscriber(PendingPost) return type | @Nonnull (implicit) | The return type is void, so it doesn't need an explicit annotation. |
+| org/greenrobot/eventbus/EventBus#invokeSubscriber(PendingPost) - pendingPost parameter | @Nonnull (implicit) | The method doesn't check for null, so we assume it's non-null. |
+| org/greenrobot/eventbus/EventBus#invokeSubscriber(Subscription, Object) return type | @Nonnull (implicit) | The return type is void, so it doesn't need an explicit annotation. |
+| org/greenrobot/eventbus/EventBus#invokeSubscriber(Subscription, Object) - subscription parameter | @Nonnull (implicit) | The method doesn't check for null, but based on the context, it's assumed to be non-null. |
+| org/greenrobot/eventbus/EventBus#invokeSubscriber(Subscription, Object) - event parameter | @Nullable | The parameter is already annotated with @Nullable. |
+| org/greenrobot/eventbus/PendingPost#event | @Nullable | The field is already annotated with @Nullable. |
+| org/greenrobot/eventbus/PendingPost#subscription | @Nullable | The field is already annotated with @Nullable. |
+| org/greenrobot/eventbus/PendingPost#releasePendingPost - pendingPost parameter | @Nonnull (implicit) | The method doesn't check for null, so we assume it's non-null. |
+| org/greenrobot/eventbus/Subscription#active | @Nonnull (implicit) | The field is a primitive boolean, so it can't be null. |
 
 ### B) Unsafe dereferences
+Here are the unsafe dereferences:
 
-The dereference of the subscription field in the invokeSubscriber method of the EventBus class could throw a NullPointerException because it is annotated as @Nullable:
-- Line 10 (warns about `subscription` being @Nullable).
-
-Additionally, the event field in the same method is also annotated as @Nullable:
-- Line 10 (warns about `subscription` being @Nullable, which is closely related to `event`).
-
-However, there is a direct dereference in `invokeSubscriber(subscription, event)` where `event` and `subscription` could potentially throw a NullPointerException:
-- There is no direct NullAway warning about `event` in this context, but `subscription` has a warning.
+1. `pendingPost.event` (line 10): This is flagged by NullAway as potentially null.
+2. `pendingPost.subscription` (line 10): This is flagged by NullAway as potentially null.
+3. `subscription.active` (line 10): This is not flagged by NullAway as potentially null, but it's still a dereference of a field that could be null if `subscription` is null.
 
 ### C) Corrected annotated code
-
 ```java
 // === javax/annotation/Nonnull.java ===
 package javax.annotation;
@@ -104,16 +99,16 @@ import javax.annotation.Nullable;
 
 public class EventBus {
 
-    void invokeSubscriber(@javax.annotation.Nonnull PendingPost pendingPost) {
+    void invokeSubscriber(PendingPost pendingPost) {
         Object event = pendingPost.event;
         Subscription subscription = pendingPost.subscription;
         PendingPost.releasePendingPost(pendingPost);
-        if (subscription.active) {
+        if (subscription != null && subscription.active) {
             invokeSubscriber(subscription, event);
         }
     }
 
-    void invokeSubscriber(@javax.annotation.Nonnull Subscription subscription, @Nullable Object event) {
+    void invokeSubscriber(Subscription subscription, @Nullable Object event) {
         throw new java.lang.Error();
     }
 }
@@ -131,7 +126,7 @@ final class PendingPost {
     @Nullable
     Subscription subscription;
 
-    static void releasePendingPost(@javax.annotation.Nonnull PendingPost pendingPost) {
+    static void releasePendingPost(PendingPost pendingPost) {
         throw new java.lang.Error();
     }
 }
@@ -159,3 +154,4 @@ import java.lang.annotation.Target;
 public @interface NullUnmarked {
 }
 ```
+Note: The corrected code includes explicit null checks to avoid NullPointerExceptions. The original code is modified to include null checks for `subscription` before accessing its fields.

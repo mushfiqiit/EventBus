@@ -10,7 +10,7 @@ final class PendingPost {
     @Nullable
     Subscription subscription;
 
-    static void releasePendingPost(@javax.annotation.Nonnull PendingPost pendingPost) {
+    static void releasePendingPost(PendingPost pendingPost) {
         throw new java.lang.Error();
     }
 }

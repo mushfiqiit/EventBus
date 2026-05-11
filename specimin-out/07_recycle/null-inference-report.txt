@@ -1,32 +1,31 @@
-### A) Annotation decisions
+### Annotation Decisions
 
-| location | inferred annotation | one-sentence reason |
+The table below presents the annotation decisions based on the provided NullAway warnings.
+
+| Location | Inferred Annotation | One-sentence reason |
 | --- | --- | --- |
-| `SubscriberMethodFinder.FindState.subscriberMethods` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
-| `SubscriberMethodFinder.FindState.anyMethodByEventType` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
-| `SubscriberMethodFinder.FindState.subscriberClassByMethodKey` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
-| `SubscriberMethodFinder.FindState.methodKeyBuilder` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
-| `SubscriberMethodFinder.FindState.subscriberClass` | `@Nullable` (already annotated) | This field is already annotated as `@Nullable`. |
-| `SubscriberMethodFinder.FindState.clazz` | `@Nullable` | NullAway flagged this field as not initialized, implying it could be null. |
-| `SubscriberMethodFinder.FindState.skipSuperClasses` | `@Nonnull` (no annotation needed) | This is a primitive type and cannot be null. |
-| `SubscriberMethodFinder.FindState.subscriberInfo` | `@Nullable` | This field is already annotated as `@Nullable`. |
-| `SubscriberMethodFinder` class | no annotations needed | The class itself does not have any fields or methods that need annotation. |
-| `SubscriberMethod` class | no annotations needed | The class itself does not have any fields or methods that need annotation. |
-| `SubscriberInfo` interface | no annotations needed | The interface itself does not have any methods or fields that need annotation. |
+| SubscriberMethodFinder.FindState.subscriberMethods | @Nullable | NullAway warns about assigning @Nullable to @NonNull field. |
+| SubscriberMethodFinder.FindState.anyMethodByEventType | @Nullable | NullAway warns about assigning @Nullable to @NonNull field. |
+| SubscriberMethodFinder.FindState.subscriberClassByMethodKey | @Nullable | NullAway warns about assigning @Nullable to @NonNull field. |
+| SubscriberMethodFinder.FindState.methodKeyBuilder | @Nullable | NullAway warns about assigning @Nullable to @NonNull field. |
+| SubscriberMethodFinder.FindState.subscriberClass | @Nullable | Already annotated as @Nullable. |
+| SubscriberMethodFinder.FindState.clazz | @Nullable | NullAway warns about @NonNull field not initialized. |
+| SubscriberMethodFinder.FindState.skipSuperClasses | @Nonnull | Primitive type, cannot be null. |
+| SubscriberMethodFinder.FindState.subscriberInfo | @Nullable | Already annotated as @Nullable. |
 
-### B) Unsafe dereferences
+### Unsafe Dereferences
 
-Based on the provided NullAway warnings, the following are potential unsafe dereferences:
-- Line 11: Assigning `@Nullable` expression to `@NonNull` field `subscriberMethods` in `FindState`.
-- Line 13: Assigning `@Nullable` expression to `@NonNull` field `anyMethodByEventType` in `FindState`.
-- Line 15: Assigning `@Nullable` expression to `@NonNull` field `subscriberClassByMethodKey` in `FindState`.
-- Line 17: Assigning `@Nullable` expression to `@NonNull` field `methodKeyBuilder` in `FindState`.
-- Line 22: `@NonNull` field `clazz` not initialized.
-- Line 35: Assigning `@Nullable` expression to `@NonNull` field.
+Based on the NullAway warnings, the following lines contain dereferences of @Nullable values that could throw a NullPointerException:
 
-These lines indicate potential null pointer exceptions if the expressions being assigned or used are null.
+- Line 22: `subscriberMethods.clear();` ( SubscriberMethodFinder.FindState.subscriberMethods )
+- Line 11: `anyMethodByEventType.clear();` ( SubscriberMethodFinder.FindState.anyMethodByEventType )
+- Line 13: `subscriberClassByMethodKey.clear();` ( SubscriberMethodFinder.FindState.subscriberClassByMethodKey )
+- Line 15: `methodKeyBuilder.setLength(0);` ( SubscriberMethodFinder.FindState.methodKeyBuilder )
+- Line 35: `subscriberMethods.clear();` ( SubscriberMethodFinder.FindState.subscriberMethods )
 
-### C) Corrected annotated code
+These lines could throw a NullPointerException if the respective fields are null.
+
+### Corrected Annotated Code
 ```java
 // === javax/annotation/Nonnull.java ===
 package javax.annotation;
@@ -45,6 +44,7 @@ public @interface Nonnull {
     When when() default When.ALWAYS;
 }
 
+
 // === javax/annotation/Nullable.java ===
 package javax.annotation;
 
@@ -60,6 +60,7 @@ import javax.annotation.meta.When;
 @TypeQualifierNickname
 public @interface Nullable {
 }
+
 
 // === javax/annotation/meta/TypeQualifier.java ===
 package javax.annotation.meta;
@@ -78,6 +79,7 @@ public @interface TypeQualifier {
     Class<?> applicableTo() default Object.class;
 }
 
+
 // === javax/annotation/meta/TypeQualifierNickname.java ===
 package javax.annotation.meta;
 
@@ -90,6 +92,7 @@ import java.lang.annotation.Target;
 public @interface TypeQualifierNickname {
 }
 
+
 // === javax/annotation/meta/When.java ===
 package javax.annotation.meta;
 
@@ -98,11 +101,13 @@ public enum When {
     ALWAYS, UNKNOWN
 }
 
+
 // === org/greenrobot/eventbus/SubscriberMethod.java ===
 package org.greenrobot.eventbus;
 
 public class SubscriberMethod {
 }
+
 
 // === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
 package org.greenrobot.eventbus;
@@ -111,23 +116,21 @@ import org.greenrobot.eventbus.meta.SubscriberInfo;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
-
 class SubscriberMethodFinder {
 
     static class FindState {
 
         @Nullable
-        final List<SubscriberMethod> subscriberMethods;
+        List<SubscriberMethod> subscriberMethods = null;
 
         @Nullable
-        final Map<Class, Object> anyMethodByEventType;
+        Map<Class, Object> anyMethodByEventType = null;
 
         @Nullable
-        final Map<String, Class> subscriberClassByMethodKey;
+        Map<String, Class> subscriberClassByMethodKey = null;
 
         @Nullable
-        final StringBuilder methodKeyBuilder;
+        StringBuilder methodKeyBuilder = null;
 
         @Nullable
         Class<?> subscriberClass;
@@ -135,17 +138,11 @@ class SubscriberMethodFinder {
         @Nullable
         Class<?> clazz;
 
+        @javax.annotation.Nonnull
         boolean skipSuperClasses;
 
         @Nullable
         SubscriberInfo subscriberInfo;
-
-        public FindState() {
-            this.subscriberMethods = new java.util.ArrayList<>();
-            this.anyMethodByEventType = new java.util.HashMap<>();
-            this.subscriberClassByMethodKey = new java.util.HashMap<>();
-            this.methodKeyBuilder = new StringBuilder();
-        }
 
         void recycle() {
             if (subscriberMethods != null) {
@@ -168,11 +165,13 @@ class SubscriberMethodFinder {
     }
 }
 
+
 // === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
 package org.greenrobot.eventbus.meta;
 
 public interface SubscriberInfo {
 }
+
 
 // === org/jspecify/annotations/NullUnmarked.java ===
 package org.jspecify.annotations;

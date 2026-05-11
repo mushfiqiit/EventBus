@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_postToSubscriptionLLMInferenced/org/greenrobot/eventbus/Subscription.java:7: error: variable subscriberMethod not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_postToSubscriptionLLMInferenced/org/greenrobot/eventbus/Subscription.java:7: error: variable subscriberMethod not initialized in the default constructor

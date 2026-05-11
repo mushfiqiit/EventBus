@@ -2,6 +2,10 @@ package org.greenrobot.eventbus.android;
 
 import javax.annotation.Nullable;
 
+/**
+ * 
+ */
+@javax.annotation.Nonnull
 public abstract class AndroidComponents {
 
     @Nullable

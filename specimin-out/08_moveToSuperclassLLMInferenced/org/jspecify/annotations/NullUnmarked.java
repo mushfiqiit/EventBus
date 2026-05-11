@@ -1,3 +1,4 @@
+// This file remains unchanged
 package org.jspecify.annotations;
 
 import java.lang.annotation.Documented;

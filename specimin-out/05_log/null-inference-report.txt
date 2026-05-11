@@ -1,22 +1,16 @@
 ### Annotation Decisions
 
-The following table presents the annotation decisions for each parameter, return type, and field in the code:
-
-| Location | Inferred Annotation | One-Sentence Reason |
+| location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| `Logger.log(Level level, String msg, @Nullable Throwable th)` | `@Nonnull` for `level` and `msg`, `@Nullable` for `th` | The `level` and `msg` parameters are expected to be non-null, while `th` is explicitly annotated as `@Nullable`. |
-| `SystemOutLogger.log(Level level, String msg, @Nullable Throwable th)` | `@Nonnull` for `level` and `msg`, `@Nullable` for `th` | The `level` and `msg` parameters are expected to be non-null, while `th` is explicitly annotated as `@Nullable`. |
-| `Logger` interface return type | No return type annotation | The `log` method in the `Logger` interface does not have a return type, so no annotation is needed. |
-| `Logger` interface fields | N/A | There are no fields in the `Logger` interface. |
+| Logger.log(Level level) | @Nonnull | The level is not flagged by NullAway as potentially null. |
+| Logger.log(String msg) | @Nonnull | The msg is not flagged by NullAway as potentially null. |
+| Logger.log(@Nullable Throwable th) | @Nullable | The th is flagged by NullAway as potentially null. |
 
 ### Unsafe Dereferences
 
-The following dereferences of `@Nullable` values could throw a `NullPointerException`, cross-referenced with the NullAway warnings:
-
-* `th.printStackTrace(System.out)` at line 15: The `th` variable is annotated as `@Nullable`, and calling `printStackTrace` on it could throw a `NullPointerException` if `th` is null.
+* The `th` parameter is dereferenced at line 15 in `org/greenrobot/eventbus/Logger.java`, which could throw a NullPointerException because `th` is `@Nullable`.
 
 ### Corrected Annotated Code
-
 ```java
 // === javax/annotation/Nonnull.java ===
 package javax.annotation;
@@ -91,9 +85,9 @@ public enum When {
 // === org/greenrobot/eventbus/Logger.java ===
 package org.greenrobot.eventbus;
 
+import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.logging.Level;
 
 public interface Logger {
 

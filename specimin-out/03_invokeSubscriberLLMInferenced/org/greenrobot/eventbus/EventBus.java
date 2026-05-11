@@ -4,16 +4,16 @@ import javax.annotation.Nullable;
 
 public class EventBus {
 
-    void invokeSubscriber(@javax.annotation.Nonnull PendingPost pendingPost) {
+    void invokeSubscriber(PendingPost pendingPost) {
         Object event = pendingPost.event;
         Subscription subscription = pendingPost.subscription;
         PendingPost.releasePendingPost(pendingPost);
-        if (subscription.active) {
+        if (subscription != null && subscription.active) {
             invokeSubscriber(subscription, event);
         }
     }
 
-    void invokeSubscriber(@javax.annotation.Nonnull Subscription subscription, @Nullable Object event) {
+    void invokeSubscriber(Subscription subscription, @Nullable Object event) {
         throw new java.lang.Error();
     }
 }

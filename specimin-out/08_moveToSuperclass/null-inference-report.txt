@@ -1,16 +1,21 @@
 ### A) Annotation decisions
 
+Here are the annotation decisions for the provided code:
+
 | location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| Class<?> clazz | @Nullable | NullAway warning at line 7 indicates that clazz may be null. |
-| boolean skipSuperClasses | (unannotated/@Nonnull) | No NullAway warnings or indications that skipSuperClasses can be null. |
-| void moveToSuperclass() return type | (unannotated/@Nonnull) | Void return type is guaranteed non-null. |
-| FindState() constructor parameters | N/A | There is no explicit constructor defined, hence no parameters to annotate. |
+| `clazz` field | `@Nullable` | Flagged by NullAway as potentially null in the warnings. |
+| `skipSuperClasses` field | (no annotation) | Guaranteed non-null by default under NullAway. |
+| `moveToSuperclass()` return type | (no annotation) | The method is void, so it doesn't have a return type. |
+| `clazz.getSuperclass()` expression | `@Nullable` | The `getSuperclass()` method returns null if the class is not a subclass of any other class. |
+| `clazz.getName()` expression | `@Nullable` | The `getName()` method does not return null, but since `clazz` is nullable, the expression is also nullable. |
 
 ### B) Unsafe dereferences
 
-The following dereferences could throw a NullPointerException:
-1. `clazz.getSuperclass()` at line 13: This dereference is flagged by NullAway as potentially null because `clazz` is @Nullable and `getSuperclass()` is called without a null check.
+Here are the dereferences of a `@Nullable` value in the code that could throw a `NullPointerException`:
+
+1. `clazz.getSuperclass()` (line 13): This expression is flagged by NullAway as potentially null.
+2. `clazz.getName()` (line 16): Although `getName()` itself does not return null, `clazz` is nullable, so this expression could also throw a `NullPointerException`.
 
 ### C) Corrected annotated code
 
@@ -33,7 +38,7 @@ class SubscriberMethodFinder {
             if (skipSuperClasses) {
                 clazz = null;
             } else {
-                clazz = clazz.getSuperclass();
+                clazz = clazz == null ? null : clazz.getSuperclass();
                 if (clazz != null) {
                     String clazzName = clazz.getName();
                     if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
@@ -46,6 +51,7 @@ class SubscriberMethodFinder {
 }
 
 // === org/jspecify/annotations/NullUnmarked.java ===
+// This file remains unchanged
 package org.jspecify.annotations;
 
 import java.lang.annotation.Documented;
