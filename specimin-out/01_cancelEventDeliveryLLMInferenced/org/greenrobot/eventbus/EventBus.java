@@ -1,12 +1,12 @@
 package org.greenrobot.eventbus;
+import javax.annotation.Nonnull;
 
 import javax.annotation.Nullable;
-
 public class EventBus {
 
-    private final ThreadLocal<PostingThreadState> currentPostingThreadState = new ThreadLocal<>();
+    private final ThreadLocal<PostingThreadState> currentPostingThreadState;
 
-    public void cancelEventDelivery(@javax.annotation.Nonnull Object event) {
+    public void cancelEventDelivery(@Nonnull Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();
         if (!postingState.isPosting) {
             throw new EventBusException("This method may only be called from inside event handling methods on the posting thread");

@@ -1,6 +1,6 @@
-package org.greenrobot/eventbus;
+package org.greenrobot.eventbus;
 
 public class SubscriberMethod {
 
-    final ThreadMode threadMode = ThreadMode.POSTING;
+    final ThreadMode threadMode;
 }

@@ -1,33 +1,35 @@
 > Task :clean
 
-> Task :compileJava
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
-        Class<?> clazz;
-                 ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
-        final List<SubscriberMethod> subscriberMethods = null;
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: error: variable subscriberMethods not initialized in the default constructor
+        final List<SubscriberMethod> subscriberMethods;
                                      ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
-        final Map<Class, Object> anyMethodByEventType = null;
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: error: variable anyMethodByEventType not initialized in the default constructor
+        final Map<Class, Object> anyMethodByEventType;
                                  ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
-        final Map<String, Class> subscriberClassByMethodKey = null;
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: error: variable subscriberClassByMethodKey not initialized in the default constructor
+        final Map<String, Class> subscriberClassByMethodKey;
                                  ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: warning: [NullAway] assigning @Nullable expression to @NonNull field
-        final StringBuilder methodKeyBuilder = null;
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: error: variable methodKeyBuilder not initialized in the default constructor
+        final StringBuilder methodKeyBuilder;
                             ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:35: warning: [NullAway] assigning @Nullable expression to @NonNull field
-            clazz = null;
-                  ^
-    (see http://t.uber.com/nullaway )
-6 warnings
+4 errors
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/build/reports/problems/problems-report.html
 
-BUILD SUCCESSFUL in 1s
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: error: variable subscriberMethods not initialized in the default constructor
+          final List<SubscriberMethod> subscriberMethods;
+                                       ^
+  4 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
 2 actionable tasks: 2 executed

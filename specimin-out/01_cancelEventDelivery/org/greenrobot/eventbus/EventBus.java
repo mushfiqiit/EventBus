@@ -3,7 +3,7 @@ package org.greenrobot.eventbus;
 import javax.annotation.Nullable;
 public class EventBus {
 
-    private final ThreadLocal<PostingThreadState> currentPostingThreadState = null;
+    private final ThreadLocal<PostingThreadState> currentPostingThreadState;
 
     public void cancelEventDelivery(Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();

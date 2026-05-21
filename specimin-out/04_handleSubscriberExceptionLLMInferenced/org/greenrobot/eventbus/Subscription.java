@@ -1,7 +1,8 @@
 package org.greenrobot.eventbus;
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 final class Subscription {
 
-    final @Nullable Object subscriber = null;
+    @Nonnull
+    final Object subscriber;
 }

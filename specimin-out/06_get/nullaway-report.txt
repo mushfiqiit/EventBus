@@ -1,13 +1,26 @@
 > Task :clean
 
-> Task :compileJava
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/org/greenrobot/eventbus/android/AndroidComponents.java:10: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
-        return implementation;
-        ^
-    (see http://t.uber.com/nullaway )
-1 warning
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/org/greenrobot/eventbus/android/AndroidComponents.java:7: error: variable implementation not initialized in the default constructor
+    private static final AndroidComponents implementation;
+                                           ^
+1 error
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/build/reports/problems/problems-report.html
 
-BUILD SUCCESSFUL in 1s
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_get/org/greenrobot/eventbus/android/AndroidComponents.java:7: error: variable implementation not initialized in the default constructor
+      private static final AndroidComponents implementation;
+                                             ^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
 2 actionable tasks: 2 executed

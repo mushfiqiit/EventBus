@@ -1,24 +1,22 @@
 ### A) Annotation decisions
-Here are the annotation decisions:
+
+The following table presents the annotation decisions for every parameter, return type, and field in the code:
 
 | location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| org/greenrobot/eventbus/EventBus#invokeSubscriber(PendingPost) return type | @Nonnull (implicit) | The return type is void, so it doesn't need an explicit annotation. |
-| org/greenrobot/eventbus/EventBus#invokeSubscriber(PendingPost) - pendingPost parameter | @Nonnull (implicit) | The method doesn't check for null, so we assume it's non-null. |
-| org/greenrobot/eventbus/EventBus#invokeSubscriber(Subscription, Object) return type | @Nonnull (implicit) | The return type is void, so it doesn't need an explicit annotation. |
-| org/greenrobot/eventbus/EventBus#invokeSubscriber(Subscription, Object) - subscription parameter | @Nonnull (implicit) | The method doesn't check for null, but based on the context, it's assumed to be non-null. |
-| org/greenrobot/eventbus/EventBus#invokeSubscriber(Subscription, Object) - event parameter | @Nullable | The parameter is already annotated with @Nullable. |
-| org/greenrobot/eventbus/PendingPost#event | @Nullable | The field is already annotated with @Nullable. |
-| org/greenrobot/eventbus/PendingPost#subscription | @Nullable | The field is already annotated with @Nullable. |
-| org/greenrobot/eventbus/PendingPost#releasePendingPost - pendingPost parameter | @Nonnull (implicit) | The method doesn't check for null, so we assume it's non-null. |
-| org/greenrobot/eventbus/Subscription#active | @Nonnull (implicit) | The field is a primitive boolean, so it can't be null. |
+| PendingPost.event | @Nullable | This field is flagged by NullAway as potentially null and is annotated with @Nullable in the original code. |
+| PendingPost.subscription | @Nullable | This field is flagged by NullAway as potentially null and is annotated with @Nullable in the original code. |
+| invokeSubscriber(PendingPost) pendingPost | @Nonnull | NullAway does not flag this parameter as potentially null. |
+| invokeSubscriber(Subscription, Object) subscription | @Nonnull | NullAway does not flag this parameter as potentially null. |
+| invokeSubscriber(Subscription, Object) event | @Nullable | This parameter is explicitly annotated with @Nullable in the original code. |
+| Subscription.active | @Nonnull | This field is a primitive boolean and cannot be null, so it is implicitly @Nonnull. |
+| PendingPost.releasePendingPost(PendingPost) pendingPost | @Nonnull | NullAway does not flag this parameter as potentially null. |
 
 ### B) Unsafe dereferences
-Here are the unsafe dereferences:
 
-1. `pendingPost.event` (line 10): This is flagged by NullAway as potentially null.
-2. `pendingPost.subscription` (line 10): This is flagged by NullAway as potentially null.
-3. `subscription.active` (line 10): This is not flagged by NullAway as potentially null, but it's still a dereference of a field that could be null if `subscription` is null.
+The following is a list of every dereference of a @Nullable value in the code that could throw a NullPointerException, cross-referenced with the NullAway warnings by line number:
+
+* Line 10: `subscription.active` could throw a NullPointerException if `subscription` is null.
 
 ### C) Corrected annotated code
 ```java
@@ -49,7 +47,7 @@ import javax.annotation.meta.TypeQualifierNickname;
 import javax.annotation.meta.When;
 
 @Documented
-@Nonnull(when = When.UNKNOWN)
+@javax.annotation.Nonnull(when = When.UNKNOWN)
 @Retention(RetentionPolicy.RUNTIME)
 @TypeQualifierNickname
 public @interface Nullable {
@@ -138,20 +136,4 @@ final class Subscription {
 
     volatile boolean active;
 }
-
-// === org/jspecify/annotations/NullUnmarked.java ===
-package org.jspecify.annotations;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface NullUnmarked {
-}
 ```
-Note: The corrected code includes explicit null checks to avoid NullPointerExceptions. The original code is modified to include null checks for `subscription` before accessing its fields.

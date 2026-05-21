@@ -1,24 +1,28 @@
-### Location and Inferred Annotation Decisions
-
-| Location | Inferred Annotation | Reason |
+### Annotation Decisions
+Here are the annotation decisions for each parameter, return type, and field in the provided code:
+| location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| `handleSubscriberException` method's `event` parameter | `@Nullable` | Flagged by NullAway as potentially null |
-| `handleSubscriberException` method's `cause` parameter | `@Nullable` | Flagged by NullAway as potentially null |
-| `EventBus` class's `logger` field | `@Nullable` | Flagged by NullAway as potentially null |
-| `SubscriberExceptionEvent` class's `throwable` field | `@Nullable` | Flagged by NullAway as potentially null |
-| `SubscriberExceptionEvent` class's `causingEvent` field | `@Nullable` | Flagged by NullAway as potentially null |
-| `SubscriberExceptionEvent` class's `causingSubscriber` field | `@Nonnull` | No indication of potential nullability |
-| `Subscription` class's `subscriber` field | `@Nullable` | Flagged by NullAway as potentially null |
-| `EventBusException` constructor's `throwable` parameter | `@Nullable` | No indication of potential non-nullability |
-| `Logger` interface's `th` parameter | `@Nullable` | No indication of potential non-nullability |
+| `private final Logger logger` | `@Nonnull` | The field is final and should be initialized in a constructor, but since it's not, we'll assume it's `@Nonnull` for now. |
+| `handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause)` | `@Nonnull` for `subscription` | Subscription is not annotated as `@Nullable`, so it's assumed to be `@Nonnull`. |
+| `event` parameter in `handleSubscriberException` | `@Nullable` | The `@Nullable` annotation is already present. |
+| `cause` parameter in `handleSubscriberException` | `@Nullable` | The `@Nullable` annotation is already present. |
+| `EventBusException(String detailMessage, @Nullable Throwable throwable)` | `@Nonnull` for `detailMessage` | The `detailMessage` should be `@Nonnull` because it's not annotated as `@Nullable`. |
+| `throwable` parameter in `EventBusException` | `@Nullable` | The `@Nullable` annotation is already present. |
+| `SubscriberExceptionEvent` fields `throwable` and `causingEvent` | `@Nullable` | The fields are already annotated as `@Nullable`. |
+| `SubscriberExceptionEvent` field `causingSubscriber` | `@Nonnull` | The field is not annotated, so it's assumed to be `@Nonnull`. |
 
 ### Unsafe Dereferences
+After analyzing the code, I found the following dereferences of `@Nullable` values that could throw a `NullPointerException`:
+1. `cause` in `logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass() + " threw an exception", cause);` (line 13 in `EventBus.java`)
+2. `throwable` in `logger.log(Level.SEVERE, "Initial event " + exEvent.causingEvent + " caused exception in " + exEvent.causingSubscriber, exEvent.throwable);` (line 17 in `EventBus.java`)
+3. `cause` in `throw new EventBusException("Invoking subscriber failed", cause);` (line 24 in `EventBus.java`)
+4. `event` in `logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class " + subscription.subscriber.getClass(), cause);` (line 27 in `EventBus.java`)
+5. `exEvent` in `post(exEvent);` (line 30 in `EventBus.java`)
 
-- The `logger.log` call in `handleSubscriberException` could throw a NullPointerException if `logger` is null ( NullAway warning at line 13 )
-- The `event instanceof SubscriberExceptionEvent` check in `handleSubscriberException` could throw a NullPointerException if `event` is null ( NullAway warning at line 31 )
+These dereferences correspond to the NullAway warnings by line number.
 
 ### Corrected Annotated Code
-
+Here is the fully annotated version of each file:
 ```java
 // === javax/annotation/Nonnull.java ===
 package javax.annotation;
@@ -94,7 +98,9 @@ public enum When {
 package org.greenrobot.eventbus;
 
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 public class EventBus {
 
     private final boolean throwSubscriberException = false;
@@ -103,29 +109,26 @@ public class EventBus {
 
     private final boolean sendSubscriberExceptionEvent = false;
 
-    private final @Nullable Logger logger = null;
+    @Nonnull
+    private final Logger logger;
 
-    public void post(@Nullable Object event) {
+    public void post(@Nonnull Object event) {
         throw new java.lang.Error();
     }
 
-    private void handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
-                if (logger != null) {
-                    logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass() + " threw an exception", cause);
-                    SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
-                    logger.log(Level.SEVERE, "Initial event " + exEvent.causingEvent + " caused exception in " + exEvent.causingSubscriber, exEvent.throwable);
-                }
+                logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass() + " threw an exception", cause);
+                SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
+                logger.log(Level.SEVERE, "Initial event " + exEvent.causingEvent + " caused exception in " + exEvent.causingSubscriber, exEvent.throwable);
             }
         } else {
             if (throwSubscriberException) {
                 throw new EventBusException("Invoking subscriber failed", cause);
             }
             if (logSubscriberExceptions) {
-                if (logger != null) {
-                    logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class " + subscription.subscriber.getClass(), cause);
-                }
+                logger.log(Level.SEVERE, "Could not dispatch event: " + event + " to subscribing class " + subscription.subscriber.getClass(), cause);
             }
             if (sendSubscriberExceptionEvent) {
                 SubscriberExceptionEvent exEvent = new SubscriberExceptionEvent(this, cause, event, subscription.subscriber);
@@ -138,11 +141,12 @@ public class EventBus {
 // === org/greenrobot/eventbus/EventBusException.java ===
 package org.greenrobot.eventbus;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class EventBusException extends RuntimeException {
 
-    public EventBusException(String detailMessage, @Nullable Throwable throwable) {
+    public EventBusException(@Nonnull String detailMessage, @Nullable Throwable throwable) {
         throw new java.lang.Error();
     }
 }
@@ -155,7 +159,7 @@ import javax.annotation.Nullable;
 
 public interface Logger {
 
-    default void log(Level level, String msg, @Nullable Throwable th) {
+    default void log(Level level, @Nonnull String msg, @Nullable Throwable th) {
         throw new java.lang.Error();
     }
 }
@@ -167,16 +171,17 @@ import javax.annotation.Nullable;
 
 public final class SubscriberExceptionEvent {
 
-    public final @Nullable Throwable throwable;
+    @Nullable
+    public final Throwable throwable;
 
-    public final @Nullable Object causingEvent;
+    @Nullable
+    public final Object causingEvent;
 
+    @Nonnull
     public final Object causingSubscriber;
 
-    public SubscriberExceptionEvent(EventBus eventBus, @Nullable Throwable throwable, @Nullable Object causingEvent, Object causingSubscriber) {
-        this.throwable = throwable;
-        this.causingEvent = causingEvent;
-        this.causingSubscriber = causingSubscriber;
+    public SubscriberExceptionEvent(@Nonnull EventBus eventBus, @Nullable Throwable throwable, @Nullable Object causingEvent, @Nonnull Object causingSubscriber) {
+        throw new java.lang.Error();
     }
 }
 
@@ -185,6 +190,22 @@ package org.greenrobot.eventbus;
 
 final class Subscription {
 
-    final @Nullable Object subscriber = null;
+    @Nonnull
+    final Object subscriber;
+}
+
+// === org/jspecify/annotations/NullUnmarked.java ===
+package org.jspecify.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD })
+public @interface NullUnmarked {
 }
 ```

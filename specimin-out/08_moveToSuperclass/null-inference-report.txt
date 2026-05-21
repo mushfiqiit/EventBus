@@ -1,29 +1,30 @@
 ### A) Annotation decisions
 
-Here are the annotation decisions for the provided code:
+Here are the annotation decisions:
 
 | location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| `clazz` field | `@Nullable` | Flagged by NullAway as potentially null in the warnings. |
-| `skipSuperClasses` field | (no annotation) | Guaranteed non-null by default under NullAway. |
-| `moveToSuperclass()` return type | (no annotation) | The method is void, so it doesn't have a return type. |
-| `clazz.getSuperclass()` expression | `@Nullable` | The `getSuperclass()` method returns null if the class is not a subclass of any other class. |
-| `clazz.getName()` expression | `@Nullable` | The `getName()` method does not return null, but since `clazz` is nullable, the expression is also nullable. |
+| FindState.clazz | @Nullable | NullAway warning on line 7 indicates it may be null after initialization, and later assigned null in moveToSuperclass method. |
+| FindState.skipSuperClasses | @Nonnull | No indication that this field could be null, and primitive boolean cannot be null. |
+| FindState.moveToSuperclass() return type | void (implied @Nonnull) | Method does not return any value, and void is non-null by default. |
+| clazz.getSuperclass() return type | @Nullable | The JavaDoc for getSuperclass() indicates it returns null if this Class represents either the Object class or an interface. |
+| clazz.getName() return type | @Nonnull | Based on the JavaDoc for getName(), this method does not throw NullPointerException if the object is null; instead, it is stated that getName() will never return null. |
 
 ### B) Unsafe dereferences
 
-Here are the dereferences of a `@Nullable` value in the code that could throw a `NullPointerException`:
+Here are the potential unsafe dereferences:
 
-1. `clazz.getSuperclass()` (line 13): This expression is flagged by NullAway as potentially null.
-2. `clazz.getName()` (line 16): Although `getName()` itself does not return null, `clazz` is nullable, so this expression could also throw a `NullPointerException`.
+1. `clazz.getSuperclass()` on line 14 - This could throw a NullPointerException if `clazz` is null, which is allowed because `clazz` is annotated as `@Nullable`.
+2. `clazz.getName()` on line 16 - This could throw a NullPointerException if `clazz` is null, which is allowed because `clazz` is annotated as `@Nullable`.
 
 ### C) Corrected annotated code
 
 ```java
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
 // === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
 package org.greenrobot.eventbus;
-
-import javax.annotation.Nullable;
 
 class SubscriberMethodFinder {
 
@@ -38,7 +39,7 @@ class SubscriberMethodFinder {
             if (skipSuperClasses) {
                 clazz = null;
             } else {
-                clazz = clazz == null ? null : clazz.getSuperclass();
+                clazz = clazz.getSuperclass();
                 if (clazz != null) {
                     String clazzName = clazz.getName();
                     if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
@@ -50,19 +51,5 @@ class SubscriberMethodFinder {
     }
 }
 
-// === org/jspecify/annotations/NullUnmarked.java ===
-// This file remains unchanged
-package org.jspecify.annotations;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.METHOD })
-public @interface NullUnmarked {
-}
+// No changes were made to org/jspecify/annotations/NullUnmarked.java
 ```

@@ -4,11 +4,11 @@ import javax.annotation.Nullable;
 public class EventBus {
 
     @Nullable
-    private final Poster mainThreadPoster = null;
+    private final Poster mainThreadPoster;
 
-    private final BackgroundPoster backgroundPoster = null;
+    private final BackgroundPoster backgroundPoster;
 
-    private final AsyncPoster asyncPoster = null;
+    private final AsyncPoster asyncPoster;
 
     private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
         switch(subscription.subscriberMethod.threadMode) {

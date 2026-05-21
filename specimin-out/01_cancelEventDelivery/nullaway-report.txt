@@ -1,25 +1,26 @@
 > Task :clean
 
-> Task :compileJava
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
-    final ThreadMode threadMode = null;
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+    final ThreadMode threadMode;
                      ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/EventBus.java:6: warning: [NullAway] assigning @Nullable expression to @NonNull field
-    private final ThreadLocal<PostingThreadState> currentPostingThreadState = null;
-                                                  ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/EventBus.java:16: warning: [NullAway] dereferenced expression postingState.subscription is @Nullable
-        } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
-                                            ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
-    final SubscriberMethod subscriberMethod = null;
-                           ^
-    (see http://t.uber.com/nullaway )
-4 warnings
+1 error
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/build/reports/problems/problems-report.html
 
-BUILD SUCCESSFUL in 1s
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+      final ThreadMode threadMode;
+                       ^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
 2 actionable tasks: 2 executed

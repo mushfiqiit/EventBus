@@ -17,5 +17,5 @@
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_moveToSuperclass/build/reports/problems/problems-report.html
 
-BUILD SUCCESSFUL in 1s
+BUILD SUCCESSFUL in 2s
 2 actionable tasks: 2 executed

@@ -15,6 +15,7 @@
  */
 package org.greenrobot.eventbus;
 import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * This Event is posted by EventBus when an exception occurs inside a subscriber's event handling method.
@@ -32,6 +33,7 @@ public final class SubscriberExceptionEvent {
     @Nullable public final Object causingEvent;
 
     /** The subscriber that threw the Throwable. */
+    @Nonnull
     public final Object causingSubscriber;
 
     public SubscriberExceptionEvent(EventBus eventBus, @Nullable Throwable throwable, @Nullable Object causingEvent,

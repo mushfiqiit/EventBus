@@ -1,5 +1,4 @@
 package org.greenrobot.eventbus;
-
 import javax.annotation.Nullable;
 
 class SubscriberMethodFinder {
@@ -15,7 +14,7 @@ class SubscriberMethodFinder {
             if (skipSuperClasses) {
                 clazz = null;
             } else {
-                clazz = clazz == null ? null : clazz.getSuperclass();
+                clazz = clazz.getSuperclass();
                 if (clazz != null) {
                     String clazzName = clazz.getName();
                     if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
@@ -26,3 +25,5 @@ class SubscriberMethodFinder {
         }
     }
 }
+
+// No changes were made to org/jspecify/annotations/NullUnmarked.java

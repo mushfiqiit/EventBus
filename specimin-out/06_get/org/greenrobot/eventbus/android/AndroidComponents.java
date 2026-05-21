@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 public abstract class AndroidComponents {
 
     @Nullable
-    private static final AndroidComponents implementation = null;
+    private static final AndroidComponents implementation;
 
     public static AndroidComponents get() {
         return implementation;

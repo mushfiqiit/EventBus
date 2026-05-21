@@ -8,10 +8,10 @@ public class EventBus {
     @Nullable
     private final Poster mainThreadPoster;
 
-    @Nullable
+    @Nonnull
     private final BackgroundPoster backgroundPoster;
 
-    @Nullable
+    @Nonnull
     private final AsyncPoster asyncPoster;
 
     private void postToSubscription(@Nonnull Subscription subscription, @Nullable Object event, boolean isMainThread) {
@@ -37,17 +37,13 @@ public class EventBus {
                 break;
             case BACKGROUND:
                 if (isMainThread) {
-                    if (backgroundPoster != null) {
-                        backgroundPoster.enqueue(subscription, event);
-                    }
+                    backgroundPoster.enqueue(subscription, event);
                 } else {
                     invokeSubscriber(subscription, event);
                 }
                 break;
             case ASYNC:
-                if (asyncPoster != null) {
-                    asyncPoster.enqueue(subscription, event);
-                }
+                asyncPoster.enqueue(subscription, event);
                 break;
             default:
                 throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);

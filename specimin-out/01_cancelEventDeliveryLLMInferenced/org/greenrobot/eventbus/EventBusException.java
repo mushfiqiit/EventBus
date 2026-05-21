@@ -1,8 +1,9 @@
-package org.greenrobot/eventbus;
+package org.greenrobot.eventbus;
+import javax.annotation.Nonnull;
 
 public class EventBusException extends RuntimeException {
 
-    public EventBusException(@javax.annotation.Nonnull String detailMessage) {
-        super(detailMessage);
+    public EventBusException(@Nonnull String detailMessage) {
+        throw new java.lang.Error();
     }
 }

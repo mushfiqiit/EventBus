@@ -1,0 +1,16 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:305: warning: [NullAway] dereferenced expression postingState.subscription is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:451: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:451: warning: [NullAway] dereferenced expression mainThreadPoster is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:456: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:464: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:470: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:515: warning: [NullAway] dereferenced expression subscription is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:545: warning: [NullAway] dereferenced expression event is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:166: warning: [NullAway] dereferenced expression AndroidComponents.get() is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:134: warning: [NullAway] passing @Nullable parameter 'findState.clazz' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:157: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:161: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:163: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:279: warning: [NullAway] dereferenced expression clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/Logger.java:60: warning: [NullAway] dereferenced expression th is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/Logger.java:68: warning: [NullAway] dereferenced expression AndroidComponents.get() is @Nullable

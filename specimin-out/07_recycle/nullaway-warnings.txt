@@ -1,6 +1,5 @@
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:35: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: error: variable subscriberMethods not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: error: variable anyMethodByEventType not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: error: variable subscriberClassByMethodKey not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: error: variable methodKeyBuilder not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: error: variable subscriberMethods not initialized in the default constructor

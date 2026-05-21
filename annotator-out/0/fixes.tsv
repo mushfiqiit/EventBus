@@ -1,1 +1,2 @@
 kind	class	method	param	index	uri	reason	annotation	rootClass	rootMethod
+PARAMETER	org.greenrobot.eventbus.meta.SubscriberInfoIndex	getSubscriberInfo(java.lang.Class)	subscriberClass	0	/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SubscriberInfoIndex.java	PASS_NULLABLE	nullable	org.greenrobot.eventbus.SubscriberMethodFinder	getSubscriberInfo(org.greenrobot.eventbus.SubscriberMethodFinder.FindState)

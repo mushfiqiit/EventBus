@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_moveToSuperclassLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: warning: [NullAway] dereferenced expression clazz is @Nullable

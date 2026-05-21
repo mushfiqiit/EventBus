@@ -1,14 +1,35 @@
 > Task :clean UP-TO-DATE
 
-> Task :compileJava
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:29: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
-        @javax.annotation.Nonnull
-        ^
-    (see https://errorprone.info/bugpattern/NullablePrimitive)
-  Did you mean to remove this line?
-1 warning
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: error: variable subscriberMethods not initialized in the default constructor
+        final List<SubscriberMethod> subscriberMethods;
+                                     ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:16: error: variable anyMethodByEventType not initialized in the default constructor
+        final Map<Class, Object> anyMethodByEventType;
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:19: error: variable subscriberClassByMethodKey not initialized in the default constructor
+        final Map<String, Class> subscriberClassByMethodKey;
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: error: variable methodKeyBuilder not initialized in the default constructor
+        final StringBuilder methodKeyBuilder;
+                            ^
+4 errors
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/build/reports/problems/problems-report.html
 
-BUILD SUCCESSFUL in 1s
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: error: variable subscriberMethods not initialized in the default constructor
+          final List<SubscriberMethod> subscriberMethods;
+                                       ^
+  4 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
 2 actionable tasks: 1 executed, 1 up-to-date

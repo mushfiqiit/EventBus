@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nonnull;
+
 
 /**
  * Posts events.
@@ -28,5 +30,5 @@ public interface Poster {
      * @param subscription Subscription which will receive the event.
      * @param event        Event that will be posted to subscribers.
      */
-    void enqueue(Subscription subscription, Object event);
+    void enqueue(@Nonnull Subscription subscription, @Nonnull Object event);
 }

@@ -1,11 +1,10 @@
 package org.greenrobot.eventbus;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 final class BackgroundPoster implements Poster {
 
     @Override
-    public void enqueue(@Nonnull Subscription subscription, @Nullable Object event) {
+    public void enqueue(@Nonnull Subscription subscription, @Nonnull Object event) {
         throw new java.lang.Error();
     }
 

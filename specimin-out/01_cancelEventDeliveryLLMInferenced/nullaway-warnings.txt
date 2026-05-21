@@ -1,5 +1,2 @@
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:1: error: ';' expected
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/ThreadMode.java:1: error: ';' expected
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/EventBusException.java:1: error: ';' expected
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/Subscription.java:1: error: ';' expected
-  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:1: error: ';' expected
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor

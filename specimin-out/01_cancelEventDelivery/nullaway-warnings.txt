@@ -1,4 +1,2 @@
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/EventBus.java:6: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/EventBus.java:16: warning: [NullAway] dereferenced expression postingState.subscription is @Nullable
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDelivery/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor

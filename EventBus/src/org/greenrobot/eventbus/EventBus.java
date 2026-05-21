@@ -27,7 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
-import org.jspecify.annotations.NullUnmarked;
+import javax.annotation.Nonnull;
 
 /**
  * EventBus is a central publish/subscribe event system for Java and Android.
@@ -65,7 +65,9 @@ public class EventBus {
     @Nullable private final MainThreadSupport mainThreadSupport;
     // @Nullable
     @Nullable private final Poster mainThreadPoster;
+    @Nonnull
     private final BackgroundPoster backgroundPoster;
+    @Nonnull
     private final AsyncPoster asyncPoster;
     private final SubscriberMethodFinder subscriberMethodFinder;
     private final ExecutorService executorService;
@@ -78,6 +80,7 @@ public class EventBus {
     private final boolean eventInheritance;
 
     private final int indexCount;
+    @Nonnull
     private final Logger logger;
 
     /** Convenience singleton for apps using a process-wide EventBus instance. */
@@ -261,7 +264,7 @@ public class EventBus {
     }
 
     /** Posts the given event to the event bus. */
-    public void post(Object event) {
+    public void post(@Nonnull Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();
         List<Object> eventQueue = postingState.eventQueue;
         eventQueue.add(event);
@@ -290,7 +293,7 @@ public class EventBus {
      * {@link Subscribe#priority()}). Canceling is restricted to event handling methods running in posting thread
      * {@link ThreadMode#POSTING}.
      */
-    @NullUnmarked public void cancelEventDelivery(Object event) {
+    public void cancelEventDelivery(@Nonnull Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();
         if (!postingState.isPosting) {
             throw new EventBusException(
@@ -436,7 +439,7 @@ public class EventBus {
         return false;
     }
 
-    @NullUnmarked private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+    private void postToSubscription(@Nonnull Subscription subscription, @Nullable Object event, boolean isMainThread) {
         switch (subscription.subscriberMethod.threadMode) {
             case POSTING:
                 invokeSubscriber(subscription, event);
@@ -505,7 +508,7 @@ public class EventBus {
      * subscriber unregistered. This is particularly important for main thread delivery and registrations bound to the
      * live cycle of an Activity or Fragment.
      */
-    @NullUnmarked void invokeSubscriber(PendingPost pendingPost) {
+    void invokeSubscriber(PendingPost pendingPost) {
         Object event = pendingPost.event;
         Subscription subscription = pendingPost.subscription;
         PendingPost.releasePendingPost(pendingPost);
@@ -514,7 +517,7 @@ public class EventBus {
         }
     }
 
-    void invokeSubscriber(Subscription subscription, @Nullable Object event) {
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nullable Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
         } catch (InvocationTargetException e) {
@@ -524,7 +527,7 @@ public class EventBus {
         }
     }
 
-    @NullUnmarked private void handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log

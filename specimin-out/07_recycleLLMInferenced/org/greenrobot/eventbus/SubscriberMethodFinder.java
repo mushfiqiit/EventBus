@@ -4,47 +4,40 @@ import org.greenrobot.eventbus.meta.SubscriberInfo;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 class SubscriberMethodFinder {
 
     static class FindState {
 
-        @Nullable
-        List<SubscriberMethod> subscriberMethods = null;
+        @Nonnull
+        final List<SubscriberMethod> subscriberMethods;
 
-        @Nullable
-        Map<Class, Object> anyMethodByEventType = null;
+        @Nonnull
+        final Map<Class, Object> anyMethodByEventType;
 
-        @Nullable
-        Map<String, Class> subscriberClassByMethodKey = null;
+        @Nonnull
+        final Map<String, Class> subscriberClassByMethodKey;
 
-        @Nullable
-        StringBuilder methodKeyBuilder = null;
+        @Nonnull
+        final StringBuilder methodKeyBuilder;
 
         @Nullable
         Class<?> subscriberClass;
 
-        @Nullable
+        @Nonnull
         Class<?> clazz;
 
-        @javax.annotation.Nonnull
+        @Nonnull
         boolean skipSuperClasses;
 
         @Nullable
         SubscriberInfo subscriberInfo;
 
         void recycle() {
-            if (subscriberMethods != null) {
-                subscriberMethods.clear();
-            }
-            if (anyMethodByEventType != null) {
-                anyMethodByEventType.clear();
-            }
-            if (subscriberClassByMethodKey != null) {
-                subscriberClassByMethodKey.clear();
-            }
-            if (methodKeyBuilder != null) {
-                methodKeyBuilder.setLength(0);
-            }
+            subscriberMethods.clear();
+            anyMethodByEventType.clear();
+            subscriberClassByMethodKey.clear();
+            methodKeyBuilder.setLength(0);
             subscriberClass = null;
             clazz = null;
             skipSuperClasses = false;

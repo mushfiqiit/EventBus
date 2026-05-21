@@ -1,1 +1,2 @@
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_getLLMInferenced/org/greenrobot/eventbus/android/AndroidComponents.java:6: warning: [MissingSummary] A summary line is required on public/protected Javadocs.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_getLLMInferenced/org/greenrobot/eventbus/android/AndroidComponents.java:8: error: variable implementation not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/06_getLLMInferenced/org/greenrobot/eventbus/android/AndroidComponents.java:8: error: variable implementation not initialized in the default constructor

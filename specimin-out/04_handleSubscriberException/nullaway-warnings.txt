@@ -1,5 +1,2 @@
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:19: warning: [UnusedMethod] Method 'handleSubscriberException' is never used.
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:31: warning: [NullAway] dereferenced expression event is @Nullable
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/SubscriberExceptionEvent.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:13: error: variable logger not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:13: error: variable logger not initialized in the default constructor

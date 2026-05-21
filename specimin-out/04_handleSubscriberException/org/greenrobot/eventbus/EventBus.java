@@ -10,7 +10,7 @@ public class EventBus {
 
     private final boolean sendSubscriberExceptionEvent = false;
 
-    private final Logger logger = null;
+    private final Logger logger;
 
     public void post(Object event) {
         throw new java.lang.Error();

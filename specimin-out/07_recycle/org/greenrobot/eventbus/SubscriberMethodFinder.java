@@ -8,13 +8,13 @@ class SubscriberMethodFinder {
 
     static class FindState {
 
-        final List<SubscriberMethod> subscriberMethods = null;
+        final List<SubscriberMethod> subscriberMethods;
 
-        final Map<Class, Object> anyMethodByEventType = null;
+        final Map<Class, Object> anyMethodByEventType;
 
-        final Map<String, Class> subscriberClassByMethodKey = null;
+        final Map<String, Class> subscriberClassByMethodKey;
 
-        final StringBuilder methodKeyBuilder = null;
+        final StringBuilder methodKeyBuilder;
 
         @Nullable
         Class<?> subscriberClass;

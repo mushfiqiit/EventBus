@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.uber.nullaway.annotations.Initializer;
 import javax.annotation.Nullable;
-import org.jspecify.annotations.NullUnmarked;
+import javax.annotation.Nonnull;
 
 class SubscriberMethodFinder {
     /*
@@ -202,13 +202,19 @@ class SubscriberMethodFinder {
     }
 
     static class FindState {
+        @Nonnull
         final List<SubscriberMethod> subscriberMethods = new ArrayList<>();
+        @Nonnull
         final Map<Class, Object> anyMethodByEventType = new HashMap<>();
+        @Nonnull
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
+        @Nonnull
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
         @Nullable Class<?> subscriberClass;
+@Nullable
         Class<?> clazz;
+        @Nonnull
         boolean skipSuperClasses;
         @Nullable SubscriberInfo subscriberInfo;
 
@@ -218,7 +224,7 @@ class SubscriberMethodFinder {
             subscriberInfo = null;
         }
 
-        @NullUnmarked void recycle() {
+        void recycle() {
             subscriberMethods.clear();
             anyMethodByEventType.clear();
             subscriberClassByMethodKey.clear();
@@ -266,7 +272,7 @@ class SubscriberMethodFinder {
             }
         }
 
-        @NullUnmarked void moveToSuperclass() {
+        void moveToSuperclass() {
             if (skipSuperClasses) {
                 clazz = null;
             } else {

@@ -1,19 +1,10 @@
 > Task :clean UP-TO-DATE
 
 > Task :compileJava FAILED
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:1: error: ';' expected
-package org.greenrobot/eventbus;
-                      ^
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/ThreadMode.java:1: error: ';' expected
-package org.greenrobot/eventbus;
-                      ^
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/EventBusException.java:1: error: ';' expected
-package org.greenrobot/eventbus;
-                      ^
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/Subscription.java:1: error: ';' expected
-package org.greenrobot/eventbus;
-                      ^
-4 errors
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+    final ThreadMode threadMode;
+                     ^
+1 error
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/build/reports/problems/problems-report.html
 
@@ -22,10 +13,10 @@ FAILURE: Build failed with an exception.
 * What went wrong:
 Execution failed for task ':compileJava'.
 > Compilation failed; see the compiler output below.
-  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:1: error: ';' expected
-  package org.greenrobot/eventbus;
-                        ^
-  4 errors
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_cancelEventDeliveryLLMInferenced/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+      final ThreadMode threadMode;
+                       ^
+  1 error
 
 * Try:
 > Check your code and dependencies to fix the compilation error(s)

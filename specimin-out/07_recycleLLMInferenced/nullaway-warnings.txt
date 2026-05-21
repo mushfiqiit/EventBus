@@ -1,1 +1,5 @@
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:29: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: error: variable subscriberMethods not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:16: error: variable anyMethodByEventType not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:19: error: variable subscriberClassByMethodKey not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: error: variable methodKeyBuilder not initialized in the default constructor
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/07_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: error: variable subscriberMethods not initialized in the default constructor

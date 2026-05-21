@@ -2,14 +2,10 @@ package org.greenrobot.eventbus.android;
 
 import javax.annotation.Nullable;
 
-/**
- * 
- */
-@javax.annotation.Nonnull
 public abstract class AndroidComponents {
 
     @Nullable
-    private static final AndroidComponents implementation = null;
+    private static final AndroidComponents implementation;
 
     @Nullable
     public static AndroidComponents get() {

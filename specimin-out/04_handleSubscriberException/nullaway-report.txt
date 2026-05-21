@@ -1,30 +1,26 @@
 > Task :clean
 
-> Task :compileJava
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:19: warning: [UnusedMethod] Method 'handleSubscriberException' is never used.
-    private void handleSubscriberException(Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
-                 ^
-    (see https://errorprone.info/bugpattern/UnusedMethod)
-  Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
-    private final Logger logger = null;
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:13: error: variable logger not initialized in the default constructor
+    private final Logger logger;
                          ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:31: warning: [NullAway] dereferenced expression event is @Nullable
-                logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class " + subscription.subscriber.getClass(), cause);
-                                                                             ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
-    final Object subscriber = null;
-                 ^
-    (see http://t.uber.com/nullaway )
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/SubscriberExceptionEvent.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
-    public final Object causingSubscriber = null;
-                        ^
-    (see http://t.uber.com/nullaway )
-5 warnings
+1 error
 
 [Incubating] Problems report is available at: file:///Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/build/reports/problems/problems-report.html
 
-BUILD SUCCESSFUL in 1s
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_handleSubscriberException/org/greenrobot/eventbus/EventBus.java:13: error: variable logger not initialized in the default constructor
+      private final Logger logger;
+                           ^
+  1 error
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
 2 actionable tasks: 2 executed

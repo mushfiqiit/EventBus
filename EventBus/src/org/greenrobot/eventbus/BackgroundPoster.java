@@ -16,6 +16,7 @@
 package org.greenrobot.eventbus;
 
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
 
 /**
  * Posts events in background.
@@ -34,7 +35,7 @@ final class BackgroundPoster implements Runnable, Poster {
         queue = new PendingPostQueue();
     }
 
-    public void enqueue(Subscription subscription, Object event) {
+    public void enqueue(@Nonnull Subscription subscription, @Nonnull Object event) {
         PendingPost pendingPost = PendingPost.obtainPendingPost(subscription, event);
         synchronized (this) {
             queue.enqueue(pendingPost);

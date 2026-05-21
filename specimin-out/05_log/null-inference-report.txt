@@ -1,16 +1,19 @@
-### Annotation Decisions
+### A) Annotation decisions
 
 | location | inferred annotation | one-sentence reason |
 | --- | --- | --- |
-| Logger.log(Level level) | @Nonnull | The level is not flagged by NullAway as potentially null. |
-| Logger.log(String msg) | @Nonnull | The msg is not flagged by NullAway as potentially null. |
-| Logger.log(@Nullable Throwable th) | @Nullable | The th is flagged by NullAway as potentially null. |
+| org.greenrobot.eventbus.Logger.log(Level level) | @Nonnull | The `level` parameter is not flagged by NullAway and should be non-null by default. |
+| org.greenrobot.eventbus.Logger.log(String msg) | @Nonnull | The `msg` parameter is not flagged by NullAway and should be non-null by default. |
+| org.greenrobot.eventbus.Logger.log(Throwable th) | @Nullable | The `th` parameter is flagged by NullAway as potentially null. |
+| org.greenrobot.eventbus.Logger.SystemOutLogger.log(Level level) | @Nonnull | The `level` parameter should be non-null by default. |
+| org.greenrobot.eventbus.Logger.SystemOutLogger.log(String msg) | @Nonnull | The `msg` parameter should be non-null by default. |
+| org.greenrobot.eventbus.Logger.SystemOutLogger.log(Throwable th) | @Nullable | The `th` parameter is flagged by NullAway as potentially null. |
 
-### Unsafe Dereferences
+### B) Unsafe dereferences
 
-* The `th` parameter is dereferenced at line 15 in `org/greenrobot/eventbus/Logger.java`, which could throw a NullPointerException because `th` is `@Nullable`.
+1. `th.printStackTrace(System.out);` (line 15): This dereference of a `@Nullable` value could throw a `NullPointerException` if `th` is null.
 
-### Corrected Annotated Code
+### C) Corrected annotated code
 ```java
 // === javax/annotation/Nonnull.java ===
 package javax.annotation;
@@ -29,6 +32,7 @@ public @interface Nonnull {
     When when() default When.ALWAYS;
 }
 
+
 // === javax/annotation/Nullable.java ===
 package javax.annotation;
 
@@ -44,6 +48,7 @@ import javax.annotation.meta.When;
 @TypeQualifierNickname
 public @interface Nullable {
 }
+
 
 // === javax/annotation/meta/TypeQualifier.java ===
 package javax.annotation.meta;
@@ -62,6 +67,7 @@ public @interface TypeQualifier {
     Class<?> applicableTo() default Object.class;
 }
 
+
 // === javax/annotation/meta/TypeQualifierNickname.java ===
 package javax.annotation.meta;
 
@@ -74,6 +80,7 @@ import java.lang.annotation.Target;
 public @interface TypeQualifierNickname {
 }
 
+
 // === javax/annotation/meta/When.java ===
 package javax.annotation.meta;
 
@@ -82,29 +89,28 @@ public enum When {
     ALWAYS, UNKNOWN
 }
 
+
 // === org/greenrobot/eventbus/Logger.java ===
 package org.greenrobot.eventbus;
 
 import java.util.logging.Level;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 public interface Logger {
 
-    default void log(@Nonnull Level level, @Nonnull String msg, @Nullable Throwable th) {
+    default void log(Level level, String msg, @Nullable Throwable th) {
         throw new java.lang.Error();
     }
 
     class SystemOutLogger implements Logger {
 
-        public void log(@Nonnull Level level, @Nonnull String msg, @Nullable Throwable th) {
+        @Override
+        public void log(Level level, String msg, @Nullable Throwable th) {
             System.out.println("[" + level + "] " + msg);
-            if (th != null) {
-                th.printStackTrace(System.out);
-            }
+            if (th != null) th.printStackTrace(System.out);
         }
     }
 }
+
 
 // === org/jspecify/annotations/NullUnmarked.java ===
 package org.jspecify.annotations;
