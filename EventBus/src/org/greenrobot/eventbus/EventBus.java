@@ -64,7 +64,7 @@ public class EventBus {
     // @Nullable
     @Nullable private final MainThreadSupport mainThreadSupport;
     // @Nullable
-    @Nullable private final Poster mainThreadPoster;
+    @Nonnull private final Poster mainThreadPoster;
     @Nonnull
     private final BackgroundPoster backgroundPoster;
     @Nonnull
@@ -439,7 +439,7 @@ public class EventBus {
         return false;
     }
 
-    private void postToSubscription(@Nonnull Subscription subscription, @Nullable Object event, boolean isMainThread) {
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
         switch (subscription.subscriberMethod.threadMode) {
             case POSTING:
                 invokeSubscriber(subscription, event);
@@ -517,7 +517,7 @@ public class EventBus {
         }
     }
 
-    void invokeSubscriber(@Nonnull Subscription subscription, @Nullable Object event) {
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nonnull Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
         } catch (InvocationTargetException e) {
@@ -527,7 +527,7 @@ public class EventBus {
         }
     }
 
-    private void handleSubscriberException(@Nonnull Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nonnull Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
@@ -558,8 +558,8 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
-        @Nullable Subscription subscription;
-        @Nullable Object event;
+        @Nonnull Subscription subscription;
+        @Nonnull Object event;
         boolean canceled;
     }
 

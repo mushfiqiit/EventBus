@@ -212,7 +212,7 @@ class SubscriberMethodFinder {
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
         @Nullable Class<?> subscriberClass;
-@Nullable
+@Nonnull
         Class<?> clazz;
         @Nonnull
         boolean skipSuperClasses;
