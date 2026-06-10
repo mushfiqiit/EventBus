@@ -1,3 +1,9 @@
+import net.ltgt.gradle.errorprone.CheckSeverity
+
+plugins {
+    id 'net.ltgt.errorprone' version '3.1.0'
+}
+
 apply plugin: 'java'
 
 group = rootProject.group
@@ -47,5 +53,26 @@ afterEvaluate {
                 packaging = "jar"
             }
         }
+    }
+}
+
+dependencies {
+    annotationProcessor 'com.uber.nullaway:nullaway:0.10.10'
+    errorprone 'com.google.errorprone:error_prone_core:2.4.0'
+    errorproneJavac 'com.google.errorprone:javac:9+181-r4173-1'
+
+    compileOnly 'com.uber.nullaway:nullaway-annotations:0.10.10'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'org.jspecify:jspecify:0.3.0'
+}
+
+tasks.withType(JavaCompile) {
+    if (!name.toLowerCase().contains("test")) {
+        options.errorprone {
+            check("NullAway", CheckSeverity.ERROR)
+            option("NullAway:AnnotatedPackages", "org.greenrobot.eventbus")
+        }
+        options.compilerArgs << "-Xmaxerrs" << "100000"
+        options.compilerArgs << "-Xmaxwarns" << "100000"
     }
 }
