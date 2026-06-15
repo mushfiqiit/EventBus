@@ -1,0 +1,22 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/21_mapThrowableLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:7: error: cannot find symbol
+import javax.annotationNonnull;
+            ^
+  symbol:   class annotationNonnull
+  location: package javax
+1 error
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 961ms
+2 actionable tasks: 1 executed, 1 up-to-date

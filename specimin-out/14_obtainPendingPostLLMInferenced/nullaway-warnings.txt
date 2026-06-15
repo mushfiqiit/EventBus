@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/14_obtainPendingPostLLMInferenced/org/greenrobot/eventbus/PendingPost.java:20: warning: [UnusedVariable] The parameter 'event' is never read.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/14_obtainPendingPostLLMInferenced/org/greenrobot/eventbus/PendingPost.java:20: warning: [UnusedVariable] The parameter 'subscription' is never read.

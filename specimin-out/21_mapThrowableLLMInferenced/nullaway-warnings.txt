@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/21_mapThrowableLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:7: error: cannot find symbol

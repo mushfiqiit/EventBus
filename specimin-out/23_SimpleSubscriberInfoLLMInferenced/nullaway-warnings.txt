@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfoLLMInferenced/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:8: warning: [UnusedVariable] The field 'methodInfos' is never read.

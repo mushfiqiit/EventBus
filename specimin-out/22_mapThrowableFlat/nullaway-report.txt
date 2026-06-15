@@ -16,5 +16,5 @@ Execution failed for task ':compileJava'.
 > Run with --info option to get more log output.
 > Run with --scan to get full insights.
 
-BUILD FAILED in 928ms
+BUILD FAILED in 886ms
 2 actionable tasks: 2 executed

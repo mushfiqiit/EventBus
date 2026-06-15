@@ -1,0 +1,29 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:14: error: variable subscriberMethods not initialized in the default constructor
+        final List<SubscriberMethod> subscriberMethods;
+                                     ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: error: variable anyMethodByEventType not initialized in the default constructor
+        final Map<Class, Object> anyMethodByEventType;
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:20: error: variable subscriberClassByMethodKey not initialized in the default constructor
+        final Map<String, Class> subscriberClassByMethodKey;
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:23: error: variable methodKeyBuilder not initialized in the default constructor
+        final StringBuilder methodKeyBuilder;
+                            ^
+4 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

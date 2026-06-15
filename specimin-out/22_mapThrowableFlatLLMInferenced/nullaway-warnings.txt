@@ -1,0 +1,5 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:7: error: cannot find symbol
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:14: error: cannot find symbol
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:14: error: cannot find symbol
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:14: error: cannot find symbol
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:15: error: cannot find symbol

@@ -1,0 +1,28 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/EventBusBuilder.java:3: error: package org.greenrobot.eventbus.meta does not exist
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+                                   ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/EventBus.java:22: error: cannot find symbol
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+                                                     ^
+  symbol:   class Subscription
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:3: error: package org.greenrobot.eventbus.meta does not exist
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+                                   ^
+3 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

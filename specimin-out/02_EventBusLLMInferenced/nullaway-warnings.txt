@@ -1,0 +1,3 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/EventBusBuilder.java:3: error: package org.greenrobot.eventbus.meta does not exist
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/EventBus.java:22: error: cannot find symbol
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:3: error: package org.greenrobot.eventbus.meta does not exist

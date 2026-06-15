@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:14: error: variable subscriberMethods not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: error: variable anyMethodByEventType not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:20: error: variable subscriberClassByMethodKey not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycleLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:23: error: variable methodKeyBuilder not initialized in the default constructor
