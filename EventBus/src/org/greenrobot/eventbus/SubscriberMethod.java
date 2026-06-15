@@ -16,15 +16,23 @@
 package org.greenrobot.eventbus;
 
 import java.lang.reflect.Method;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /** Used internally by EventBus and generated subscriber indexes. */
 public class SubscriberMethod {
+    @Nonnull
     final Method method;
+    @Nonnull
     final ThreadMode threadMode;
+    @Nonnull
     final Class<?> eventType;
+    @Nonnull
     final int priority;
+    @Nonnull
     final boolean sticky;
     /** Used for efficient comparison */
+    @Nullable
     String methodString;
 
     public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {

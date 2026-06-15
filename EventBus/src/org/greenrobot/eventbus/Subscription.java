@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nonnull;
+
 
 final class Subscription {
+    @Nonnull
     final Object subscriber;
+    @Nonnull
     final SubscriberMethod subscriberMethod;
     /**
      * Becomes false as soon as {@link EventBus#unregister(Object)} is called, which is checked by queued event delivery

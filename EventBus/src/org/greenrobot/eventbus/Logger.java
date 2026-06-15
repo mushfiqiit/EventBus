@@ -17,10 +17,12 @@ package org.greenrobot.eventbus;
 
 import org.greenrobot.eventbus.android.AndroidComponents;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface Logger {
 
-    void log(Level level, String msg);
+    void log(@Nonnull Level level, @Nonnull String msg);
 
     void log(Level level, String msg, Throwable th);
 
@@ -61,6 +63,7 @@ public interface Logger {
     }
 
     class Default {
+        @Nullable
         public static Logger get() {
             if (AndroidComponents.areAvailable()) {
                 return AndroidComponents.get().logger;

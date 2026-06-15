@@ -16,12 +16,14 @@
 package org.greenrobot.eventbus.meta;
 
 import org.greenrobot.eventbus.SubscriberMethod;
+import javax.annotation.Nullable;
 
 /**
  * Uses {@link SubscriberMethodInfo} objects to create {@link org.greenrobot.eventbus.SubscriberMethod} objects on demand.
  */
 public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
 
+    @Nullable
     private final SubscriberMethodInfo[] methodInfos;
 
     public SimpleSubscriberInfo(Class subscriberClass, boolean shouldCheckSuperclass, SubscriberMethodInfo[] methodInfos) {

@@ -17,12 +17,18 @@ package org.greenrobot.eventbus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 final class PendingPost {
+@Nonnull
     private final static List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
+    @Nullable
     Object event;
+    @Nullable
     Subscription subscription;
+    @Nullable
     PendingPost next;
 
     private PendingPost(Object event, Subscription subscription) {
@@ -30,7 +36,8 @@ final class PendingPost {
         this.subscription = subscription;
     }
 
-    static PendingPost obtainPendingPost(Subscription subscription, Object event) {
+    @Nonnull
+    static PendingPost obtainPendingPost(@Nullable Subscription subscription, @Nullable Object event) {
         synchronized (pendingPostPool) {
             int size = pendingPostPool.size();
             if (size > 0) {
@@ -44,7 +51,7 @@ final class PendingPost {
         return new PendingPost(event, subscription);
     }
 
-    static void releasePendingPost(PendingPost pendingPost) {
+    static void releasePendingPost(@Nonnull PendingPost pendingPost) {
         pendingPost.event = null;
         pendingPost.subscription = null;
         pendingPost.next = null;

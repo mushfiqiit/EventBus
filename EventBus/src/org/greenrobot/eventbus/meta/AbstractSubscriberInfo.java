@@ -20,10 +20,12 @@ import org.greenrobot.eventbus.SubscriberMethod;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Method;
+import javax.annotation.Nullable;
 
 /** Base class for generated subscriber meta info classes created by annotation processing. */
 public abstract class AbstractSubscriberInfo implements SubscriberInfo {
     private final Class subscriberClass;
+    @Nullable
     private final Class<? extends SubscriberInfo> superSubscriberInfoClass;
     private final boolean shouldCheckSuperclass;
 
@@ -40,6 +42,7 @@ public abstract class AbstractSubscriberInfo implements SubscriberInfo {
     }
 
     @Override
+    @Nullable
     public SubscriberInfo getSuperSubscriberInfo() {
         if(superSubscriberInfoClass == null) {
             return null;

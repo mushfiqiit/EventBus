@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 class SubscriberMethodFinder {
     /*
@@ -38,6 +40,7 @@ class SubscriberMethodFinder {
     private static final int MODIFIERS_IGNORE = Modifier.ABSTRACT | Modifier.STATIC | BRIDGE | SYNTHETIC;
     private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE = new ConcurrentHashMap<>();
 
+    @Nullable
     private List<SubscriberInfoIndex> subscriberInfoIndexes;
     private final boolean strictMethodVerification;
     private final boolean ignoreGeneratedIndex;
@@ -119,6 +122,7 @@ class SubscriberMethodFinder {
         return new FindState();
     }
 
+    @Nullable
     private SubscriberInfo getSubscriberInfo(FindState findState) {
         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
@@ -199,17 +203,24 @@ class SubscriberMethodFinder {
     }
 
     static class FindState {
+        @Nonnull
         final List<SubscriberMethod> subscriberMethods = new ArrayList<>();
+        @Nonnull
         final Map<Class, Object> anyMethodByEventType = new HashMap<>();
+        @Nonnull
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
+        @Nonnull
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
+@Nullable
         Class<?> subscriberClass;
+@Nullable
         Class<?> clazz;
         boolean skipSuperClasses;
+        @Nullable
         SubscriberInfo subscriberInfo;
 
-        void initForSubscriber(Class<?> subscriberClass) {
+        void initForSubscriber(@Nonnull Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;
             subscriberInfo = null;
