@@ -1,0 +1,242 @@
+### Annotation Decisions
+The following table presents the annotation decisions for the given code:
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| EventBus.mainThreadPoster | @Nullable | mainThreadPoster is set to null when mainThreadSupport is null |
+| EventBusBuilder.getLogger() return | @Nullable | NullAway warning indicates a possible null return value |
+| EventBusBuilder.getMainThreadSupport() return | @Nullable | NullAway warning indicates a possible null return value |
+| EventBusBuilder.executorService | @Nullable | executorService can be null if not set in the builder |
+| SubscriberMethodFinder constructor subscriberInfoIndexes parameter | @Nullable | subscriberInfoIndexes can be null if not provided |
+| EventBusBuilder.subscriberInfoIndexes | @Nullable | subscriberInfoIndexes can be null if not set in the builder |
+| EventBusBuilder.strictMethodVerification | @Nonnull | strictMethodVerification is a primitive boolean and cannot be null |
+| EventBusLogger logger | @Nullable | logger can be null if not set in the builder |
+| EventBus.mainThreadSupport | @Nullable | mainThreadSupport can be null if not set in the builder |
+
+### Unsafe Dereferences
+Based on the annotation decisions, the following expressions could throw a NullPointerException:
+* `mainThreadSupport.createPoster(this)` in `EventBus` constructor (potential null dereference of `mainThreadSupport`)
+* `builder.getLogger()` in `EventBus` constructor (potential null return from `getLogger()`)
+* `builder.getMainThreadSupport()` in `EventBus` constructor (potential null return from `getMainThreadSupport()`)
+* `builder.executorService` in `EventBus` constructor (potential null dereference of `executorService`)
+* `subscriberMethodFinder = new SubscriberMethodFinder(builder.subscriberInfoIndexes, ...)` in `EventBus` constructor (potential null dereference of `subscriberInfoIndexes`)
+
+### Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/AsyncPoster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+class AsyncPoster implements Poster {
+
+    AsyncPoster(EventBus eventBus) {
+        throw new java.lang.Error();
+    }
+
+    public void run() {
+        throw new java.lang.Error();
+    }
+}
+
+
+// === org/greenrobot/eventbus/BackgroundPoster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class BackgroundPoster implements Poster {
+
+    BackgroundPoster(EventBus eventBus) {
+        throw new java.lang.Error();
+    }
+
+    public void run() {
+        throw new java.lang.Error();
+    }
+}
+
+
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+
+import javax.annotation.Nullable;
+
+public class EventBus {
+
+    public static String TAG;
+
+    static volatile EventBus defaultInstance;
+
+    private static final EventBusBuilder DEFAULT_BUILDER;
+
+    private static final Map<Class<?>, List<Class<?>>> eventTypesCache;
+
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private final Map<Object, List<Class<?>>> typesBySubscriber;
+
+    private final Map<Class<?>, Object> stickyEvents;
+
+    private final ThreadLocal<PostingThreadState> currentPostingThreadState;
+
+    private final MainThreadSupport mainThreadSupport;
+
+    private final Poster mainThreadPoster;
+
+    private final BackgroundPoster backgroundPoster;
+
+    private final AsyncPoster asyncPoster;
+
+    private final SubscriberMethodFinder subscriberMethodFinder;
+
+    private final ExecutorService executorService;
+
+    private final boolean throwSubscriberException;
+
+    private final boolean logSubscriberExceptions;
+
+    private final boolean logNoSubscriberMessages;
+
+    private final boolean sendSubscriberExceptionEvent;
+
+    private final boolean sendNoSubscriberEvent;
+
+    private final boolean eventInheritance;
+
+    private final int indexCount;
+
+    private final Logger logger;
+
+    EventBus(EventBusBuilder builder) {
+        logger = builder.getLogger();
+        subscriptionsByEventType = new HashMap<>();
+        typesBySubscriber = new HashMap<>();
+        stickyEvents = new ConcurrentHashMap<>();
+        mainThreadSupport = builder.getMainThreadSupport();
+        mainThreadPoster = mainThreadSupport != null ? mainThreadSupport.createPoster(this) : null;
+        backgroundPoster = new BackgroundPoster(this);
+        asyncPoster = new AsyncPoster(this);
+        indexCount = builder.subscriberInfoIndexes != null ? builder.subscriberInfoIndexes.size() : 0;
+        subscriberMethodFinder = new SubscriberMethodFinder(builder.subscriberInfoIndexes, builder.strictMethodVerification, builder.ignoreGeneratedIndex);
+        logSubscriberExceptions = builder.logSubscriberExceptions;
+        logNoSubscriberMessages = builder.logNoSubscriberMessages;
+        sendSubscriberExceptionEvent = builder.sendSubscriberExceptionEvent;
+        sendNoSubscriberEvent = builder.sendNoSubscriberEvent;
+        throwSubscriberException = builder.throwSubscriberException;
+        eventInheritance = builder.eventInheritance;
+        executorService = builder.executorService;
+    }
+
+    final static class PostingThreadState {
+    }
+}
+
+
+// === org/greenrobot/eventbus/EventBusBuilder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+
+import javax.annotation.Nullable;
+
+@SuppressWarnings("unused")
+public class EventBusBuilder {
+
+    boolean logSubscriberExceptions;
+
+    boolean logNoSubscriberMessages;
+
+    boolean sendSubscriberExceptionEvent;
+
+    boolean sendNoSubscriberEvent;
+
+    boolean throwSubscriberException;
+
+    boolean eventInheritance;
+
+    boolean ignoreGeneratedIndex;
+
+    boolean strictMethodVerification;
+
+    @Nullable
+    ExecutorService executorService;
+
+    @Nullable
+    List<SubscriberInfoIndex> subscriberInfoIndexes;
+
+    @Nullable
+    Logger getLogger() {
+        throw new java.lang.Error();
+    }
+
+    @Nullable
+    MainThreadSupport getMainThreadSupport() {
+        throw new java.lang.Error();
+    }
+}
+
+
+// === org/greenrobot/eventbus/Logger.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public interface Logger {
+}
+
+
+// === org/greenrobot/eventbus/MainThreadSupport.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public interface MainThreadSupport {
+
+    default Poster createPoster(EventBus eventBus) {
+        throw new java.lang.Error();
+    }
+}
+
+
+// === org/greenrobot/eventbus/Poster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public interface Poster {
+}
+
+
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    SubscriberMethodFinder(@Nullable List<SubscriberInfoIndex> subscriberInfoIndexes, boolean strictMethodVerification, boolean ignoreGeneratedIndex) {
+        throw new java.lang.Error();
+    }
+}
+
+
+// === org/greenrobot/eventbus/meta/SubscriberInfoIndex.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public interface SubscriberInfoIndex {
+}
+```

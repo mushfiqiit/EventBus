@@ -1,0 +1,69 @@
+### Null Safety Analysis and Corrections
+
+#### A) Annotation Decisions
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `SubscriberMethod.method` | `@Nonnull` | The NullAway warning indicates that `method` is not initialized in the default constructor, implying it should never be null. |
+| `Subscription.subscriber` | `@Nonnull` | There's no indication that `subscriber` could be null; thus, it's assumed to be non-null. |
+| `Subscription.subscriberMethod` | `@Nonnull` | Similar to `subscriber`, there's no indication that `subscriberMethod` could be null. |
+| `invokeSubscriber(event)` parameter | `@Nonnull` | The method's logic doesn't indicate `event` could be null, so it's considered non-null. |
+| `invokeSubscriber(subscription)` parameter | `@Nonnull` | Similar to `event`, there's no indication `subscription` could be null during method invocation. |
+| `handleSubscriberException(cause)` parameter | `@Nullable` | Since `cause` is obtained from an exception, it could potentially be null, depending on the exception type. |
+| `handleSubscriberException(event)` parameter | `@Nonnull` | As per the `invokeSubscriber` method, `event` is considered non-null. |
+| `handleSubscriberException(subscription)` parameter | `@Nonnull` | `subscription` is assumed to be non-null, consistent with the `invokeSubscriber` method's assumption. |
+
+#### B) Unsafe Dereferences
+1. The dereference of `subscription.subscriberMethod.method` in `EventBus.invokeSubscriber` could throw a `NullPointerException` if `subscription.subscriberMethod` is null. However, based on our annotation decisions, `subscription.subscriberMethod` is considered `@Nonnull`. The key unsafe dereference that might have prompted the NullAway warning is actually related to `method` within `SubscriberMethod`, which is flagged for not being initialized in the constructor. Yet, our analysis suggests marking it as `@Nonnull` given the context and the lack of any null checks or handling around its initialization and use.
+
+#### C) Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.InvocationTargetException;
+
+public class EventBus {
+
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nonnull Object event) {
+        try {
+            subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
+        } catch (InvocationTargetException e) {
+            handleSubscriberException(subscription, event, e.getCause());
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("Unexpected exception", e);
+        }
+    }
+
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nullable Throwable cause) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.Method;
+
+public class SubscriberMethod {
+
+    @Nonnull
+    final Method method;
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+final class Subscription {
+
+    @Nonnull
+    final Object subscriber;
+
+    @Nonnull
+    final SubscriberMethod subscriberMethod;
+}
+```

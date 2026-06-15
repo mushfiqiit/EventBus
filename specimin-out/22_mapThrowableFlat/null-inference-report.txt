@@ -1,0 +1,58 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `throwableToMsgIdMap` field | @Nullable | NullAway warns that it's not initialized in the default constructor, suggesting it could be null. |
+| `throwable` parameter | @Nonnull | The method is designed to handle throwables, and there's no indication it would accept null. |
+| `mapThrowableFlat` return type | @Nullable | The method returns `resId` which could be null if no mapping is found. |
+| `resId` local variable | @Nullable | It's initialized with the result of `get` which can return null. |
+| `closestClass` local variable | @Nullable | It's initialized to null and updated conditionally. |
+| `mappings` local variable | @Nonnull | It's initialized with the result of `entrySet` which should not return null. |
+| `mapping` local variable | @Nonnull | It's part of an iteration over `mappings`, which is non-null. |
+| `candidate` local variable | @Nonnull | It's part of a `mapping` which is non-null. |
+| `throwableClass` local variable | @Nonnull | It's initialized with the result of `getClass` which should not return null. |
+
+### B) Unsafe dereferences
+
+The following dereferences could throw a NullPointerException:
+
+* `throwableToMsgIdMap.get(throwableClass)` (line 9) - `throwableToMsgIdMap` is potentially null.
+* `mappings = throwableToMsgIdMap.entrySet()` (line 11) - `throwableToMsgIdMap` is potentially null, which would cause a NullPointerException when calling `entrySet`.
+* `candidate.isAssignableFrom(throwableClass)` (line 14) - `candidate` is non-null because it's part of a `mapping`, but it's worth noting for completeness.
+* `closestClass.isAssignableFrom(candidate)` (line 15) - `closestClass` is potentially null, which would cause a NullPointerException when calling `isAssignableFrom`.
+
+### C) Corrected annotated code
+```java
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+// === org/greenrobot/eventbus/util/ExceptionToResourceMapping.java ===
+package org.greenrobot.eventbus.util;
+
+public class ExceptionToResourceMapping {
+
+    public final @Nullable Map<Class<? extends Throwable>, Integer> throwableToMsgIdMap;
+
+    protected @Nullable Integer mapThrowableFlat(@Nonnull Throwable throwable) {
+        Class<? extends Throwable> throwableClass = throwable.getClass();
+        @Nullable Integer resId = throwableToMsgIdMap != null ? throwableToMsgIdMap.get(throwableClass) : null;
+        if (resId == null) {
+            @Nullable Class<? extends Throwable> closestClass = null;
+            @Nonnull Set<Entry<Class<? extends Throwable>, Integer>> mappings = throwableToMsgIdMap != null ? throwableToMsgIdMap.entrySet() : Set.of();
+            for (@Nonnull Entry<Class<? extends Throwable>, Integer> mapping : mappings) {
+                Class<? extends Throwable> candidate = mapping.getKey();
+                if (candidate.isAssignableFrom(throwableClass)) {
+                    if (closestClass == null || (closestClass != null && closestClass.isAssignableFrom(candidate))) {
+                        closestClass = candidate;
+                        resId = mapping.getValue();
+                    }
+                }
+            }
+        }
+        return resId;
+    }
+}
+```

@@ -1,0 +1,46 @@
+### Annotation Decisions
+
+The following table represents the annotation decisions based on the NullAway warnings:
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| Builder.threadPool | @Nullable | NullAway warns that the field is never read and may not be initialized. |
+| Builder.failureEventType | @Nullable | NullAway warns that the field is never read and may not be initialized. |
+| Builder.eventBus | @Nullable | NullAway warns that the field is never read and may not be initialized. |
+
+### Unsafe Dereferences
+
+There are no explicit dereferences in the code. However, NullAway warnings indicate potential issues with the fields being never read and possibly not initialized, which could lead to NullPointerExceptions if they are dereferenced later.
+
+### Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.NonNull;
+
+public class EventBus {
+}
+
+// === org/greenrobot/eventbus/util/AsyncExecutor.java ===
+package org.greenrobot.eventbus.util;
+
+import org.greenrobot.eventbus.EventBus;
+import java.util.concurrent.Executor;
+import javax.annotation.Nullable;
+
+public class AsyncExecutor {
+
+    public static class Builder {
+
+        private @Nullable Executor threadPool;
+
+        private @Nullable Class<?> failureEventType;
+
+        private @Nullable EventBus eventBus;
+
+        private Builder() {
+        }
+    }
+}
+```

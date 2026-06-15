@@ -1,0 +1,51 @@
+### Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| SubscriberMethodFinder.FindState.clazz | @Nullable | NullAway warning indicates it's not guaranteed non-null. |
+| SubscriberMethodFinder.FindState.skipSuperClasses | @Nonnull | No NullAway warning indicates it's guaranteed non-null. |
+| SubscriberMethodFinder.FindState.moveToSuperclass() return type | void | It's a void method, no annotation is needed. |
+| SubscriberMethodFinder.FindState.moveToSuperclass().clazz.getSuperclass() | @Nullable | The clazz might be null before calling getSuperclass(). |
+| SubscriberMethodFinder.FindState.moveToSuperclass().clazz.getName() | @Nullable | The clazz might be null before calling getName(). |
+| SubscriberMethodFinder.FindState.moveToSuperclass().clazz.getSuperclass().getName() | @Nullable | The clazz or its superclass might be null before calling getName(). |
+
+### Unsafe Dereferences
+Based on NullAway warnings, the following lines are potential unsafe dereferences:
+1. Line 7: `clazz` might be null before being assigned to `clazz`.
+2. Line 13: `clazz` might be null before calling `clazz.getSuperclass()`.
+3. Line 18: `clazz` might be null before calling `clazz.getName()`.
+
+These are related to the `clazz` field and occur when `skipSuperClasses` is true or when `clazzName` starts with certain prefixes.
+
+### Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nullable
+        Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        void moveToSuperclass() {
+            if (skipSuperClasses) {
+                clazz = null;
+            } else {
+                clazz = clazz != null ? clazz.getSuperclass() : null;
+                if (clazz != null) {
+                    String clazzName = clazz.getName();
+                    if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+                        clazz = null;
+                    }
+                }
+            }
+        }
+    }
+}
+```

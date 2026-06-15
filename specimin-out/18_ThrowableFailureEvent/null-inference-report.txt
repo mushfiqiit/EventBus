@@ -1,0 +1,46 @@
+### A) Annotation decisions
+
+The following table lists the annotation decisions for each location in the code:
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| ThrowableFailureEvent.constructor(throwable) | @Nonnull | NullAway does not flag this parameter as potentially null, and it is used to initialize a final field. |
+| ThrowableFailureEvent.constructor(suppressErrorUi) | @Nonnull | This is a primitive boolean value and cannot be null. |
+| ThrowableFailureEvent.throwable field | @Nonnull | NullAway does not flag this field as potentially null, and it is initialized in the constructor. |
+| ThrowableFailureEvent.suppressErrorUi field | @Nonnull | This is a primitive boolean value and cannot be null. |
+| ThrowableFailureEvent.executionContext field | @Nullable | NullAway warns that this field might not be initialized along all control-flow paths, and it is not explicitly initialized in the provided code. |
+
+### B) Unsafe dereferences
+
+No dereferences of @Nullable values are present in the provided code.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/util/HasExecutionScope.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nonnull;
+
+public interface HasExecutionScope {
+}
+
+// === org/greenrobot/eventbus/util/ThrowableFailureEvent.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class ThrowableFailureEvent implements HasExecutionScope {
+
+    protected final @Nonnull Throwable throwable;
+
+    protected final boolean suppressErrorUi;
+
+    private @Nullable Object executionContext;
+
+    public ThrowableFailureEvent(@Nonnull Throwable throwable, boolean suppressErrorUi) {
+        this.throwable = throwable;
+        this.suppressErrorUi = suppressErrorUi;
+    }
+}
+```

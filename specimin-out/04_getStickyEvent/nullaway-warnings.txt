@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEvent/org/greenrobot/eventbus/EventBus.java:7: error: variable stickyEvents not initialized in the default constructor

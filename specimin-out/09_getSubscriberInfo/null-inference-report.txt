@@ -1,0 +1,98 @@
+### Annotation Decisions Table
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| SubscriberMethodFinder.subscriberInfoIndexes | @Nullable | Field is not initialized in the class and may be null. |
+| SubscriberMethodFinder.getSubscriberInfo return type | @Nullable | Method may return null when no subscriber info is found. |
+| FindState.clazz | @Nullable | Field is not initialized in the class and may be null. |
+| FindState.subscriberInfo | @Nullable | Field is not initialized in the class and may be null. |
+| SubscriberInfo.getSubscriberClass return type | @Nullable | Method returns an interface method with no nullability information. |
+| SubscriberInfo.getSuperSubscriberInfo return type | @Nullable | Method returns an interface method with no nullability information. |
+| SubscriberInfoIndex.getSubscriberInfo return type | @Nullable | Method returns an interface method with no nullability information. |
+
+### Unsafe Dereferences
+
+The following dereferences of @Nullable values could throw a NullPointerException:
+- `findState.subscriberInfo.getSuperSubscriberInfo()` ( SubscriberMethodFinder.java:15 )
+- `subscriberInfoIndexes.getSubscriberInfo(findState.clazz)` ( SubscriberMethodFinder.java:24 )
+- `findState.clazz` ( SubscriberMethodFinder.java:19 )
+- `findState.subscriberInfo` ( SubscriberMethodFinder.java:14 )
+- `index.getSubscriberInfo(findState.clazz)` ( SubscriberMethodFinder.java:27 )
+
+These correspond to the following NullAway warnings:
+- 26: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+- 31: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+- 33: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+
+### Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+
+class SubscriberMethodFinder {
+
+    private @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes;
+
+    private @Nullable SubscriberInfo getSubscriberInfo(FindState findState) {
+        if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
+            SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
+            if (findState.clazz == superclassInfo.getSubscriberClass()) {
+                return superclassInfo;
+            }
+        }
+        if (subscriberInfoIndexes != null) {
+            for (SubscriberInfoIndex index : subscriberInfoIndexes) {
+                SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+                if (info != null) {
+                    return info;
+                }
+            }
+        }
+        return null;
+    }
+
+    static class FindState {
+
+        @Nullable Class<?> clazz;
+
+        @Nullable SubscriberInfo subscriberInfo;
+    }
+
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public interface SubscriberInfo {
+
+    @Nullable default Class<?> getSubscriberClass() {
+        throw new java.lang.Error();
+    }
+
+    @Nullable default SubscriberInfo getSuperSubscriberInfo() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfoIndex.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public interface SubscriberInfoIndex {
+
+    @Nullable default SubscriberInfo getSubscriberInfo(@Nullable Class<?> subscriberClass) {
+        throw new java.lang.Error();
+    }
+}
+```

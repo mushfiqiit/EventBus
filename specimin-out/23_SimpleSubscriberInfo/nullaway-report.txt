@@ -1,0 +1,16 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:5: warning: [UnusedVariable] The field 'methodInfos' is never read.
+    private final SubscriberMethodInfo[] methodInfos;
+                                         ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:8: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+        super(subscriberClass, null, shouldCheckSuperclass);
+                               ^
+    (see http://t.uber.com/nullaway )
+2 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

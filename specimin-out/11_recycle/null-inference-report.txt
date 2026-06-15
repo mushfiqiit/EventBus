@@ -1,0 +1,97 @@
+### Annotation Decisions
+
+The following decisions are based on the provided NullAway warnings:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `subscriberMethods` | @Nonnull | Guaranteed non-null as it's initialized within the `FindState` class. |
+| `anyMethodByEventType` | @Nonnull | Guaranteed non-null as it's initialized within the `FindState` class. |
+| `subscriberClassByMethodKey` | @Nonnull | Guaranteed non-null as it's initialized within the `FindState` class. |
+| `methodKeyBuilder` | @Nonnull | Guaranteed non-null as it's initialized within the `FindState` class. |
+| `subscriberClass` | @Nullable | Could be null after `recycle()` method is called. |
+| `clazz` | @Nullable | Could be null after `recycle()` method is called. |
+| `skipSuperClasses` | (no annotation) | Guaranteed non-null as it's a primitive type. |
+| `subscriberInfo` | @Nullable | Could be null after `recycle()` method is called. |
+
+### Unsafe Dereferences
+
+Based on the NullAway warnings, the following dereferences could potentially throw a NullPointerException:
+
+* `subscriberMethods.clear()` (line 11): This line could throw a NullPointerException if `subscriberMethods` is null.
+* `anyMethodByEventType.clear()` (line 13): This line could throw a NullPointerException if `anyMethodByEventType` is null.
+* `subscriberClassByMethodKey.clear()` (line 15): This line could throw a NullPointerException if `subscriberClassByMethodKey` is null.
+* `methodKeyBuilder.setLength(0)` (line 17): This line could throw a NullPointerException if `methodKeyBuilder` is null.
+
+However, according to the annotation decisions, `subscriberMethods`, `anyMethodByEventType`, `subscriberClassByMethodKey`, and `methodKeyBuilder` are all guaranteed non-null. Therefore, these dereferences are safe.
+
+On the other hand, the following fields are annotated as @Nullable:
+* `subscriberClass`
+* `clazz`
+* `subscriberInfo`
+
+These fields are not dereferenced in the provided code. However, if they are dereferenced elsewhere in the code, it could potentially throw a NullPointerException.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+public class SubscriberMethod {
+}
+
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nonnull
+        final List<SubscriberMethod> subscriberMethods;
+
+        @Nonnull
+        final Map<Class, Object> anyMethodByEventType;
+
+        @Nonnull
+        final Map<String, Class> subscriberClassByMethodKey;
+
+        @Nonnull
+        final StringBuilder methodKeyBuilder;
+
+        @Nullable
+        Class<?> subscriberClass;
+
+        @Nullable
+        Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        @Nullable
+        SubscriberInfo subscriberInfo;
+
+        void recycle() {
+            subscriberMethods.clear();
+            anyMethodByEventType.clear();
+            subscriberClassByMethodKey.clear();
+            methodKeyBuilder.setLength(0);
+            subscriberClass = null;
+            clazz = null;
+            skipSuperClasses = false;
+            subscriberInfo = null;
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfo {
+}
+```

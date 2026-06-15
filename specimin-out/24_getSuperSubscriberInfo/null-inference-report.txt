@@ -1,0 +1,54 @@
+### Annotation Decisions
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `superSubscriberInfoClass` field | `@Nullable` | NullAway warns that `superSubscriberInfoClass` is not initialized in the default constructor, indicating it could be null. |
+| `getSuperSubscriberInfo()` return type | `@Nullable` | The method returns `null` when `superSubscriberInfoClass` is null, indicating the return value could be null. |
+| `getSuperSubscriberInfo()` method in `SubscriberInfo` interface | `@Nullable` | Although the interface method throws an `Error` by default, its implementation in `AbstractSubscriberInfo` shows it can return null. |
+
+### Unsafe Dereferences
+
+* The expression `superSubscriberInfoClass` is dereferenced when calling `superSubscriberInfoClass.newInstance()` (line not specified in the warning but implied in the method `getSuperSubscriberInfo()`). This could throw a `NullPointerException` if `superSubscriberInfoClass` is null, which is why NullAway warns about its potential nullability.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+
+public abstract class AbstractSubscriberInfo implements SubscriberInfo {
+
+    private final @Nullable Class<? extends SubscriberInfo> superSubscriberInfoClass;
+
+    @Nullable
+    public SubscriberInfo getSuperSubscriberInfo() {
+        if (superSubscriberInfoClass == null) {
+            return null;
+        }
+        try {
+            return superSubscriberInfoClass.newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+
+public interface SubscriberInfo {
+
+    @Nullable
+    default SubscriberInfo getSuperSubscriberInfo() {
+        throw new java.lang.Error();
+    }
+}
+```
+
+Note: The corrections assume that the default behavior of the `getSuperSubscriberInfo` method in the `SubscriberInfo` interface should also be annotated as `@Nullable` based on its implementation in `AbstractSubscriberInfo`. This ensures consistency across the inheritance hierarchy regarding nullability expectations.

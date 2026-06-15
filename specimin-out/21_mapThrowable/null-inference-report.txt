@@ -1,0 +1,77 @@
+### Annotation Decisions
+The following decisions were made based on the provided NullAway warnings and the functionality of the code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `Logger` interface methods' return type | Not applicable | Interfaces do not have return types for their methods' declarations themselves but their implementations might. |
+| `Logger.Default.get()` return type | `@Nullable` | NullAway warning indicates the expression returned could be null. |
+| `ExceptionToResourceMapping.mapThrowable(throwable)` return type | `@Nullable` | NullAway warning indicates the expression returned could be null. |
+| `ExceptionToResourceMapping.mapThrowable(throwable)` parameter `throwable` | `@Nonnull` | Since it's used throughout without null checks in this context, and a null value for `throwable` would break the functionality. |
+| `ExceptionToResourceMapping.mapThrowableFlat(throwable)` return type | `@Nullable` | Since the method could potentially return null. |
+| `ExceptionToResourceMapping.mapThrowableFlat(throwable)` parameter `throwable` | `@Nonnull` | This method is protected and its usage within the class suggests throwable should always be non-null when called. |
+| `Logger.log(Level, String)` parameters | `@Nonnull` | These parameters should not be null for the method to function correctly, though `@NonNull` is the default, explicit annotations can improve readability. |
+| `ExceptionToResourceMapping.throwableToCheck` | `@Nullable` | This field might be assigned a null value under certain conditions. |
+
+### Unsafe Dereferences
+1. `throwableToCheck = throwableToCheck.getCause();` - This line could throw a `NullPointerException` if `throwableToCheck` is null and its `getCause()` method is called. Cross-referenced with the NullAway warning by logic, not line number directly, but related to the overall handling of `throwableToCheck`.
+2. The line `logger.log(Level.FINE, "No specific message resource ID found for " + throwable);` could potentially throw a `NullPointerException` if `logger` or `throwable` is null. However, the direct NullAway warning is for the return type of `Logger.Default.get()`, which is `@Nullable`, thus the `logger` variable.
+
+### Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/Logger.java ===
+package org.greenrobot.eventbus;
+
+import java.util.logging.Level;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public interface Logger {
+
+    default void log(@Nonnull Level level, @Nonnull String msg) {
+        throw new java.lang.Error();
+    }
+
+    class Default {
+
+        public static @Nullable Logger get() {
+            throw new java.lang.Error();
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/util/ExceptionToResourceMapping.java ===
+package org.greenrobot.eventbus.util;
+
+import org.greenrobot.eventbus.Logger;
+import java.util.logging.Level;
+import javax.annotation.Nullable;
+import javax.annotationNonnull;
+
+public class ExceptionToResourceMapping {
+
+    public @Nullable Integer mapThrowable(@Nonnull final Throwable throwable) {
+        Throwable throwableToCheck = throwable;
+        int depthToGo = 20;
+        while (true) {
+            @Nullable Integer resId = mapThrowableFlat(throwableToCheck);
+            if (resId != null) {
+                return resId;
+            } else {
+                throwableToCheck = throwableToCheck.getCause();
+                depthToGo--;
+                if (depthToGo <= 0 || throwableToCheck == throwable || throwableToCheck == null) {
+                    @Nullable Logger logger = Logger.Default.get();
+                    if (logger != null) {
+                        logger.log(Level.FINE, "No specific message resource ID found for " + throwable);
+                    }
+                    return null;
+                }
+            }
+        }
+    }
+
+    protected @Nullable Integer mapThrowableFlat(@Nonnull Throwable throwable) {
+        throw new java.lang.Error();
+    }
+}
+```

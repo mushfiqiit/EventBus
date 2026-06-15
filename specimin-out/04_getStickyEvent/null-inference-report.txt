@@ -1,0 +1,39 @@
+### A) Annotation decisions
+
+The following table presents the annotation decisions for every parameter, return type, and field in the code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `stickyEvents` | `@Nullable` | NullAway warned about `stickyEvents` not being initialized in the default constructor, indicating it may be null. |
+| `eventType` | `@Nonnull` | The `getStickyEvent` method does not check for null before using `eventType`, implying it is expected to be non-null. |
+| return type of `getStickyEvent` | `@Nullable` | The method returns the result of `stickyEvents.get(eventType)`, which may return null if `eventType` is not found in the map. |
+
+### B) Unsafe dereferences
+
+Based on the annotation decisions, the following dereferences of `@Nullable` values could throw a `NullPointerException`:
+
+* `synchronized (stickyEvents)`: This line dereferences `stickyEvents`, which is `@Nullable` according to the annotation decisions. If `stickyEvents` is null, this line will throw a `NullPointerException`.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.util.Map;
+
+public class EventBus {
+
+    private final @Nullable Map<Class<?>, Object> stickyEvents;
+
+    public <T> @Nullable T getStickyEvent(@Nonnull Class<T> eventType) {
+        synchronized (stickyEvents) {
+            return eventType.cast(stickyEvents.get(eventType));
+        }
+    }
+}
+```
+
+Note: The corrected annotated code adds the `@Nullable` and `@Nonnull` annotations to the fields and parameters as decided in the table. The existing logic is preserved exactly, and only the annotations are added or changed.

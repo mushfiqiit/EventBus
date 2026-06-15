@@ -1,0 +1,67 @@
+### A) Annotation Decisions
+
+Here are the annotation decisions based on the provided NullAway warnings:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `method` field | `@Nonnull` | The `method` field is guaranteed to be initialized in the constructor. |
+| `threadMode` field | `@Nonnull` | The `threadMode` field is guaranteed to be initialized in the constructor. |
+| `eventType` field | `@Nonnull` | The `eventType` field is guaranteed to be initialized in the constructor. |
+| `priority` field | `@Nonnull` | The `priority` field is a primitive type and cannot be null. |
+| `sticky` field | `@Nonnull` | The `sticky` field is a primitive type and cannot be null. |
+| `methodString` field | `@Nullable` | The `methodString` field is not guaranteed to be initialized along all control-flow paths. |
+| `method` parameter | `@Nonnull` | The `method` parameter is not annotated as nullable in the provided code. |
+| `eventType` parameter | `@Nonnull` | The `eventType` parameter is not annotated as nullable in the provided code. |
+| `threadMode` parameter | `@Nonnull` | The `threadMode` parameter is not annotated as nullable in the provided code. |
+| `priority` parameter | `@Nonnull` | The `priority` parameter is a primitive type and cannot be null. |
+| `sticky` parameter | `@Nonnull` | The `sticky` parameter is a primitive type and cannot be null. |
+
+### B) Unsafe Dereferences
+
+There are no explicit dereferences of `@Nullable` values in the provided code. However, the NullAway warning suggests that the `methodString` field could potentially be null when accessed.
+
+* Line 19: The `methodString` field is not guaranteed to be initialized along all control-flow paths, which could lead to a `NullPointerException` if accessed without a null check.
+
+### C) Corrected Annotated Code
+
+```java
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import java.lang.reflect.Method;
+
+public class SubscriberMethod {
+
+    final @Nonnull Method method;
+
+    final @Nonnull ThreadMode threadMode;
+
+    final @Nonnull Class<?> eventType;
+
+    final int priority;
+
+    final boolean sticky;
+
+    @Nullable
+    String methodString;
+
+    public SubscriberMethod(@Nonnull Method method, @Nonnull Class<?> eventType, @Nonnull ThreadMode threadMode, int priority, boolean sticky) {
+        this.method = method;
+        this.threadMode = threadMode;
+        this.eventType = eventType;
+        this.priority = priority;
+        this.sticky = sticky;
+    }
+}
+
+// === org/greenrobot/eventbus/ThreadMode.java ===
+package org.greenrobot.eventbus;
+
+public enum ThreadMode {
+}
+```
+
+Note that the `@Nonnull` annotations are added to the fields and parameters that are guaranteed to be non-null, while the `@Nullable` annotation is added to the `methodString` field, which is not guaranteed to be initialized along all control-flow paths.

@@ -1,0 +1,96 @@
+### A) Annotation Decisions
+
+Here are the annotation decisions for every parameter, return type, and field in the code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `subscriptionsByEventType` | `@Nonnull` | It must be initialized in the constructor to avoid the NullAway warning. |
+| `postSingleEventForEventType` return type | `@Nonnull` | The method always returns a boolean value, so it's non-null. |
+| `postSingleEventForEventType` parameter `event` | `@Nonnull` | The method uses the event without checking for null, so it's expected to be non-null. |
+| `postSingleEventForEventType` parameter `postingState` | `@Nonnull` | The method uses the postingState without checking for null, so it's expected to be non-null. |
+| `postSingleEventForEventType` parameter `eventClass` | `@Nonnull` | The method uses the eventClass to get subscriptions, so it's expected to be non-null. |
+| `postToSubscription` parameter `subscription` | `@Nonnull` | The method uses the subscription without checking for null, so it's expected to be non-null. |
+| `postToSubscription` parameter `event` | `@Nonnull` | The method uses the event without checking for null, so it's expected to be non-null. |
+| `postToSubscription` parameter `isMainThread` | `@Nonnull` | The method uses the boolean value without checking for null, so it's not applicable, but we can consider it as `@Nonnull` because it's a primitive type. |
+| `subscriptions` variable | `@Nullable` | It could be null if the event type is not found in the map. |
+| `subscription` variable in the for-each loop | `@Nonnull` | The loop iterates over non-null subscriptions. |
+| `PostingThreadState.isMainThread` | `@Nonnull` | It's a boolean field, so it's not applicable, but we can consider it as `@Nonnull` because it's a primitive type. |
+| `PostingThreadState.subscription` | `@Nullable` | It could be null if not set. |
+| `PostingThreadState.event` | `@Nullable` | It could be null if not set. |
+| `PostingThreadState.canceled` | `@Nonnull` | It's a boolean field, so it's not applicable, but we can consider it as `@Nonnull` because it's a primitive type. |
+
+### B) Unsafe Dereferences
+
+The following dereferences of potentially null values could throw a NullPointerException:
+
+* `subscriptions.get(eventClass)`: This is the line that NullAway warned about, on line 8.
+* `postingState.subscription`: If `postingState` is an instance of `PostingThreadState` and its `subscription` field is null, then this could throw a NullPointerException.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class EventBus {
+
+    private final @Nonnull Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private boolean postSingleEventForEventType(@Nonnull Object event, @Nonnull PostingThreadState postingState, @Nonnull Class<?> eventClass) {
+        @Nullable CopyOnWriteArrayList<Subscription> subscriptions;
+        synchronized (this) {
+            subscriptions = subscriptionsByEventType.get(eventClass);
+        }
+        if (subscriptions != null && !subscriptions.isEmpty()) {
+            for (@Nonnull Subscription subscription : subscriptions) {
+                postingState.event = event;
+                postingState.subscription = subscription;
+                boolean aborted;
+                try {
+                    postToSubscription(subscription, event, postingState.isMainThread);
+                    aborted = postingState.canceled;
+                } finally {
+                    postingState.event = null;
+                    postingState.subscription = null;
+                    postingState.canceled = false;
+                }
+                if (aborted) {
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
+        throw new java.lang.Error();
+    }
+
+    final static class PostingThreadState {
+
+        boolean isMainThread;
+
+        @Nullable Subscription subscription;
+
+        @Nullable Object event;
+
+        boolean canceled;
+    }
+
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+}
+```
+
+Note: I've assumed that `PostingThreadState` fields are correctly used outside this code snippet and are not the cause of any potential NullPointerExceptions. The corrected code includes the necessary annotations to indicate the nullability of each field, parameter, and return type.

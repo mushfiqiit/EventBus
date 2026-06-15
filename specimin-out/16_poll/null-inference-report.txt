@@ -1,0 +1,53 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| PendingPost.next | @Nullable | NullAway warns about potential nullability, and there's no guarantee that it will always be non-null. |
+| PendingPostQueue.head | @Nullable | NullAway indicates that the field is not initialized, and its value can be null. |
+| PendingPostQueue.tail | @Nullable | NullAway indicates that the field is not initialized and is never read, but in the context of the code, it could be null. |
+| PendingPostQueue.poll() return type | @Nullable | The return type can be null, as indicated by NullAway warning about assigning @Nullable expression to @NonNull field. |
+
+### B) Unsafe dereferences
+
+Based on the warnings and the code, the following dereferences could throw a `NullPointerException`:
+- `head.next` on line 14 of `PendingPostQueue.java`, because `head` is `@Nullable` and `next` is dereferenced without a null check.
+
+### C) Corrected annotated code
+```java
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class PendingPost {
+
+    @Nullable
+    PendingPost next;
+}
+
+// === org/greenrobot/eventbus/PendingPostQueue.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class PendingPostQueue {
+
+    @Nullable
+    private PendingPost head;
+
+    @Nullable
+    private PendingPost tail;
+
+    @Nullable
+    synchronized PendingPost poll() {
+        PendingPost pendingPost = head;
+        if (head != null) {
+            head = head.next;
+            if (head == null) {
+                tail = null;
+            }
+        }
+        return pendingPost;
+    }
+}
+```

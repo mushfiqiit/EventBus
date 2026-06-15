@@ -1,0 +1,37 @@
+### A) Annotation Decisions
+
+The following table presents the annotation decisions for the provided code:
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `Object executionContext` | `@Nullable` | NullAway warned about passing `null` to this parameter, indicating it can be `null`. |
+| `return type of buildForScope` | `@Nonnull` | Although not explicitly warned, the return type of `buildForScope` is not indicated to be `null`. |
+| `return type of build` | `@Nonnull` | The return type of `build` is not indicated to be `null`, as it directly calls `buildForScope`. |
+
+### B) Unsafe Dereferences
+
+The following dereferences could throw a `NullPointerException`:
+* `buildForScope(null)` in the `build` method (line 8): This is the source of the NullAway warning. However, the code does not actually dereference `executionContext` before throwing an `Error`. Therefore, there are no actual unsafe dereferences in the provided code.
+
+### C) Corrected Annotated Code
+```java
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+// === org/greenrobot/eventbus/util/AsyncExecutor.java ===
+package org.greenrobot.eventbus.util;
+
+public class AsyncExecutor {
+
+    public static class Builder {
+
+        public AsyncExecutor build() {
+            return buildForScope(null);
+        }
+
+        @Nonnull
+        public AsyncExecutor buildForScope(@Nullable Object executionContext) {
+            throw new java.lang.Error();
+        }
+    }
+}
+```

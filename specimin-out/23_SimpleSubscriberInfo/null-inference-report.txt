@@ -1,0 +1,60 @@
+### A) Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `subscriberClass` in `AbstractSubscriberInfo` constructor | `@Nonnull` | The `subscriberClass` is required for the class to function correctly, implying it must be non-null. |
+| `superSubscriberInfoClass` in `AbstractSubscriberInfo` constructor | `@Nullable` | The `superSubscriberInfoClass` is allowed to be null as indicated by the warning when passing null to the constructor. |
+| `shouldCheckSuperclass` in `AbstractSubscriberInfo` constructor | `@Nonnull` | This is a primitive type (boolean) and cannot be null. |
+| `subscriberClass` in `SimpleSubscriberInfo` constructor | `@Nonnull` | Similar to `AbstractSubscriberInfo`, this is required for correct functioning. |
+| `shouldCheckSuperclass` in `SimpleSubscriberInfo` constructor | `@Nonnull` | This is a primitive type (boolean) and cannot be null. |
+| `methodInfos` in `SimpleSubscriberInfo` constructor | `@Nullable` | The `methodInfos` is not read and the warning about passing null suggests it could be nullable. |
+| `methodInfos` field in `SimpleSubscriberInfo` | `@Nullable` | Since it's not used and can be passed as null to the constructor, it should be annotated as nullable. |
+| `return type` of all methods | Not applicable directly but implies non-null by default | Given the context, most return types should imply non-null unless explicitly marked as nullable. |
+
+### B) Unsafe Dereferences
+
+1. Passing `null` to `AbstractSubscriberInfo` constructor for `superSubscriberInfoClass` parameter (line 8 in `SimpleSubscriberInfo.java`). This could throw a `NullPointerException` if the null value is dereferenced within the constructor or any subsequent methods.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public abstract class AbstractSubscriberInfo implements SubscriberInfo {
+
+    protected AbstractSubscriberInfo(@Nonnull Class subscriberClass, @Nullable Class<? extends SubscriberInfo> superSubscriberInfoClass, boolean shouldCheckSuperclass) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+
+public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
+
+    private final @Nullable SubscriberMethodInfo[] methodInfos;
+
+    public SimpleSubscriberInfo(@Nonnull Class subscriberClass, boolean shouldCheckSuperclass, @Nullable SubscriberMethodInfo[] methodInfos) {
+        super(subscriberClass, null, shouldCheckSuperclass);
+        this.methodInfos = methodInfos;
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfo {
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberMethodInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public class SubscriberMethodInfo {
+}
+```

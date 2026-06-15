@@ -1,0 +1,5 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [UnusedMethod] Method 'getSubscriberInfo' is never used.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field subscriberInfoIndexes not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:26: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:31: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:33: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized

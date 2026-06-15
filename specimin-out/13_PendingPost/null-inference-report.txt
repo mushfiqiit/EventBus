@@ -1,0 +1,52 @@
+### A) Annotation Decisions
+
+The following table presents the annotation decisions for each parameter, return type, and field in the code.
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `pendingPostPool` | @Nullable | NullAway warns that `pendingPostPool` might not have been initialized, indicating it could be null. |
+| `event` | @Nullable | Although not explicitly flagged by NullAway, `event` could be null since it's not initialized with a non-null value. |
+| `subscription` | @Nullable | Similar to `event`, `subscription` could be null as it's not guaranteed non-null. |
+| `next` | @Nullable | The `next` field is not initialized with a non-null value, making it potentially null. |
+| PendingPost constructor parameters: `event`, `subscription` | @Nullable | These parameters are not guaranteed non-null, as the constructor does not enforce non-null values. |
+
+### B) Unsafe Dereferences
+
+Based on the provided code, there are no explicit dereferences of `@Nullable` values that could throw a `NullPointerException`. However, the NullAway warning suggests that the `pendingPostPool` variable might not have been initialized, which could lead to a `NullPointerException` if it's dereferenced without proper initialization.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.util.List;
+
+final class PendingPost {
+
+    private final static @Nullable List<PendingPost> pendingPostPool;
+
+    @Nullable
+    Object event;
+
+    @Nullable
+    Subscription subscription;
+
+    @Nullable
+    PendingPost next;
+
+    private PendingPost(@Nullable Object event, @Nullable Subscription subscription) {
+        this.event = event;
+        this.subscription = subscription;
+    }
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+import javax.annotation.NonNull;
+
+final class Subscription {
+    // No changes needed as there are no fields or methods in this class.
+}
+```
