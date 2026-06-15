@@ -32,7 +32,7 @@ public class SubscriberMethod {
     @Nonnull
     final boolean sticky;
     /** Used for efficient comparison */
-    @Nullable
+    @Nonnull
     String methodString;
 
     public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {

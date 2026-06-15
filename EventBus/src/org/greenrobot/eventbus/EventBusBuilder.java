@@ -46,7 +46,7 @@ public class EventBusBuilder {
     List<Class<?>> skipMethodVerificationForClasses;
     @Nullable
     List<SubscriberInfoIndex> subscriberInfoIndexes;
-    @Nullable
+    @Nonnull
     Logger logger;
     @Nullable
     MainThreadSupport mainThreadSupport;

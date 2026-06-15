@@ -53,7 +53,7 @@ public class EventBus {
     @Nonnull
     private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
     private final Map<Object, List<Class<?>>> typesBySubscriber;
-    @Nullable
+    @Nonnull
     private final Map<Class<?>, Object> stickyEvents;
 
     private final ThreadLocal<PostingThreadState> currentPostingThreadState = new ThreadLocal<PostingThreadState>() {
@@ -527,7 +527,7 @@ public class EventBus {
         }
     }
 
-    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nullable Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nonnull Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
@@ -558,7 +558,7 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
-        @Nullable
+        @Nonnull
         Subscription subscription;
         @Nullable
         Object event;

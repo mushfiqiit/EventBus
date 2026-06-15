@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
  */
 public class ExceptionToResourceMapping {
 
-    @Nullable
+    @Nonnull
     public final Map<Class<? extends Throwable>, Integer> throwableToMsgIdMap;
 
     public ExceptionToResourceMapping() {
