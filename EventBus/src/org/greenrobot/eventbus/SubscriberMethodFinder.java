@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 class SubscriberMethodFinder {
     /*
@@ -38,6 +40,7 @@ class SubscriberMethodFinder {
     private static final int MODIFIERS_IGNORE = Modifier.ABSTRACT | Modifier.STATIC | BRIDGE | SYNTHETIC;
     private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE = new ConcurrentHashMap<>();
 
+    @Nullable
     private List<SubscriberInfoIndex> subscriberInfoIndexes;
     private final boolean strictMethodVerification;
     private final boolean ignoreGeneratedIndex;
@@ -52,7 +55,8 @@ class SubscriberMethodFinder {
         this.ignoreGeneratedIndex = ignoreGeneratedIndex;
     }
 
-    List<SubscriberMethod> findSubscriberMethods(Class<?> subscriberClass) {
+    @Nonnull
+    List<SubscriberMethod> findSubscriberMethods(@Nonnull Class<?> subscriberClass) {
         List<SubscriberMethod> subscriberMethods = METHOD_CACHE.get(subscriberClass);
         if (subscriberMethods != null) {
             return subscriberMethods;
@@ -72,7 +76,8 @@ class SubscriberMethodFinder {
         }
     }
 
-    private List<SubscriberMethod> findUsingInfo(Class<?> subscriberClass) {
+    @Nonnull
+    private List<SubscriberMethod> findUsingInfo(@Nonnull Class<?> subscriberClass) {
         FindState findState = prepareFindState();
         findState.initForSubscriber(subscriberClass);
         while (findState.clazz != null) {
@@ -119,7 +124,8 @@ class SubscriberMethodFinder {
         return new FindState();
     }
 
-    private SubscriberInfo getSubscriberInfo(FindState findState) {
+    @Nullable
+    private SubscriberInfo getSubscriberInfo(@Nonnull FindState findState) {
         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
             if (findState.clazz == superclassInfo.getSubscriberClass()) {
@@ -137,7 +143,8 @@ class SubscriberMethodFinder {
         return null;
     }
 
-    private List<SubscriberMethod> findUsingReflection(Class<?> subscriberClass) {
+    @Nonnull
+    private List<SubscriberMethod> findUsingReflection(@Nonnull Class<?> subscriberClass) {
         FindState findState = prepareFindState();
         findState.initForSubscriber(subscriberClass);
         while (findState.clazz != null) {
@@ -199,17 +206,24 @@ class SubscriberMethodFinder {
     }
 
     static class FindState {
+        @Nonnull
         final List<SubscriberMethod> subscriberMethods = new ArrayList<>();
+        @Nonnull
         final Map<Class, Object> anyMethodByEventType = new HashMap<>();
+        @Nonnull
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
+        @Nonnull
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
+@Nullable
         Class<?> subscriberClass;
+@Nullable
         Class<?> clazz;
         boolean skipSuperClasses;
+        @Nullable
         SubscriberInfo subscriberInfo;
 
-        void initForSubscriber(Class<?> subscriberClass) {
+        void initForSubscriber(@Nonnull Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;
             subscriberInfo = null;
@@ -226,7 +240,7 @@ class SubscriberMethodFinder {
             subscriberInfo = null;
         }
 
-        boolean checkAdd(Method method, Class<?> eventType) {
+        boolean checkAdd(@Nonnull Method method, @Nonnull Class<?> eventType) {
             // 2 level check: 1st level with event type only (fast), 2nd level with complete signature when required.
             // Usually a subscriber doesn't have methods listening to the same event type.
             Object existing = anyMethodByEventType.put(eventType, method);
@@ -245,7 +259,7 @@ class SubscriberMethodFinder {
             }
         }
 
-        private boolean checkAddWithMethodSignature(Method method, Class<?> eventType) {
+        private boolean checkAddWithMethodSignature(@Nonnull Method method, @Nonnull Class<?> eventType) {
             methodKeyBuilder.setLength(0);
             methodKeyBuilder.append(method.getName());
             methodKeyBuilder.append('>').append(eventType.getName());

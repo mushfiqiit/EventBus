@@ -1,0 +1,74 @@
+### Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| ExceptionToResourceMapping.mapThrowable(Throwable throwable) parameter | @Nonnull | The method does not handle null input explicitly and would throw a NullPointerException if throwable were null. |
+| ExceptionToResourceMapping.mapThrowable() return type | @Nullable | NullAway flags the return expression as potentially null. |
+| Logger.Default.get() return type | @Nullable | The method throws an Error, which is not explicitly handled, and its return type is unknown. |
+| Logger.log(Level level, String msg) parameter level | @Nonnull | The method does not handle null input explicitly for the level parameter. |
+| Logger.log(Level level, String msg) parameter msg | @Nonnull | The method does not handle null input explicitly for the msg parameter. |
+| ExceptionToResourceMapping.mapThrowableFlat(Throwable throwable) parameter | @Nonnull | The method does not handle null input explicitly for the throwable parameter. |
+| ExceptionToResourceMapping.mapThrowableFlat(Throwable throwable) return type | @Nullable | NullAway warns about a null expression, and the method can potentially return null. |
+
+### Unsafe Dereferences
+
+1. Line 21: `throwableToCheck` is a @Nullable value, and its `getCause()` method is called without a null check. 
+2. Line 21: `throwableToCheck` is a @Nullable value, and its `==` operator is used with `throwable` and `null` without a null check.
+3. Line 13: `logger` is a @Nullable value, and its `log()` method is called without a null check.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/Logger.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import java.util.logging.Level;
+
+public interface Logger {
+
+    default void log(Level level, String msg) {
+        throw new Error();
+    }
+
+    class Default {
+
+        public static @Nullable Logger get() {
+            throw new java.lang.Error();
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/util/ExceptionToResourceMapping.java ===
+package org.greenrobot.eventbus.util;
+
+import org.greenrobot.eventbus.Logger;
+import javax.annotation.Nullable;
+import java.util.logging.Level;
+
+public class ExceptionToResourceMapping {
+
+    public @Nullable Integer mapThrowable(final Throwable throwable) {
+        Throwable throwableToCheck = throwable;
+        int depthToGo = 20;
+        while (true) {
+            @Nullable Integer resId = mapThrowableFlat(throwableToCheck);
+            if (resId != null) {
+                return resId;
+            } else {
+                throwableToCheck = throwableToCheck.getCause();
+                depthToGo--;
+                if (depthToGo <= 0 || throwableToCheck == throwable || throwableToCheck == null) {
+                    @Nullable Logger logger = Logger.Default.get();
+                    logger.log(Level.FINE, "No specific message resource ID found for " + throwable);
+                    return null;
+                }
+            }
+        }
+    }
+
+    protected @Nullable Integer mapThrowableFlat(Throwable throwable) {
+        throw new java.lang.Error();
+    }
+}
+```

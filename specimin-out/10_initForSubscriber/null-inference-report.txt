@@ -1,0 +1,75 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `subscriberClass` parameter in `initForSubscriber` | `@Nonnull` | The NullAway warnings suggest this parameter is not null. |
+| return type of `initForSubscriber` | - | Method has no return type, so no annotation is needed. |
+| `subscriberClass` field in `FindState` | `@Nonnull` | NullAway warning suggests this field should be initialized to prevent null pointer exceptions. |
+| `clazz` field in `FindState` | `@Nonnull` | NullAway warning suggests this field should be initialized to prevent null pointer exceptions. |
+| `subscriberInfo` field in `FindState` | `@Nullable` | NullAway warning suggests this field may be assigned a null value. |
+| `skipSuperClasses` field in `FindState` | `@Nonnull` | This field is a primitive boolean, so it cannot be null. |
+| return type of `moveToSuperclass` | - | Method has no return type, so no annotation is needed. |
+| `clazz` in `moveToSuperclass` assignment | `@Nullable` | NullAway warnings suggest this expression may be null. |
+| `subscriberClass` in `SubscriberMethodFinder` constructor | `@Nonnull` | The NullAway warnings suggest this field should be initialized to prevent null pointer exceptions. |
+
+### B) Unsafe dereferences
+
+1. Line 20: `clazz = clazz.getSuperclass();` - The `clazz` field is assigned a null value on line 15, and later dereferenced on this line, which could throw a NullPointerException.
+2. Line 25: `String clazzName = clazz.getName();` - The `clazz` field is assigned a null value on line 20, and later dereferenced on this line, which could throw a NullPointerException.
+3. Line 30: `clazz = null;` - The `clazz` field is assigned a null value, and later dereferenced, which could throw a NullPointerException.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nonnull
+        Class<?> subscriberClass;
+
+        @Nonnull
+        Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        @Nullable
+        SubscriberInfo subscriberInfo;
+
+        void initForSubscriber(@Nonnull Class<?> subscriberClass) {
+            this.subscriberClass = clazz = subscriberClass;
+            skipSuperClasses = false;
+            subscriberInfo = null;
+        }
+
+        void moveToSuperclass() {
+            if (skipSuperClasses) {
+                clazz = null;
+            } else {
+                clazz = clazz.getSuperclass();
+                if (clazz != null) {
+                    String clazzName = clazz.getName();
+                    if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+                        clazz = null;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+
+public interface SubscriberInfo {
+}
+```

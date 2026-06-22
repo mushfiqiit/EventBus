@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/15_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:17: error: variable pendingPostPool might not have been initialized

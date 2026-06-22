@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEvent/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable eventType not initialized in the default constructor

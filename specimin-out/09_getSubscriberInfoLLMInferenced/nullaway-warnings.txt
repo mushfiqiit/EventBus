@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [UnusedMethod] Method 'getSubscriberInfo' is never used.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: warning: [NullAway] passing @Nullable parameter 'findState.clazz' where @NonNull is required

@@ -1,0 +1,84 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `clazz` field | `@Nullable` | The NullAway warnings indicate that `clazz` may be assigned `null` values, so it should be marked as `@Nullable`. |
+| `skipSuperClasses` field | `@Nonnull` | The field is a primitive `boolean` and cannot be `null`, so it can remain unannotated (defaulting to `@Nonnull`). |
+| `moveToSuperclass()` method return type | `@Nonnull` | The method does not return any value (i.e., its return type is `void`), but if it were to return a value, it would not be `null` based on the method's logic. However, since it's `void`, no annotation is needed. |
+| `clazz.getSuperclass()` expression | `@Nullable` | The `getSuperclass()` method may return `null` if the class has no superclass, which would happen with the `Object` class. |
+| `clazz.getName()` expression | `@Nonnull` | The `getName()` method of `Class` never returns `null`, so it can remain unannotated (defaulting to `@Nonnull`). |
+| `clazz` assignment in `if (skipSuperClasses)` block | `@Nullable` | This is one of the places where `clazz` is explicitly set to `null`, indicating it should be `@Nullable`. |
+| `clazz` assignment in `else` block | `@Nullable` | Similarly, `clazz` is assigned the result of `getSuperclass()`, which can be `null`, reinforcing the decision to mark `clazz` as `@Nullable`. |
+
+### B) Unsafe dereferences
+
+Based on the NullAway warnings, the following dereferences of `@Nullable` values could throw a `NullPointerException`:
+
+1. `clazz.getSuperclass()` (line 18): This is an unsafe dereference because `clazz` might be `null`, and attempting to call `getSuperclass()` on `null` would throw a `NullPointerException`.
+2. `clazz.getName()` (line 13): Similarly, if `clazz` is `null`, calling `getName()` on it would result in a `NullPointerException`.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nullable
+        Class<?> clazz;
+
+        /* @Nonnull */ 
+        boolean skipSuperClasses;
+
+        void moveToSuperclass() {
+            if (skipSuperClasses) {
+                clazz = null;
+            } else {
+                clazz = clazz.getSuperclass();
+                if (clazz != null) {
+                    String clazzName = clazz.getName();
+                    if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+                        clazz = null;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+However, we were instructed not to add null checks, but to only add annotations. The original code does not include null checks, but based on the instructions for part C, adding null checks was not allowed even though it's necessary for safety. Therefore, the corrected code strictly following the instructions without adding any null checks would look like this:
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        @Nullable
+        Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        void moveToSuperclass() {
+            if (skipSuperClasses) {
+                clazz = null;
+            } else {
+                clazz = clazz.getSuperclass();
+                String clazzName = clazz.getName();
+                if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+                    clazz = null;
+                }
+            }
+        }
+    }
+}
+```

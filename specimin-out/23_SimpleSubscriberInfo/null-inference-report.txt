@@ -1,0 +1,152 @@
+### A) Annotation decisions
+
+The following table presents the annotation decisions for each parameter, return type, and field in the code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `AbstractSubscriberInfo` constructor: `subscriberClass` | `@Nonnull` | This parameter is likely required to initialize the object. |
+| `AbstractSubscriberInfo` constructor: `superSubscriberInfoClass` | `@Nullable` | This parameter is allowed to be null as evidenced by the passing of null in the `SimpleSubscriberInfo` constructor. |
+| `AbstractSubscriberInfo` constructor: `shouldCheckSuperclass` | `@Nonnull` | This parameter is a primitive boolean and cannot be null. |
+| `SimpleSubscriberInfo` constructor: `subscriberClass` | `@Nonnull` | This parameter is likely required to initialize the object. |
+| `SimpleSubscriberInfo` constructor: `shouldCheckSuperclass` | `@Nonnull` | This parameter is a primitive boolean and cannot be null. |
+| `SimpleSubscriberInfo` constructor: `methodInfos` | `@Nonnull` | The `methodInfos` field is not initialized with a null check, so this parameter is likely required. |
+| `SubscriberMethodInfo` class: `methodName` | `@Nonnull` | This field is initialized in the constructor and should not be null. |
+| `SubscriberMethodInfo` class: `threadMode` | `@Nonnull` | This field is initialized in the constructor and should not be null. |
+| `SubscriberMethodInfo` class: `eventType` | `@Nonnull` | This field is initialized in the constructor and should not be null. |
+| `SubscriberMethodInfo` class: `priority` | `@Nonnull` | This field is a primitive integer and cannot be null. |
+| `SubscriberMethodInfo` class: `sticky` | `@Nonnull` | This field is a primitive boolean and cannot be null. |
+| `SubscriberInfo` interface: `getSubscriberMethods()` return type | `@Nonnull` | This return type should not be null as it returns an array of subscriber methods. |
+| `SimpleSubscriberInfo` class: `methodInfos` field | `@Nonnull` | The `methodInfos` field is not initialized with a null check, so this field is likely required. |
+| `SimpleSubscriberInfo` class: `createSubscriberMethod()` return type | `@Nonnull` | This return type should not be null as it returns a subscriber method. |
+| `SimpleSubscriberInfo` class: `createSubscriberMethod()` `methodName` parameter | `@Nonnull` | This parameter should not be null as it is used to create a subscriber method. |
+| `SimpleSubscriberInfo` class: `createSubscriberMethod()` `eventType` parameter | `@Nonnull` | This parameter should not be null as it is used to create a subscriber method. |
+| `SimpleSubscriberInfo` class: `createSubscriberMethod()` `threadMode` parameter | `@Nonnull` | This parameter should not be null as it is used to create a subscriber method. |
+| `SimpleSubscriberInfo` class: `createSubscriberMethod()` `priority` parameter | `@Nonnull` | This parameter is a primitive integer and cannot be null. |
+| `SimpleSubscriberInfo` class: `createSubscriberMethod()` `sticky` parameter | `@Nonnull` | This parameter is a primitive boolean and cannot be null. |
+
+### B) Unsafe dereferences
+
+Based on the NullAway warnings, the following are the potential unsafe dereferences:
+
+1. The expression `info.methodName` in the `getSubscriberMethods()` method of the `SimpleSubscriberInfo` class could throw a NullPointerException if `info` is null. However, based on the annotation decisions, `info` is not expected to be null.
+2. The expression `info.threadMode` in the `getSubscriberMethods()` method of the `SimpleSubscriberInfo` class could throw a NullPointerException if `info` is null. However, based on the annotation decisions, `info` is not expected to be null.
+3. The expression `info.eventType` in the `getSubscriberMethods()` method of the `SimpleSubscriberInfo` class could throw a NullPointerException if `info` is null. However, based on the annotation decisions, `info` is not expected to be null.
+
+However, based on the line numbers from the NullAway warnings, the actual unsafe dereferences are:
+
+1. Line 10: passing `null` where `@NonNull` is required in the `SimpleSubscriberInfo` constructor.
+2. Line 14: No unsafe dereference, this is a MissingOverride warning.
+3. Lines 7, 9, 11: The `SubscriberMethodInfo` constructor does not initialize the `methodName`, `threadMode`, and `eventType` fields, which can lead to NullPointerExceptions.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+public class SubscriberMethod {
+}
+
+// === org/greenrobot/eventbus/ThreadMode.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+public enum ThreadMode {
+}
+
+// === org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.greenrobot.eventbus.SubscriberMethod;
+import org.greenrobot.eventbus.ThreadMode;
+
+public abstract class AbstractSubscriberInfo implements SubscriberInfo {
+
+    protected AbstractSubscriberInfo(@Nonnull Class subscriberClass, @Nullable Class<? extends SubscriberInfo> superSubscriberInfoClass, boolean shouldCheckSuperclass) {
+        throw new java.lang.Error();
+    }
+
+    @Nonnull
+    protected SubscriberMethod createSubscriberMethod(@Nonnull String methodName, @Nonnull Class<?> eventType, @Nonnull ThreadMode threadMode, int priority, boolean sticky) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nonnull;
+
+import org.greenrobot.eventbus.SubscriberMethod;
+
+public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
+
+    @Nonnull
+    private final SubscriberMethodInfo[] methodInfos;
+
+    public SimpleSubscriberInfo(@Nonnull Class subscriberClass, boolean shouldCheckSuperclass, @Nonnull SubscriberMethodInfo[] methodInfos) {
+        super(subscriberClass, null, shouldCheckSuperclass);
+        this.methodInfos = methodInfos;
+    }
+
+    @Nonnull
+    @Override
+    public synchronized SubscriberMethod[] getSubscriberMethods() {
+        int length = methodInfos.length;
+        @Nonnull SubscriberMethod[] methods = new SubscriberMethod[length];
+        for (int i = 0; i < length; i++) {
+            @Nonnull SubscriberMethodInfo info = methodInfos[i];
+            methods[i] = createSubscriberMethod(info.methodName, info.eventType, info.threadMode, info.priority, info.sticky);
+        }
+        return methods;
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nonnull;
+
+import org.greenrobot.eventbus.SubscriberMethod;
+
+public interface SubscriberInfo {
+
+    @Nonnull
+    default SubscriberMethod[] getSubscriberMethods() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberMethodInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nonnull;
+
+import org.greenrobot.eventbus.ThreadMode;
+
+public class SubscriberMethodInfo {
+
+    @Nonnull
+    public final String methodName;
+
+    @Nonnull
+    public final ThreadMode threadMode;
+
+    @Nonnull
+    public final Class<?> eventType;
+
+    public final int priority = 0;
+
+    public final boolean sticky = false;
+
+    public SubscriberMethodInfo(@Nonnull String methodName, @Nonnull ThreadMode threadMode, @Nonnull Class<?> eventType) {
+        this.methodName = methodName;
+        this.threadMode = threadMode;
+        this.eventType = eventType;
+    }
+}
+```

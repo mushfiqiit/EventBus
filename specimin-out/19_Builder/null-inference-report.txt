@@ -1,0 +1,56 @@
+### A) Annotation Decisions
+
+The following table outlines the annotation decisions for each field in the code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `threadPool` field | `@Nullable` | NullAway flagged it as potentially null and not initialized along all control-flow paths. |
+| `failureEventType` field | `@Nullable` | NullAway flagged it as potentially null and not initialized along all control-flow paths. |
+| `eventBus` field | `@Nullable` | NullAway flagged it as potentially null and not initialized along all control-flow paths. |
+| `Builder` constructor return type | `@Nonnull` | Since the constructor returns a non-null object. |
+
+### B) Unsafe Dereferences
+
+The following list outlines every dereference of a `@Nullable` value in the code that could throw a `NullPointerException`, cross-referencing the NullAway warnings by line number:
+
+* `threadPool` field (line 10) could be dereferenced and throw a `NullPointerException` if used later in the code.
+* `failureEventType` field (line 12) could be dereferenced and throw a `NullPointerException` if used later in the code.
+* `eventBus` field (line 14) could be dereferenced and throw a `NullPointerException` if used later in the code.
+
+However, in the provided code, none of these fields are actually being dereferenced.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+public class EventBus {
+}
+
+// === org/greenrobot/eventbus/util/AsyncExecutor.java ===
+package org.greenrobot.eventbus.util;
+
+import org.greenrobot.eventbus.EventBus;
+import java.util.concurrent.Executor;
+import javax.annotation.Nullable;
+
+public class AsyncExecutor {
+
+    public static class Builder {
+
+        private @Nullable Executor threadPool;
+
+        private @Nullable Class<?> failureEventType;
+
+        private @Nullable EventBus eventBus;
+
+        private Builder() {
+        }
+    }
+}
+```
+
+Note that the `EventBus` class doesn't need any nullable annotations since it doesn't have any fields or methods in this reduced source code. The fields in the `Builder` class are annotated with `@Nullable` to reflect that they might be null according to the NullAway warnings.

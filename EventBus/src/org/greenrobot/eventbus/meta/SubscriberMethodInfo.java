@@ -16,10 +16,14 @@
 package org.greenrobot.eventbus.meta;
 
 import org.greenrobot.eventbus.ThreadMode;
+import javax.annotation.Nonnull;
 
 public class SubscriberMethodInfo {
+    @Nonnull
     final String methodName;
+    @Nonnull
     final ThreadMode threadMode;
+    @Nonnull
     final Class<?> eventType;
     final int priority;
     final boolean sticky;

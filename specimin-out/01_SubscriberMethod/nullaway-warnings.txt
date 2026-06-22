@@ -1,0 +1,3 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:27: warning: [UnusedMethod] Method 'checkMethodString' is never used.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:19: warning: [NullAway] initializer method does not guarantee @NonNull field methodString (line 17) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:37: warning: [MissingOverride] hashCode overrides method in Object; expected @Override

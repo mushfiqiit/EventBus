@@ -1,0 +1,47 @@
+### Annotation Decisions
+The following table presents the annotation decisions for the given code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `ThrowableFailureEvent` constructor parameter `throwable` | `@Nonnull` | The constructor does not check for null, so it is expected to be non-null. |
+| `ThrowableFailureEvent` constructor parameter `suppressErrorUi` | `@Nonnull` | Primitive boolean cannot be null. |
+| `throwable` field | `@Nonnull` | It is initialized in the constructor and never reassigned. |
+| `suppressErrorUi` field | `@Nonnull` | Primitive boolean cannot be null. |
+| `executionContext` field | `@Nullable` | NullAway warning indicates that the field may not be initialized. |
+| `HasExecutionScope` interface | No annotation | Interfaces do not have annotations in this context. |
+
+### Unsafe Dereferences
+The following potential unsafe dereferences are found in the code:
+- `executionContext` is never read, but it is not guaranteed to be non-null due to the NullAway warning on line 11.
+
+### Corrected Annotated Code
+```java
+// === org/greenrobot/eventbus/util/HasExecutionScope.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public interface HasExecutionScope {
+}
+
+// === org/greenrobot/eventbus/util/ThrowableFailureEvent.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public class ThrowableFailureEvent implements HasExecutionScope {
+
+    protected final @Nonnull Throwable throwable;
+
+    protected final boolean suppressErrorUi;
+
+    private @Nullable Object executionContext;
+
+    public ThrowableFailureEvent(@Nonnull Throwable throwable, boolean suppressErrorUi) {
+        this.throwable = throwable;
+        this.suppressErrorUi = suppressErrorUi;
+    }
+}
+```

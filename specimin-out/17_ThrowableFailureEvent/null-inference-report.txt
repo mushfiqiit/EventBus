@@ -1,0 +1,48 @@
+### Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| ThrowableFailureEvent.throwable | @Nonnull | The field is initialized in the constructor and not reassignable, so it's guaranteed non-null. |
+| ThrowableFailureEvent.suppressErrorUi | @Nonnull | The field is initialized with a primitive boolean value, which cannot be null. |
+| ThrowableFailureEvent.executionContext | @Nullable | NullAway warns that the field might not be initialized along all control-flow paths, indicating it could be null. |
+| ThrowableFailureEvent(Throwable throwable) parameter | @Nonnull | The parameter is used to initialize the non-null field 'throwable', suggesting it's expected to be non-null. |
+| HasExecutionScope interface | N/A | Interfaces do not have parameters or return types that can be annotated for nullability. |
+
+### Unsafe Dereferences
+
+Based on the NullAway warnings, there's a potential unsafe dereference of the `executionContext` field. However, the code provided does not explicitly dereference this field. The warning on line 9 about the unused variable and the warning on line 11 about the uninitialized `executionContext` field suggest potential issues but do not directly indicate a dereference that could throw a NullPointerException.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/util/HasExecutionScope.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nonnull;
+
+public interface HasExecutionScope {
+}
+
+// === org/greenrobot/eventbus/util/ThrowableFailureEvent.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class ThrowableFailureEvent implements HasExecutionScope {
+
+    @Nonnull
+    protected final Throwable throwable;
+
+    @Nonnull
+    protected final boolean suppressErrorUi;
+
+    @Nullable
+    private Object executionContext;
+
+    public ThrowableFailureEvent(@Nonnull Throwable throwable) {
+        this.throwable = throwable;
+        suppressErrorUi = false;
+    }
+}
+```

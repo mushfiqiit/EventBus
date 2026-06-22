@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:21: warning: [UnusedMethod] Method 'subscribe' is never used.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'newSubscription' is never read.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'stickyEvent' is never read.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:80: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

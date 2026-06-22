@@ -1,0 +1,73 @@
+### Annotation Decisions
+
+Here are the annotation decisions based on the provided code and NullAway warnings:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| Subscription.subscriber | @Nonnull | The subscriber is a final field and is guaranteed to be initialized. |
+| Subscription.subscriberMethod | @Nonnull | The subscriberMethod is a final field and is guaranteed to be initialized. |
+| SubscriberMethod.method | @Nonnull | The method is a final field and is guaranteed to be initialized. |
+| EventBus.invokeSubscriber(subscription) | @Nonnull | The subscription is a method parameter and should be guaranteed to be non-null by the caller. |
+| EventBus.invokeSubscriber(event) | @Nonnull | The event is a method parameter and should be guaranteed to be non-null by the caller. |
+| EventBus.handleSubscriberException(subscription) | @Nonnull | The subscription is a method parameter and should be guaranteed to be non-null by the caller. |
+| EventBus.handleSubscriberException(event) | @Nonnull | The event is a method parameter and should be guaranteed to be non-null by the caller. |
+| EventBus.handleSubscriberException(cause) | @Nonnull | The cause is a method parameter and should be guaranteed to be non-null by the caller. |
+
+### Unsafe Dereferences
+
+Based on the provided code and NullAway warnings, the following dereferences could throw a NullPointerException:
+
+* `subscription.subscriberMethod.method` (line 7): This dereference could throw a NullPointerException if `subscription.subscriberMethod` or `subscription.subscriberMethod.method` is null.
+
+### Corrected Annotated Code
+
+Here is the fully annotated version of each file:
+
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.InvocationTargetException;
+
+public class EventBus {
+
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nonnull Object event) {
+        try {
+            subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
+        } catch (InvocationTargetException e) {
+            handleSubscriberException(subscription, event, e.getCause());
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException("Unexpected exception", e);
+        }
+    }
+
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nonnull Throwable cause) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.Method;
+
+public class SubscriberMethod {
+
+    @Nonnull
+    final Method method;
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+
+    @Nonnull
+    final Object subscriber;
+
+    @Nonnull
+    final SubscriberMethod subscriberMethod;
+}
+```

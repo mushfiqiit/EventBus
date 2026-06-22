@@ -1,0 +1,17 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/17_ThrowableFailureEventLLMInferenced/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:15: warning: [UnusedVariable] The field 'executionContext' is never read.
+    private Object executionContext;
+                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/17_ThrowableFailureEventLLMInferenced/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:11: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+2 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

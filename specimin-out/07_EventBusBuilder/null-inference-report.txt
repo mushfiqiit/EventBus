@@ -1,0 +1,89 @@
+### A) Annotation decisions
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| ExecutorService DEFAULT_EXECUTOR_SERVICE | @Nullable | NullAway warns that this variable might not have been initialized, so it could be null. |
+| boolean logSubscriberExceptions | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean logNoSubscriberMessages | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean sendSubscriberExceptionEvent | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean sendNoSubscriberEvent | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean throwSubscriberException | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean eventInheritance | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean ignoreGeneratedIndex | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| boolean strictMethodVerification | @Nonnull (unannotated) | This is a primitive type and cannot be null. |
+| ExecutorService executorService | @Nullable | ExecutorService is an interface and can be null. |
+| List<Class<?>> skipMethodVerificationForClasses | @Nullable | List is an interface and can be null. |
+| List<SubscriberInfoIndex> subscriberInfoIndexes | @Nullable | List is an interface and can be null. |
+| Logger logger | @Nullable | Logger is an interface and can be null. |
+| MainThreadSupport mainThreadSupport | @Nullable | MainThreadSupport is an interface and can be null. |
+
+### B) Unsafe dereferences
+
+1. Line 39: The NullAway warning indicates that the variable `DEFAULT_EXECUTOR_SERVICE` might not have been initialized, which could throw a NullPointerException if it is used.
+
+### C) Corrected annotated code
+
+```java
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+// === org/greenrobot/eventbus/EventBusBuilder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+
+@SuppressWarnings("unused")
+public class EventBusBuilder {
+
+    private final static @Nullable ExecutorService DEFAULT_EXECUTOR_SERVICE;
+
+    boolean logSubscriberExceptions;
+
+    boolean logNoSubscriberMessages;
+
+    boolean sendSubscriberExceptionEvent;
+
+    boolean sendNoSubscriberEvent;
+
+    boolean throwSubscriberException;
+
+    boolean eventInheritance;
+
+    boolean ignoreGeneratedIndex;
+
+    boolean strictMethodVerification;
+
+    @Nullable ExecutorService executorService;
+
+    @Nullable List<Class<?>> skipMethodVerificationForClasses;
+
+    @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes;
+
+    @Nullable Logger logger;
+
+    @Nullable MainThreadSupport mainThreadSupport;
+
+    EventBusBuilder() {
+    }
+}
+
+// === org/greenrobot/eventbus/Logger.java ===
+package org.greenrobot.eventbus;
+
+public interface Logger {
+}
+
+// === org/greenrobot/eventbus/MainThreadSupport.java ===
+package org.greenrobot.eventbus;
+
+public interface MainThreadSupport {
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfoIndex.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfoIndex {
+}
+```

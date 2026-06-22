@@ -1,0 +1,16 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/21_mapThrowableLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:21: warning: [NullAway] dereferenced expression logger is @Nullable
+                    logger.log(Level.FINE, "No specific message resource ID found for " + throwable);
+                          ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/21_mapThrowableLLMInferenced/org/greenrobot/eventbus/Logger.java:14: warning: [DoNotCallSuggester] Methods that always throw an exception should be annotated with @DoNotCall to prevent calls at compilation time vs. at runtime (note that adding @DoNotCall will break any existing callers of this API).
+        public static @Nullable Logger get() {
+                                       ^
+    (see https://errorprone.info/bugpattern/DoNotCallSuggester)
+  Did you mean '@DoNotCall("Always throws java.lang.Error") public static @Nullable Logger get() {'?
+2 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

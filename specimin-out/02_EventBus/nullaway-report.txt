@@ -1,0 +1,23 @@
+> Task :clean
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBus/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+    final ThreadMode threadMode;
+                     ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBus/org/greenrobot/eventbus/SubscriberMethod.java:7: error: variable eventType not initialized in the default constructor
+    final Class<?> eventType;
+                   ^
+2 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 2 executed

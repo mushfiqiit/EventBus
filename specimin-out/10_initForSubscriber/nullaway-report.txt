@@ -1,0 +1,31 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberClass not initialized
+        Class<?> subscriberClass;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+        Class<?> clazz;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+        SubscriberInfo subscriberInfo;
+                       ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:20: warning: [NullAway] assigning @Nullable expression to @NonNull field
+            subscriberInfo = null;
+                           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:25: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                clazz = null;
+                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:30: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                    clazz = null;
+                          ^
+    (see http://t.uber.com/nullaway )
+6 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

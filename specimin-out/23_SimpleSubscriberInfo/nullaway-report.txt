@@ -1,0 +1,36 @@
+> Task :clean
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:10: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+        super(subscriberClass, null, shouldCheckSuperclass);
+                               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:14: warning: [MissingOverride] getSubscriberMethods implements method in SubscriberInfo; expected @Override
+    public synchronized SubscriberMethod[] getSubscriberMethods() {
+                                           ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public synchronized SubscriberMethod[] getSubscriberMethods() {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SubscriberMethodInfo.java:7: error: variable methodName not initialized in the default constructor
+    final String methodName;
+                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SubscriberMethodInfo.java:9: error: variable threadMode not initialized in the default constructor
+    final ThreadMode threadMode;
+                     ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SubscriberMethodInfo.java:11: error: variable eventType not initialized in the default constructor
+    final Class<?> eventType;
+                   ^
+3 errors
+2 warnings
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 2 executed

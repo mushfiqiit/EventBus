@@ -1,0 +1,66 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| EventBusBuilder.mainThreadSupport | @Nullable | The NullAway warning suggests that `mainThreadSupport` might not be initialized. |
+| EventBusBuilder.getMainThreadSupport() return type | @Nullable | The method might return `null` if both `mainThreadSupport` is `null` and `AndroidComponents` are not available. |
+| AndroidComponents.defaultMainThreadSupport | @Nullable | The NullAway warning mentions that `defaultMainThreadSupport` is not initialized in the default constructor. |
+| AndroidComponents.areAvailable() return type | @Nonnull | The method returns a boolean value, which is not nullable by default. |
+| AndroidComponents.get() return type | @Nonnull | Although `get()` might throw an exception, its return type is expected to be non-null based on its name and usage. |
+
+### B) Unsafe dereferences
+
+1. `AndroidComponents.get().defaultMainThreadSupport` - This line dereferences the result of `AndroidComponents.get()`, which might be `null`, but it is annotated as `@Nonnull` based on its usage. However, considering the `@Nullable` annotation on `defaultMainThreadSupport`, it could still throw a `NullPointerException`.
+2. `mainThreadSupport` in `EventBusBuilder` - Although it's not directly dereferenced in the provided code, any usage of `mainThreadSupport` without null checks could throw a `NullPointerException`.
+
+### C) Corrected annotated code
+```java
+// === org/greenrobot/eventbus/EventBusBuilder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.android.AndroidComponents;
+import javax.annotation.Nullable;
+
+@SuppressWarnings("unused")
+public class EventBusBuilder {
+
+    @Nullable
+    MainThreadSupport mainThreadSupport;
+
+    @Nullable
+    MainThreadSupport getMainThreadSupport() {
+        if (mainThreadSupport != null) {
+            return mainThreadSupport;
+        } else if (AndroidComponents.areAvailable()) {
+            return AndroidComponents.get().defaultMainThreadSupport;
+        } else {
+            return null;
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/MainThreadSupport.java ===
+package org.greenrobot.eventbus;
+
+public interface MainThreadSupport {
+}
+
+// === org/greenrobot/eventbus/android/AndroidComponents.java ===
+package org.greenrobot.eventbus.android;
+
+import org.greenrobot.eventbus.MainThreadSupport;
+import javax.annotation.Nullable;
+
+public abstract class AndroidComponents {
+
+    public static boolean areAvailable() {
+        throw new java.lang.Error();
+    }
+
+    public static AndroidComponents get() {
+        throw new java.lang.Error();
+    }
+
+    public @Nullable MainThreadSupport defaultMainThreadSupport;
+}
+```

@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPost.java:5: warning: [NullAway] @NonNull field next not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field head not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPostQueue.java:7: warning: [NullAway] @NonNull field tail not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPostQueue.java:29: warning: [NullAway] assigning @Nullable expression to @NonNull field

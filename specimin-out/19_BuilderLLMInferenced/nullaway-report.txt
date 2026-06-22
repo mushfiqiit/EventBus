@@ -1,0 +1,22 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:13: warning: [UnusedVariable] The field 'failureEventType' is never read.
+        private @Nullable Class<?> failureEventType;
+                                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:11: warning: [UnusedVariable] The field 'threadPool' is never read.
+        private @Nullable Executor threadPool;
+                                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:15: warning: [UnusedVariable] The field 'eventBus' is never read.
+        private @Nullable EventBus eventBus;
+                                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+3 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

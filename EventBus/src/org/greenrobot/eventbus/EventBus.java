@@ -26,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * EventBus is a central publish/subscribe event system for Java and Android.
@@ -156,7 +158,7 @@ public class EventBus {
     }
 
     // Must be called in synchronized block
-    private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
+    private void subscribe(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
         Class<?> eventType = subscriberMethod.eventType;
         Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
         CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
@@ -206,7 +208,7 @@ public class EventBus {
         }
     }
 
-    private void checkPostStickyEventToSubscription(Subscription newSubscription, Object stickyEvent) {
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
         if (stickyEvent != null) {
             // If the subscriber is trying to abort the event, it will fail (event is not tracked in posting state)
             // --> Strange corner case, which we don't take care of here.
@@ -224,12 +226,12 @@ public class EventBus {
         return mainThreadSupport == null || mainThreadSupport.isMainThread();
     }
 
-    public synchronized boolean isRegistered(Object subscriber) {
+    public synchronized boolean isRegistered(@Nonnull Object subscriber) {
         return typesBySubscriber.containsKey(subscriber);
     }
 
     /** Only updates subscriptionsByEventType, not typesBySubscriber! Caller must update typesBySubscriber. */
-    private void unsubscribeByEventType(Object subscriber, Class<?> eventType) {
+    private void unsubscribeByEventType(@Nonnull Object subscriber, @Nonnull Class<?> eventType) {
         List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
         if (subscriptions != null) {
             int size = subscriptions.size();
@@ -246,7 +248,7 @@ public class EventBus {
     }
 
     /** Unregisters the given subscriber from all event classes. */
-    public synchronized void unregister(Object subscriber) {
+    public synchronized void unregister(@Nonnull Object subscriber) {
         List<Class<?>> subscribedTypes = typesBySubscriber.get(subscriber);
         if (subscribedTypes != null) {
             for (Class<?> eventType : subscribedTypes) {
@@ -259,7 +261,7 @@ public class EventBus {
     }
 
     /** Posts the given event to the event bus. */
-    public void post(Object event) {
+    public void post(@Nonnull Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();
         List<Object> eventQueue = postingState.eventQueue;
         eventQueue.add(event);
@@ -308,7 +310,7 @@ public class EventBus {
      * Posts the given event to the event bus and holds on to the event (because it is sticky). The most recent sticky
      * event of an event's type is kept in memory for future access by subscribers using {@link Subscribe#sticky()}.
      */
-    public void postSticky(Object event) {
+    public void postSticky(@Nonnull Object event) {
         synchronized (stickyEvents) {
             stickyEvents.put(event.getClass(), event);
         }
@@ -321,7 +323,8 @@ public class EventBus {
      *
      * @see #postSticky(Object)
      */
-    public <T> T getStickyEvent(Class<T> eventType) {
+    @Nullable
+    public <T> T getStickyEvent(@Nonnull Class<T> eventType) {
         synchronized (stickyEvents) {
             return eventType.cast(stickyEvents.get(eventType));
         }
@@ -332,7 +335,8 @@ public class EventBus {
      *
      * @see #postSticky(Object)
      */
-    public <T> T removeStickyEvent(Class<T> eventType) {
+    @Nullable
+    public <T> T removeStickyEvent(@Nonnull Class<T> eventType) {
         synchronized (stickyEvents) {
             return eventType.cast(stickyEvents.remove(eventType));
         }
@@ -343,7 +347,7 @@ public class EventBus {
      *
      * @return true if the events matched and the sticky event was removed.
      */
-    public boolean removeStickyEvent(Object event) {
+    public boolean removeStickyEvent(@Nonnull Object event) {
         synchronized (stickyEvents) {
             Class<?> eventType = event.getClass();
             Object existingEvent = stickyEvents.get(eventType);
@@ -365,7 +369,7 @@ public class EventBus {
         }
     }
 
-    public boolean hasSubscriberForEvent(Class<?> eventClass) {
+    public boolean hasSubscriberForEvent(@Nonnull Class<?> eventClass) {
         List<Class<?>> eventTypes = lookupAllEventTypes(eventClass);
         if (eventTypes != null) {
             int countTypes = eventTypes.size();
@@ -407,7 +411,7 @@ public class EventBus {
         }
     }
 
-    private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
+    private boolean postSingleEventForEventType(@Nonnull Object event, @Nonnull PostingThreadState postingState, @Nonnull Class<?> eventClass) {
         CopyOnWriteArrayList<Subscription> subscriptions;
         synchronized (this) {
             subscriptions = subscriptionsByEventType.get(eventClass);
@@ -434,7 +438,7 @@ public class EventBus {
         return false;
     }
 
-    private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
         switch (subscription.subscriberMethod.threadMode) {
             case POSTING:
                 invokeSubscriber(subscription, event);
@@ -470,7 +474,8 @@ public class EventBus {
     }
 
     /** Looks up all Class objects including super classes and interfaces. Should also work for interfaces. */
-    private static List<Class<?>> lookupAllEventTypes(Class<?> eventClass) {
+    @Nullable
+    private static List<Class<?>> lookupAllEventTypes(@Nonnull Class<?> eventClass) {
         synchronized (eventTypesCache) {
             List<Class<?>> eventTypes = eventTypesCache.get(eventClass);
             if (eventTypes == null) {
@@ -512,7 +517,7 @@ public class EventBus {
         }
     }
 
-    void invokeSubscriber(Subscription subscription, Object event) {
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nonnull Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
         } catch (InvocationTargetException e) {
@@ -522,7 +527,7 @@ public class EventBus {
         }
     }
 
-    private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nonnull Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
@@ -553,7 +558,9 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
+        @Nullable
         Subscription subscription;
+        @Nullable
         Object event;
         boolean canceled;
     }

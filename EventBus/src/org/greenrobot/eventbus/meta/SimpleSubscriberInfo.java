@@ -16,12 +16,14 @@
 package org.greenrobot.eventbus.meta;
 
 import org.greenrobot.eventbus.SubscriberMethod;
+import javax.annotation.Nonnull;
 
 /**
  * Uses {@link SubscriberMethodInfo} objects to create {@link org.greenrobot.eventbus.SubscriberMethod} objects on demand.
  */
 public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
 
+    @Nonnull
     private final SubscriberMethodInfo[] methodInfos;
 
     public SimpleSubscriberInfo(Class subscriberClass, boolean shouldCheckSuperclass, SubscriberMethodInfo[] methodInfos) {
@@ -30,6 +32,7 @@ public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
     }
 
     @Override
+    @Nonnull
     public synchronized SubscriberMethod[] getSubscriberMethods() {
         int length = methodInfos.length;
         SubscriberMethod[] methods = new SubscriberMethod[length];

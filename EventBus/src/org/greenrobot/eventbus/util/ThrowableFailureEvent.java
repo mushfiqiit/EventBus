@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus.util;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 
 /**
  * A generic failure event, which can be used by apps to propagate thrown exceptions.
  * Used as default failure event by {@link AsyncExecutor}.
  */
 public class ThrowableFailureEvent implements HasExecutionScope {
+    @Nonnull
     protected final Throwable throwable;
+    @Nonnull
     protected final boolean suppressErrorUi;
+    @Nullable
     private Object executionContext;
 
     public ThrowableFailureEvent(Throwable throwable) {

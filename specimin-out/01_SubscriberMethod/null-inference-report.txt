@@ -1,0 +1,76 @@
+### Part A: Annotation decisions
+
+The following table presents the annotation decisions for every parameter, return type, and field in the code:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| method | @Nonnull | Guaranteed non-null because it's a final field initialized in the constructor. |
+| threadMode | @Nonnull | Guaranteed non-null because it's a final field initialized in the constructor. |
+| eventType | @Nonnull | Guaranteed non-null because it's a final field initialized in the constructor. |
+| priority |  | A primitive type, so it's always non-null. |
+| sticky |  | A primitive type, so it's always non-null. |
+| methodString | @Nullable | May be null until initialized in the checkMethodString method. |
+| SubscriberMethod constructor method parameter | @Nonnull | These parameters are guaranteed non-null because the constructor does not check for null and uses them to initialize final fields. |
+| checkMethodString method return type | @Nullable | The method does not return any value, so its return type is void, which is non-null by default. |
+| hashCode method return type | @Nonnull | The method returns an integer, which is a primitive type and always non-null. |
+
+### Part B: Unsafe dereferences
+
+Based on the provided NullAway warnings and the code, the following are potential unsafe dereferences that could throw a NullPointerException, cross-referenced with the NullAway warnings by line number:
+
+1. Line 19: `methodString` is not guaranteed to be initialized along all control-flow paths. In the `checkMethodString` method, `methodString` is checked for null and then used. If `checkMethodString` is not called before using `methodString`, it could throw a NullPointerException.
+
+### Part C: Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.lang.reflect.Method;
+
+public class SubscriberMethod {
+
+    final @Nonnull Method method;
+
+    final @Nonnull ThreadMode threadMode;
+
+    final @Nonnull Class<?> eventType;
+
+    final int priority;
+
+    final boolean sticky;
+
+    @Nullable String methodString;
+
+    public SubscriberMethod(@Nonnull Method method, @Nonnull Class<?> eventType, @Nonnull ThreadMode threadMode, int priority, boolean sticky) {
+        this.method = method;
+        this.threadMode = threadMode;
+        this.eventType = eventType;
+        this.priority = priority;
+        this.sticky = sticky;
+    }
+
+    private synchronized void checkMethodString() {
+        if (methodString == null) {
+            StringBuilder builder = new StringBuilder(64);
+            builder.append(method.getDeclaringClass().getName());
+            builder.append('#').append(method.getName());
+            builder.append('(').append(eventType.getName());
+            methodString = builder.toString();
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return method.hashCode();
+    }
+}
+
+// === org/greenrobot/eventbus/ThreadMode.java ===
+package org.greenrobot.eventbus;
+
+public enum ThreadMode {
+}
+```

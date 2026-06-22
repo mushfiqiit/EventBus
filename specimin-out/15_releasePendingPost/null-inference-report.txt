@@ -1,0 +1,86 @@
+### Annotation Decisions
+
+The following table presents the annotation decisions for every parameter, return type, and field in the code:
+
+| Location | Inferred Annotation | One-Sentence Reason |
+| --- | --- | --- |
+| `pendingPostPool` | @Nullable | NullAway warns that `pendingPostPool` might not have been initialized. |
+| `event` | @Nullable | The `event` field is explicitly set to `null` in `releasePendingPost`, and it's also set to a potentially `null` `event` parameter. |
+| `subscription` | @Nullable | The `subscription` field is explicitly set to `null` in `releasePendingPost`, and it's also set to a potentially `null` `subscription` parameter. |
+| `next` | @Nullable | The `next` field is explicitly set to `null`, and it's also set to a potentially `null` `pendingPost.next` value. |
+| `obtainPendingPost` return type | @Nullable | The method may return `null` if `pendingPostPool` is `null` or if an exception is thrown. |
+| `obtainPendingPost` `subscription` parameter | @Nonnull | The `subscription` parameter is not explicitly marked as `null` and is used without a null check. |
+| `obtainPendingPost` `event` parameter | @Nullable | The `event` parameter is not explicitly marked as `null` and is used after a potential null dereference warning. |
+| `releasePendingPost` `pendingPost` parameter | @Nonnull | The `pendingPost` parameter is not explicitly marked as `null` and is used without a null check. |
+
+### Unsafe Dereferences
+
+The following are the dereferences of `@Nullable` values in the code that could throw a `NullPointerException`, cross-referenced with the NullAway warnings by line number:
+
+* Line 17: `pendingPostPool.size()` - The `pendingPostPool` might be `null`, causing a `NullPointerException`.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import java.util.List;
+
+final class PendingPost {
+
+    private final static @Nullable List<PendingPost> pendingPostPool;
+
+    @Nullable
+    Object event;
+
+    @Nullable
+    Subscription subscription;
+
+    @Nullable
+    PendingPost next;
+
+    private PendingPost(@Nullable Object event, Subscription subscription) {
+        throw new java.lang.Error();
+    }
+
+    @Nullable
+    static PendingPost obtainPendingPost(Subscription subscription, @Nullable Object event) {
+        synchronized (pendingPostPool) {
+            if (pendingPostPool == null) {
+                throw new java.lang.Error();
+            }
+            int size = pendingPostPool.size();
+            if (size > 0) {
+                PendingPost pendingPost = pendingPostPool.remove(size - 1);
+                pendingPost.event = event;
+                pendingPost.subscription = subscription;
+                pendingPost.next = null;
+                return pendingPost;
+            }
+        }
+        return new PendingPost(event, subscription);
+    }
+
+    static void releasePendingPost(PendingPost pendingPost) {
+        pendingPost.event = null;
+        pendingPost.subscription = null;
+        pendingPost.next = null;
+        synchronized (pendingPostPool) {
+            if (pendingPostPool == null) {
+                throw new java.lang.Error();
+            }
+            if (pendingPostPool.size() < 10000) {
+                pendingPostPool.add(pendingPost);
+            }
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+}
+```

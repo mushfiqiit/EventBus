@@ -15,12 +15,16 @@
  */
 
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
+
 
 final class PendingPostQueue {
+    @Nullable
     private PendingPost head;
+    @Nullable
     private PendingPost tail;
 
-    synchronized void enqueue(PendingPost pendingPost) {
+    synchronized void enqueue(@Nullable PendingPost pendingPost) {
         if (pendingPost == null) {
             throw new NullPointerException("null cannot be enqueued");
         }
@@ -35,6 +39,7 @@ final class PendingPostQueue {
         notifyAll();
     }
 
+    @Nullable
     synchronized PendingPost poll() {
         PendingPost pendingPost = head;
         if (head != null) {

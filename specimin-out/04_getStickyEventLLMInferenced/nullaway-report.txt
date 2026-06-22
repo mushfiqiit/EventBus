@@ -1,0 +1,26 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:21: warning: [UnusedMethod] Method 'subscribe' is never used.
+    private void subscribe(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
+                 ^
+    (see https://errorprone.info/bugpattern/UnusedMethod)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'newSubscription' is never read.
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
+                                                                          ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'checkPostStickyEventToSubscription(stickyEvent);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'stickyEvent' is never read.
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
+                                                                                                            ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'checkPostStickyEventToSubscription(newSubscription);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:80: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+            return eventType.cast(stickyEvents.get(eventType));
+            ^
+    (see http://t.uber.com/nullaway )
+4 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

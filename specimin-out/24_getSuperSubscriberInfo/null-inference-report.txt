@@ -1,0 +1,49 @@
+### A) Annotation decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `superSubscriberInfoClass` | @Nullable | NullAway warns that it may not be initialized in the default constructor |
+| `getSuperSubscriberInfo()` return type | @Nullable | Method may return null if `superSubscriberInfoClass` is null |
+| `getSuperSubscriberInfo()` method in `SubscriberInfo` interface | @Nullable | Method may throw an error, but for consistency with other methods, assume it could be null |
+
+### B) Unsafe dereferences
+
+* `superSubscriberInfoClass.newInstance()` at line 5 (corresponding to the NullAway warning) - This could throw a NullPointerException if `superSubscriberInfoClass` is null.
+
+### C) Corrected annotated code
+```java
+// === org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+import javax.annotation.Nullable;
+
+public abstract class AbstractSubscriberInfo implements SubscriberInfo {
+
+    private final @Nullable Class<? extends SubscriberInfo> superSubscriberInfoClass;
+
+    @Nullable
+    public SubscriberInfo getSuperSubscriberInfo() {
+        if (superSubscriberInfoClass == null) {
+            return null;
+        }
+        try {
+            return superSubscriberInfoClass.newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+import javax.annotation.Nullable;
+
+public interface SubscriberInfo {
+
+    @Nullable
+    default SubscriberInfo getSuperSubscriberInfo() {
+        throw new java.lang.Error();
+    }
+}
+```

@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/18_ThrowableFailureEvent/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:9: warning: [UnusedVariable] The field 'executionContext' is never read.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/18_ThrowableFailureEvent/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:11: warning: [NullAway] initializer method does not guarantee @NonNull field executionContext (line 9) is initialized along all control-flow paths (remember to check for exceptions or early returns).

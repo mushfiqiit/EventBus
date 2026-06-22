@@ -1,0 +1,32 @@
+> Task :clean
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:42: error: variable subscriberMethods not initialized in the default constructor
+        final List<SubscriberMethod> subscriberMethods;
+                                     ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:44: error: variable anyMethodByEventType not initialized in the default constructor
+        final Map<Class, Object> anyMethodByEventType;
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:46: error: variable subscriberClassByMethodKey not initialized in the default constructor
+        final Map<String, Class> subscriberClassByMethodKey;
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:48: error: variable methodKeyBuilder not initialized in the default constructor
+        final StringBuilder methodKeyBuilder;
+                            ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/11_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:10: error: variable METHOD_CACHE not initialized in the default constructor
+    private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE;
+                                                               ^
+5 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 2 executed

@@ -1,0 +1,37 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:7: error: cannot find symbol
+    public final @Nullable Map<Class<? extends Throwable>, Integer> throwableToMsgIdMap;
+                           ^
+  symbol:   class Map
+  location: class ExceptionToResourceMapping
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:16: error: cannot find symbol
+                @Nonnull Set<Entry<Class<? extends Throwable>, Integer>> mappings = throwableToMsgIdMap.entrySet();
+                         ^
+  symbol:   class Set
+  location: class ExceptionToResourceMapping
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:16: error: cannot find symbol
+                @Nonnull Set<Entry<Class<? extends Throwable>, Integer>> mappings = throwableToMsgIdMap.entrySet();
+                             ^
+  symbol:   class Entry
+  location: class ExceptionToResourceMapping
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:17: error: cannot find symbol
+                for (@Nonnull Entry<Class<? extends Throwable>, Integer> mapping : mappings) {
+                              ^
+  symbol:   class Entry
+  location: class ExceptionToResourceMapping
+4 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

@@ -1,0 +1,16 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [UnusedMethod] Method 'getSubscriberInfo' is never used.
+    private @Nullable SubscriberInfo getSubscriberInfo(@Nonnull FindState findState) {
+                                     ^
+    (see https://errorprone.info/bugpattern/UnusedMethod)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:22: warning: [NullAway] passing @Nullable parameter 'findState.clazz' where @NonNull is required
+                SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+                                                                       ^
+    (see http://t.uber.com/nullaway )
+2 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

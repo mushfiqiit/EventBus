@@ -1,0 +1,11 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/20_build/org/greenrobot/eventbus/util/AsyncExecutor.java:8: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+            return buildForScope(null);
+                                 ^
+    (see http://t.uber.com/nullaway )
+1 warning
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

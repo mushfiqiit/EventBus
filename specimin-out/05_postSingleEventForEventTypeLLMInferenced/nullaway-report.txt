@@ -1,0 +1,98 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:7: error: cannot find symbol
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+                  ^
+  symbol:   class Map
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:7: error: cannot find symbol
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+                                ^
+  symbol:   class CopyOnWriteArrayList
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:9: error: cannot find symbol
+    private final Map<Object, List<Class<?>>> typesBySubscriber;
+                  ^
+  symbol:   class Map
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:9: error: cannot find symbol
+    private final Map<Object, List<Class<?>>> typesBySubscriber;
+                              ^
+  symbol:   class List
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:11: error: cannot find symbol
+    private final Map<Class<?>, Object> stickyEvents;
+                  ^
+  symbol:   class Map
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:127: error: cannot find symbol
+    private static List<Class<?>> lookupAllEventTypes(@Nonnull Class<?> eventClass) {
+                   ^
+  symbol:   class List
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:18: error: cannot find symbol
+        @Nullable CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+                  ^
+  symbol:   class CopyOnWriteArrayList
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:20: error: cannot find symbol
+            subscriptions = new CopyOnWriteArrayList<>();
+                                ^
+  symbol:   class CopyOnWriteArrayList
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:34: error: cannot find symbol
+        @Nullable List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+                  ^
+  symbol:   class List
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:36: error: cannot find symbol
+            subscribedEvents = new ArrayList<>();
+                                   ^
+  symbol:   class ArrayList
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:42: error: cannot find symbol
+                @Nullable Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+                          ^
+  symbol:   class Set
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:42: error: package Map does not exist
+                @Nullable Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+                                 ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:43: error: package Map does not exist
+                for (Map.Entry<Class<?>, Object> entry : entries) {
+                        ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:62: error: cannot find symbol
+        @Nullable List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+                  ^
+  symbol:   class List
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:78: error: cannot find symbol
+        @Nullable List<Class<?>> eventTypes = lookupAllEventTypes(eventClass);
+                  ^
+  symbol:   class List
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:83: error: cannot find symbol
+                @Nullable CopyOnWriteArrayList<Subscription> subscriptions;
+                          ^
+  symbol:   class CopyOnWriteArrayList
+  location: class EventBus
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/05_postSingleEventForEventTypeLLMInferenced/org/greenrobot/eventbus/EventBus.java:96: error: cannot find symbol
+        @Nullable CopyOnWriteArrayList<Subscription> subscriptions;
+                  ^
+  symbol:   class CopyOnWriteArrayList
+  location: class EventBus
+17 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

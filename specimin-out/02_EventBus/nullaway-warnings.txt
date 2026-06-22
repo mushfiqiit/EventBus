@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBus/org/greenrobot/eventbus/SubscriberMethod.java:5: error: variable threadMode not initialized in the default constructor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBus/org/greenrobot/eventbus/SubscriberMethod.java:7: error: variable eventType not initialized in the default constructor

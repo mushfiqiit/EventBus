@@ -1,0 +1,234 @@
+### A) Annotation Decisions
+
+The following table presents the inferred annotations for each location in the code:
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `eventType` field in `SubscriberMethod` | `@Nonnull` | It is a final field and is guaranteed non-null because the NullAway warning is about an uninitialized `eventType` in the `SubscriberMethod` constructor, which implies the field itself is not supposed to be null. |
+| `priority` field in `SubscriberMethod` | `@Nonnull` | It is an int field, so it is always non-null. |
+| `sticky` field in `SubscriberMethod` | `@Nonnull` | It is a boolean field, so it is always non-null. |
+| `event` parameter in `postSingleEventForEventType` | `@Nonnull` | The method is supposed to post an event, so the event parameter is expected to be non-null. |
+| `postingState` parameter in `postSingleEventForEventType` | `@Nonnull` | The method uses the postingState parameter to store state during the posting process, so it is expected to be non-null. |
+| `eventClass` parameter in `postSingleEventForEventType` | `@Nonnull` | The method posts an event for a specific event class, so the event class parameter is expected to be non-null. |
+| `subscription` parameter in `postToSubscription` | `@Nonnull` | The method is supposed to post an event to a subscription, so the subscription parameter is expected to be non-null. |
+| `event` parameter in `postToSubscription` | `@Nonnull` | The method is supposed to post an event, so the event parameter is expected to be non-null. |
+| `isMainThread` parameter in `postToSubscription` | `@Nonnull` | It is a boolean parameter, so it is always non-null. |
+| `subscriber` parameter in `subscribe` | `@Nonnull` | The method is supposed to subscribe an object, so the subscriber parameter is expected to be non-null. |
+| `subscriberMethod` parameter in `subscribe` | `@Nonnull` | The method is supposed to subscribe a subscriber method, so the subscriber method parameter is expected to be non-null. |
+| `subscriptions` variable in `postSingleEventForEventType` | `@Nullable` | The variable is initialized with a value from a map, and the map might not contain the key, so it could be null. |
+| `subscribedEvents` variable in `subscribe` | `@Nullable` | The variable is initialized with a value from a map, and the map might not contain the key, so it could be null. |
+| `subscriptions` variable in `subscribe` | `@Nullable` | The variable is initialized with a value from a map, and the map might not contain the key, so it could be null. |
+| `stickyEvent` variable in `subscribe` | `@Nullable` | The variable is initialized with a value from a map, and the map might not contain the key, so it could be null. |
+| `subscribedEvents` field in `typesBySubscriber` map | `@Nonnull` | Once initialized, the field is guaranteed non-null because it is initialized with a new list when null. |
+| `subscriptions` field in `subscriptionsByEventType` map | `@Nonnull` | Once initialized, the field is guaranteed non-null because it is initialized with a new list when null. |
+
+### B) Unsafe Dereferences
+
+The following dereferences of `@Nullable` values could throw a `NullPointerException`:
+1. `subscriptions.contains(newSubscription)` (line 10): `subscriptions` is `@Nullable`.
+2. `subscriptions.add(i, newSubscription)` (line 13): `subscriptions` is `@Nullable`.
+3. `subscriptions.size()` (line 14): `subscriptions` is `@Nullable`.
+4. `subscribedEvents.add(eventType)` (line 23): `subscribedEvents` is `@Nullable`.
+5. `stickyEvents.get(eventType)` (line 28): The `get` method of `stickyEvents` returns `@Nullable`.
+6. `subscriptions.remove(i)` (line 33): `subscriptions` is `@Nullable`.
+7. `subscriptionsByEventType.get(eventClass)` (line 45): The `get` method of `subscriptionsByEventType` returns `@Nullable`.
+8. `lookupAllEventTypes(eventClass)` (line 51): The method returns `@Nullable`.
+9. `subscriptionsByEventType.get(clazz)` (line 63): The `get` method of `subscriptionsByEventType` returns `@Nullable`.
+10. `postingState.event = event` (line 75): `postingState.event` could be `null`, but this is an assignment, not a dereference.
+11. `postingState.subscription = subscription` (line 76): `postingState.subscription` could be `null`, but this is an assignment, not a dereference.
+
+Note that the above list only includes actual dereferences of `@Nullable` values that could throw a `NullPointerException`. Assignments to `@Nullable` fields are not included.
+
+### C) Corrected Annotated Code
+```java
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+public class EventBus {
+
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private final Map<Object, List<Class<?>>> typesBySubscriber;
+
+    private final Map<Class<?>, Object> stickyEvents;
+
+    private final boolean eventInheritance = false;
+
+    private void subscribe(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
+        Class<?> eventType = subscriberMethod.eventType;
+        Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+        @Nullable CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions == null) {
+            subscriptions = new CopyOnWriteArrayList<>();
+            subscriptionsByEventType.put(eventType, subscriptions);
+        } else {
+            if (subscriptions.contains(newSubscription)) {
+                throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered to event " + eventType);
+            }
+        }
+        int size = subscriptions.size();
+        for (int i = 0; i <= size; i++) {
+            if (i == size || subscriberMethod.priority > subscriptions.get(i).subscriberMethod.priority) {
+                subscriptions.add(i, newSubscription);
+                break;
+            }
+        }
+        @Nullable List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+        if (subscribedEvents == null) {
+            subscribedEvents = new ArrayList<>();
+            typesBySubscriber.put(subscriber, subscribedEvents);
+        }
+        subscribedEvents.add(eventType);
+        if (subscriberMethod.sticky) {
+            if (eventInheritance) {
+                @Nullable Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+                for (Map.Entry<Class<?>, Object> entry : entries) {
+                    Class<?> candidateEventType = entry.getKey();
+                    if (eventType.isAssignableFrom(candidateEventType)) {
+                        @Nullable Object stickyEvent = entry.getValue();
+                        checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                    }
+                }
+            } else {
+                @Nullable Object stickyEvent = stickyEvents.get(eventType);
+                checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+            }
+        }
+    }
+
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
+        throw new java.lang.Error();
+    }
+
+    private void unsubscribeByEventType(@Nonnull Object subscriber, @Nonnull Class<?> eventType) {
+        @Nullable List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions != null) {
+            int size = subscriptions.size();
+            for (int i = 0; i < size; i++) {
+                Subscription subscription = subscriptions.get(i);
+                if (subscription.subscriber == subscriber) {
+                    subscription.active = false;
+                    subscriptions.remove(i);
+                    i--;
+                    size--;
+                }
+            }
+        }
+    }
+
+    public boolean hasSubscriberForEvent(@Nonnull Class<?> eventClass) {
+        @Nullable List<Class<?>> eventTypes = lookupAllEventTypes(eventClass);
+        if (eventTypes != null) {
+            int countTypes = eventTypes.size();
+            for (int h = 0; h < countTypes; h++) {
+                Class<?> clazz = eventTypes.get(h);
+                @Nullable CopyOnWriteArrayList<Subscription> subscriptions;
+                synchronized (this) {
+                    subscriptions = subscriptionsByEventType.get(clazz);
+                }
+                if (subscriptions != null && !subscriptions.isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean postSingleEventForEventType(@Nonnull Object event, @Nonnull PostingThreadState postingState, @Nonnull Class<?> eventClass) {
+        @Nullable CopyOnWriteArrayList<Subscription> subscriptions;
+        synchronized (this) {
+            subscriptions = subscriptionsByEventType.get(eventClass);
+        }
+        if (subscriptions != null && !subscriptions.isEmpty()) {
+            for (Subscription subscription : subscriptions) {
+                postingState.event = event;
+                postingState.subscription = subscription;
+                boolean aborted;
+                try {
+                    postToSubscription(subscription, event, postingState.isMainThread);
+                    aborted = postingState.canceled;
+                } finally {
+                    postingState.event = null;
+                    postingState.subscription = null;
+                    postingState.canceled = false;
+                }
+                if (aborted) {
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
+        throw new java.lang.Error();
+    }
+
+    @Nullable
+    private static List<Class<?>> lookupAllEventTypes(@Nonnull Class<?> eventClass) {
+        throw new java.lang.Error();
+    }
+
+    final static class PostingThreadState {
+
+        boolean isMainThread;
+
+        @Nullable Subscription subscription;
+
+        @Nullable Object event;
+
+        boolean canceled;
+    }
+}
+
+// === org/greenrobot/eventbus/EventBusException.java ===
+package org.greenrobot.eventbus;
+
+public class EventBusException extends RuntimeException {
+
+    public EventBusException(@Nonnull String detailMessage) {
+        super(detailMessage);
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+public class SubscriberMethod {
+
+    @Nonnull
+    final Class<?> eventType;
+
+    final int priority = 0;
+
+    final boolean sticky = false;
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+
+    @Nonnull
+    final Object subscriber;
+
+    @Nonnull
+    final SubscriberMethod subscriberMethod;
+
+    volatile boolean active;
+
+    Subscription(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
+        this.subscriber = subscriber;
+        this.subscriberMethod = subscriberMethod;
+    }
+}
+```

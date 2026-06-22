@@ -1,0 +1,208 @@
+package org.greenrobot.eventbus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class EventBus {
+
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private final Map<Object, List<Class<?>>> typesBySubscriber;
+
+    private final Map<Class<?>, Object> stickyEvents;
+
+    private final boolean eventInheritance = false;
+
+    private final Logger logger;
+
+    private void subscribe(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
+        Class<?> eventType = subscriberMethod.eventType;
+        Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+        CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions == null) {
+            subscriptions = new CopyOnWriteArrayList<>();
+            subscriptionsByEventType.put(eventType, subscriptions);
+        } else {
+            if (subscriptions.contains(newSubscription)) {
+                throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered to event " + eventType);
+            }
+        }
+        int size = subscriptions.size();
+        for (int i = 0; i <= size; i++) {
+            if (i == size || subscriberMethod.priority > subscriptions.get(i).subscriberMethod.priority) {
+                subscriptions.add(i, newSubscription);
+                break;
+            }
+        }
+        List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+        if (subscribedEvents == null) {
+            subscribedEvents = new ArrayList<>();
+            typesBySubscriber.put(subscriber, subscribedEvents);
+        }
+        subscribedEvents.add(eventType);
+        if (subscriberMethod.sticky) {
+            if (eventInheritance) {
+                Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+                for (Map.Entry<Class<?>, Object> entry : entries) {
+                    Class<?> candidateEventType = entry.getKey();
+                    if (eventType.isAssignableFrom(candidateEventType)) {
+                        Object stickyEvent = entry.getValue();
+                        checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                    }
+                }
+            } else {
+                Object stickyEvent = stickyEvents.get(eventType);
+                checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+            }
+        }
+    }
+
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
+        throw new java.lang.Error();
+    }
+
+    public synchronized boolean isRegistered(@Nonnull Object subscriber) {
+        return typesBySubscriber.containsKey(subscriber);
+    }
+
+    private void unsubscribeByEventType(@Nonnull Object subscriber, @Nonnull Class<?> eventType) {
+        List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions != null) {
+            int size = subscriptions.size();
+            for (int i = 0; i < size; i++) {
+                Subscription subscription = subscriptions.get(i);
+                if (subscription.subscriber == subscriber) {
+                    subscription.active = false;
+                    subscriptions.remove(i);
+                    i--;
+                    size--;
+                }
+            }
+        }
+    }
+
+    public synchronized void unregister(@Nonnull Object subscriber) {
+        List<Class<?>> subscribedTypes = typesBySubscriber.get(subscriber);
+        if (subscribedTypes != null) {
+            for (Class<?> eventType : subscribedTypes) {
+                unsubscribeByEventType(subscriber, eventType);
+            }
+            typesBySubscriber.remove(subscriber);
+        } else {
+            logger.log(Level.WARNING, "Subscriber to unregister was not registered before: " + subscriber.getClass());
+        }
+    }
+
+    public void post(@Nonnull Object event) {
+        throw new java.lang.Error();
+    }
+
+    public void postSticky(@Nonnull Object event) {
+        synchronized (stickyEvents) {
+            stickyEvents.put(event.getClass(), event);
+        }
+        post(event);
+    }
+
+    public <T> @Nullable T getStickyEvent(@Nonnull Class<T> eventType) {
+        synchronized (stickyEvents) {
+            return eventType.cast(stickyEvents.get(eventType));
+        }
+    }
+
+    public <T> @Nullable T removeStickyEvent(@Nonnull Class<T> eventType) {
+        synchronized (stickyEvents) {
+            return eventType.cast(stickyEvents.remove(eventType));
+        }
+    }
+
+    public boolean removeStickyEvent(@Nonnull Object event) {
+        synchronized (stickyEvents) {
+            Class<?> eventType = event.getClass();
+            Object existingEvent = stickyEvents.get(eventType);
+            if (event.equals(existingEvent)) {
+                stickyEvents.remove(eventType);
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    public void removeAllStickyEvents() {
+        synchronized (stickyEvents) {
+            stickyEvents.clear();
+        }
+    }
+
+    public boolean hasSubscriberForEvent(@Nonnull Class<?> eventClass) {
+        List<Class<?>> eventTypes = lookupAllEventTypes(eventClass);
+        if (eventTypes != null) {
+            int countTypes = eventTypes.size();
+            for (int h = 0; h < countTypes; h++) {
+                Class<?> clazz = eventTypes.get(h);
+                CopyOnWriteArrayList<Subscription> subscriptions;
+                synchronized (this) {
+                    subscriptions = subscriptionsByEventType.get(clazz);
+                }
+                if (subscriptions != null && !subscriptions.isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean postSingleEventForEventType(@Nonnull Object event, @Nonnull PostingThreadState postingState, @Nonnull Class<?> eventClass) {
+        CopyOnWriteArrayList<Subscription> subscriptions;
+        synchronized (this) {
+            subscriptions = subscriptionsByEventType.get(eventClass);
+        }
+        if (subscriptions != null && !subscriptions.isEmpty()) {
+            for (Subscription subscription : subscriptions) {
+                postingState.event = event;
+                postingState.subscription = subscription;
+                boolean aborted;
+                try {
+                    postToSubscription(subscription, event, postingState.isMainThread);
+                    aborted = postingState.canceled;
+                } finally {
+                    postingState.event = null;
+                    postingState.subscription = null;
+                    postingState.canceled = false;
+                }
+                if (aborted) {
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
+        throw new java.lang.Error();
+    }
+
+    private static List<Class<?>> lookupAllEventTypes(@Nonnull Class<?> eventClass) {
+        throw new java.lang.Error();
+    }
+
+    final static class PostingThreadState {
+
+        boolean isMainThread;
+
+        Subscription subscription;
+
+        Object event;
+
+        boolean canceled;
+    }
+
+}

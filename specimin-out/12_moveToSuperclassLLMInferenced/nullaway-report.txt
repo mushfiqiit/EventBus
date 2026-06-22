@@ -1,0 +1,11 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/12_moveToSuperclassLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:20: warning: [NullAway] dereferenced expression clazz is @Nullable
+                clazz = clazz.getSuperclass();
+                             ^
+    (see http://t.uber.com/nullaway )
+1 warning
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

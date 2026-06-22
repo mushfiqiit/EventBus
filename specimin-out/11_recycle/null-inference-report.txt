@@ -1,0 +1,176 @@
+### A) Annotation Decisions
+
+Here are the annotation decisions based on the NullAway warnings:
+
+| Location | Inferred Annotation | Reason |
+| --- | --- | --- |
+| `METHOD_CACHE` | `@Nonnull` | It is a static final field that must be initialized. |
+| `ignoreGeneratedIndex` | `@Nonnull` | It is a primitive boolean field that is always initialized. |
+| `subscriberMethods` (in `findSubscriberMethods`) | `@Nullable` | NullAway flags it as potentially null because it is assigned a value from `METHOD_CACHE.get(subscriberClass)`. |
+| `anyMethodByEventType` | `@Nonnull` | It is a field of the `FindState` class that is always initialized in the `recycle` method. |
+| `subscriberClassByMethodKey` | `@Nonnull` | It is a field of the `FindState` class that is always initialized in the `recycle` method. |
+| `methodKeyBuilder` | `@Nonnull` | It is a field of the `FindState` class that is always initialized in the `recycle` method. |
+| `subscriberClass` (in `FindState`) | `@Nullable` | It is a field of the `FindState` class that is initialized to null in the `recycle` method. |
+| `clazz` (in `FindState`) | `@Nullable` | It is a field of the `FindState` class that is initialized to null in the `recycle` method. |
+| `subscriberInfo` (in `FindState`) | `@Nullable` | It is a field of the `FindState` class that is initialized to null in the `recycle` method. |
+| `method` (in `checkAdd`) | `@Nonnull` | It is a method parameter that must be non-null to avoid a NullPointerException in the `put` method. |
+| `eventType` (in `checkAdd`) | `@Nonnull` | It is a method parameter that must be non-null to avoid a NullPointerException in the `put` method. |
+| `existing` (in `checkAdd`) | `@Nullable` | It is a local variable that is assigned a value from `anyMethodByEventType.put(eventType, method)`, which may return null. |
+| `methodClassOld` (in `checkAddWithMethodSignature`) | `@Nullable` | It is a local variable that is assigned a value from `subscriberClassByMethodKey.put(methodKey, methodClass)`, which may return null. |
+
+### B) Unsafe Dereferences
+
+Here are the unsafe dereferences of @Nullable values in the code:
+
+* `subscriberMethods` (in `findSubscriberMethods`) on line 11: `subscriberMethods.isEmpty()` could throw a NullPointerException if `subscriberMethods` is null.
+* `existing` (in `checkAdd`) on line 15: `if (existing instanceof Method)` could throw a NullPointerException if `existing` is null.
+* `methodClassOld` (in `checkAddWithMethodSignature`) on line 27: `methodClassOld.isAssignableFrom(methodClass)` could throw a NullPointerException if `methodClassOld` is null.
+* `subscriberClass` (in `FindState`) on line 42: `subscriberClass` is assigned to `clazz` and then used to call `getSuperclass()` without checking for null.
+* `clazz` (in `FindState`) on line 48: `clazz.getSuperclass()` could throw a NullPointerException if `clazz` is null.
+
+### C) Corrected Annotated Code
+
+Here is the fully annotated version of each file:
+```java
+// === org/greenrobot/eventbus/EventBusException.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+public class EventBusException extends RuntimeException {
+
+    public EventBusException(@Nonnull String detailMessage) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+public class SubscriberMethod {
+}
+
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE = new java.util.HashMap<>();
+
+    private final boolean ignoreGeneratedIndex = false;
+
+    @Nonnull
+    List<SubscriberMethod> findSubscriberMethods(@Nonnull Class<?> subscriberClass) {
+        @Nullable List<SubscriberMethod> subscriberMethods = METHOD_CACHE.get(subscriberClass);
+        if (subscriberMethods != null) {
+            return subscriberMethods;
+        }
+        if (ignoreGeneratedIndex) {
+            subscriberMethods = findUsingReflection(subscriberClass);
+        } else {
+            subscriberMethods = findUsingInfo(subscriberClass);
+        }
+        if (subscriberMethods.isEmpty()) {
+            throw new EventBusException("Subscriber " + subscriberClass + " and its super classes have no public methods with the @Subscribe annotation");
+        } else {
+            METHOD_CACHE.put(subscriberClass, subscriberMethods);
+            return subscriberMethods;
+        }
+    }
+
+    @Nonnull
+    private List<SubscriberMethod> findUsingInfo(@Nonnull Class<?> subscriberClass) {
+        throw new java.lang.Error();
+    }
+
+    @Nonnull
+    private List<SubscriberMethod> findUsingReflection(@Nonnull Class<?> subscriberClass) {
+        throw new java.lang.Error();
+    }
+
+    static class FindState {
+
+        final @Nonnull List<SubscriberMethod> subscriberMethods;
+
+        final @Nonnull Map<Class, Object> anyMethodByEventType;
+
+        final @Nonnull Map<String, Class> subscriberClassByMethodKey;
+
+        final @Nonnull StringBuilder methodKeyBuilder;
+
+        @Nullable Class<?> subscriberClass;
+
+        @Nullable Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        @Nullable SubscriberInfo subscriberInfo;
+
+        void recycle() {
+            subscriberMethods.clear();
+            anyMethodByEventType.clear();
+            subscriberClassByMethodKey.clear();
+            methodKeyBuilder.setLength(0);
+            subscriberClass = null;
+            clazz = null;
+            skipSuperClasses = false;
+            subscriberInfo = null;
+        }
+
+        boolean checkAdd(@Nonnull Method method, @Nonnull Class<?> eventType) {
+            @Nullable Object existing = anyMethodByEventType.put(eventType, method);
+            if (existing == null) {
+                return true;
+            } else {
+                if (existing instanceof Method) {
+                    if (!checkAddWithMethodSignature((Method) existing, eventType)) {
+                        throw new IllegalStateException();
+                    }
+                    anyMethodByEventType.put(eventType, this);
+                }
+                return checkAddWithMethodSignature(method, eventType);
+            }
+        }
+
+        private boolean checkAddWithMethodSignature(@Nonnull Method method, @Nonnull Class<?> eventType) {
+            methodKeyBuilder.setLength(0);
+            methodKeyBuilder.append(method.getName());
+            methodKeyBuilder.append(']').append(eventType.getName());
+            String methodKey = methodKeyBuilder.toString();
+            Class<?> methodClass = method.getDeclaringClass();
+            @Nullable Class<?> methodClassOld = subscriberClassByMethodKey.put(methodKey, methodClass);
+            if (methodClassOld == null || methodClassOld.isAssignableFrom(methodClass)) {
+                return true;
+            } else {
+                subscriberClassByMethodKey.put(methodKey, methodClassOld);
+                return false;
+            }
+        }
+
+        void moveToSuperclass() {
+            if (skipSuperClasses) {
+                clazz = null;
+            } else {
+                clazz = clazz.getSuperclass();
+                String clazzName = clazz.getName();
+                if (clazzName.startsWith("java.") || clazzName.startsWith("javax.") || clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+                    clazz = null;
+                }
+            }
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfo {
+}
+```

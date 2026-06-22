@@ -1,0 +1,23 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPost.java:5: warning: [NullAway] @NonNull field next not initialized
+    PendingPost next;
+                ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field head not initialized
+    private PendingPost head;
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPostQueue.java:7: warning: [NullAway] @NonNull field tail not initialized
+    private PendingPost tail;
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/16_poll/org/greenrobot/eventbus/PendingPostQueue.java:29: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                tail = null;
+                     ^
+    (see http://t.uber.com/nullaway )
+4 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

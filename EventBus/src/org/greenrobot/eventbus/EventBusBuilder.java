@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.annotation.Nullable;
 
 /**
  * Creates EventBus instances with custom parameters and also allows to install a custom default EventBus instance.
@@ -28,6 +29,7 @@ import java.util.concurrent.Executors;
  */
 @SuppressWarnings("unused")
 public class EventBusBuilder {
+    @Nullable
     private final static ExecutorService DEFAULT_EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
     boolean logSubscriberExceptions = true;
@@ -38,10 +40,15 @@ public class EventBusBuilder {
     boolean eventInheritance = true;
     boolean ignoreGeneratedIndex;
     boolean strictMethodVerification;
+    @Nullable
     ExecutorService executorService = DEFAULT_EXECUTOR_SERVICE;
+    @Nullable
     List<Class<?>> skipMethodVerificationForClasses;
+    @Nullable
     List<SubscriberInfoIndex> subscriberInfoIndexes;
+    @Nullable
     Logger logger;
+    @Nullable
     MainThreadSupport mainThreadSupport;
 
     EventBusBuilder() {
@@ -158,6 +165,7 @@ public class EventBusBuilder {
         }
     }
 
+    @Nullable
     MainThreadSupport getMainThreadSupport() {
         if (mainThreadSupport != null) {
             return mainThreadSupport;
