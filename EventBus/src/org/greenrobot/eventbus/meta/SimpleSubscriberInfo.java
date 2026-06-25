@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  */
 public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
 
-    @Nullable
+    @Nonnull
     private final SubscriberMethodInfo[] methodInfos;
 
     public SimpleSubscriberInfo(Class subscriberClass, boolean shouldCheckSuperclass, SubscriberMethodInfo[] methodInfos) {

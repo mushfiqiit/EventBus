@@ -41,17 +41,17 @@ import javax.annotation.Nonnull;
 public class AsyncExecutor {
 
     public static class Builder {
-        @Nullable
+        @Nonnull
         private Executor threadPool;
         @Nullable
         private Class<?> failureEventType;
-        @Nullable
+        @Nonnull
         private EventBus eventBus;
 
         private Builder() {
         }
 
-        public Builder threadPool(@Nullable Executor threadPool) {
+        public Builder threadPool(@Nonnull Executor threadPool) {
             this.threadPool = threadPool;
             return this;
         }
@@ -61,7 +61,7 @@ public class AsyncExecutor {
             return this;
         }
 
-        public Builder eventBus(@Nullable EventBus eventBus) {
+        public Builder eventBus(@Nonnull EventBus eventBus) {
             this.eventBus = eventBus;
             return this;
         }
@@ -99,10 +99,10 @@ public class AsyncExecutor {
         return new Builder().build();
     }
 
-    @Nullable
+    @Nonnull
     private final Executor threadPool;
     private final Constructor<?> failureEventConstructor;
-    @Nullable
+    @Nonnull
     private final EventBus eventBus;
     private final Object scope;
 

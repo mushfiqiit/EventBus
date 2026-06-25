@@ -212,7 +212,7 @@ class SubscriberMethodFinder {
 
 @Nullable
         Class<?> subscriberClass;
-@Nullable
+@Nonnull
         Class<?> clazz;
         boolean skipSuperClasses;
         @Nullable

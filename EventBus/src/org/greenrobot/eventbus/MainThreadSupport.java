@@ -24,6 +24,6 @@ public interface MainThreadSupport {
 
     boolean isMainThread();
 
-    @Nullable
+    @Nonnull
     Poster createPoster(EventBus eventBus);
 }

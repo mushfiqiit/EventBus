@@ -69,7 +69,7 @@ public class EventBus {
     @Nullable
     private final MainThreadSupport mainThreadSupport;
     // @Nullable
-    @Nullable
+    @Nonnull
     private final Poster mainThreadPoster;
     @Nonnull
     private final BackgroundPoster backgroundPoster;
@@ -536,7 +536,7 @@ public class EventBus {
         }
     }
 
-    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nullable Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nonnull Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
@@ -567,7 +567,7 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
-        @Nullable
+        @Nonnull
         Subscription subscription;
         @Nullable
         Object event;

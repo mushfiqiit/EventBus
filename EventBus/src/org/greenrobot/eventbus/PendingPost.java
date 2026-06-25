@@ -26,7 +26,7 @@ final class PendingPost {
 
     @Nullable
     Object event;
-    @Nullable
+    @Nonnull
     Subscription subscription;
     @Nullable
     PendingPost next;
@@ -36,7 +36,7 @@ final class PendingPost {
         this.subscription = subscription;
     }
 
-    static PendingPost obtainPendingPost(@Nullable Subscription subscription, @Nullable Object event) {
+    static PendingPost obtainPendingPost(@Nonnull Subscription subscription, @Nullable Object event) {
         synchronized (pendingPostPool) {
             int size = pendingPostPool.size();
             if (size > 0) {
