@@ -1,0 +1,36 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: head, next, tail
+
+# org/greenrobot/eventbus/PendingPost.java
+     39:                 pendingPost.subscription = subscription;
+     40:                 pendingPost.next = null;
+     41:                 return pendingPost;
+  ---
+     49:         pendingPost.subscription = null;
+     50:         pendingPost.next = null;
+     51:         synchronized (pendingPostPool) {
+  ---
+
+# org/greenrobot/eventbus/PendingPostQueue.java
+     26:         }
+     27:         if (tail != null) {
+     28:             tail.next = pendingPost;
+     29:             tail = pendingPost;
+     30:         } else if (head == null) {
+     31:             head = tail = pendingPost;
+     32:         } else {
+  ---
+     38:     synchronized PendingPost poll() {
+     39:         PendingPost pendingPost = head;
+     40:         if (head != null) {
+     41:             head = head.next;
+     42:             if (head == null) {
+     43:                 tail = null;
+     44:             }
+  ---
+     49:     synchronized PendingPost poll(int maxMillisToWait) throws InterruptedException {
+     50:         if (head == null) {
+     51:             wait(maxMillisToWait);
+  ---

@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/15_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:7: error: variable pendingPostPool not initialized in the default constructor

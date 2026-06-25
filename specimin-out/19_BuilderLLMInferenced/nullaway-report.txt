@@ -1,0 +1,45 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/EventBus.java:6: error: package javax.logging does not exist
+    public @Nullable javax.logging.Logger getLogger() {
+                                  ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:49: error: cannot find symbol
+    private final @Nullable EventBus eventBus;
+                            ^
+  symbol:   class EventBus
+  location: class AsyncExecutor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:53: error: cannot find symbol
+    private AsyncExecutor(@Nullable Executor threadPool, @Nullable EventBus eventBus, @Nullable Class<?> failureEventType, Object scope) {
+                                                                   ^
+  symbol:   class EventBus
+  location: class AsyncExecutor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:14: error: cannot find symbol
+        private @Nullable EventBus eventBus;
+                          ^
+  symbol:   class EventBus
+  location: class Builder
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:29: error: cannot find symbol
+        public Builder eventBus(@Nullable EventBus eventBus) {
+                                          ^
+  symbol:   class EventBus
+  location: class Builder
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_BuilderLLMInferenced/org/greenrobot/eventbus/util/AsyncExecutor.java:36: error: cannot find symbol
+                eventBus = EventBus.getDefault();
+                           ^
+  symbol:   variable EventBus
+  location: class Builder
+6 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

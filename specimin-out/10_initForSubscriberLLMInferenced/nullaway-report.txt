@@ -1,0 +1,15 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriberLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:12: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberClass not initialized
+        Class<?> subscriberClass;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriberLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+        Class<?> clazz;
+                 ^
+    (see http://t.uber.com/nullaway )
+2 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

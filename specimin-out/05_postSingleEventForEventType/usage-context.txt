@@ -1,0 +1,194 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: canceled, event, isMainThread, subscription, subscriptionsByEventType
+
+# org/greenrobot/eventbus/EventBus.java
+    114:         logger = builder.getLogger();
+    115:         subscriptionsByEventType = new HashMap<>();
+    116:         typesBySubscriber = new HashMap<>();
+  ---
+    161:         Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+    162:         CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+    163:         if (subscriptions == null) {
+    164:             subscriptions = new CopyOnWriteArrayList<>();
+    165:             subscriptionsByEventType.put(eventType, subscriptions);
+    166:         } else {
+  ---
+    212:             // --> Strange corner case, which we don't take care of here.
+    213:             postToSubscription(newSubscription, stickyEvent, isMainThread());
+    214:         }
+  ---
+    222:      */
+    223:     private boolean isMainThread() {
+    224:         return mainThreadSupport == null || mainThreadSupport.isMainThread();
+    225:     }
+  ---
+    232:     private void unsubscribeByEventType(Object subscriber, Class<?> eventType) {
+    233:         List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+    234:         if (subscriptions != null) {
+  ---
+    236:             for (int i = 0; i < size; i++) {
+    237:                 Subscription subscription = subscriptions.get(i);
+    238:                 if (subscription.subscriber == subscriber) {
+    239:                     subscription.active = false;
+    240:                     subscriptions.remove(i);
+  ---
+    261:     /** Posts the given event to the event bus. */
+    262:     public void post(Object event) {
+    263:         PostingThreadState postingState = currentPostingThreadState.get();
+    264:         List<Object> eventQueue = postingState.eventQueue;
+    265:         eventQueue.add(event);
+    266: 
+    267:         if (!postingState.isPosting) {
+    268:             postingState.isMainThread = isMainThread();
+    269:             postingState.isPosting = true;
+    270:             if (postingState.canceled) {
+    271:                 throw new EventBusException("Internal error. Abort state was not reset");
+  ---
+    278:                 postingState.isPosting = false;
+    279:                 postingState.isMainThread = false;
+    280:             }
+  ---
+    290:      */
+    291:     public void cancelEventDelivery(Object event) {
+    292:         PostingThreadState postingState = currentPostingThreadState.get();
+  ---
+    295:                     "This method may only be called from inside event handling methods on the posting thread");
+    296:         } else if (event == null) {
+    297:             throw new EventBusException("Event may not be null");
+    298:         } else if (postingState.event != event) {
+    299:             throw new EventBusException("Only the currently handled event may be aborted");
+    300:         } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+    301:             throw new EventBusException(" event handlers may only abort the incoming event");
+  ---
+    303: 
+    304:         postingState.canceled = true;
+    305:     }
+  ---
+    310:      */
+    311:     public void postSticky(Object event) {
+    312:         synchronized (stickyEvents) {
+    313:             stickyEvents.put(event.getClass(), event);
+    314:         }
+    315:         // Should be posted after it is putted, in case the subscriber wants to remove immediately
+    316:         post(event);
+    317:     }
+  ---
+    345:      */
+    346:     public boolean removeStickyEvent(Object event) {
+    347:         synchronized (stickyEvents) {
+    348:             Class<?> eventType = event.getClass();
+    349:             Object existingEvent = stickyEvents.get(eventType);
+    350:             if (event.equals(existingEvent)) {
+    351:                 stickyEvents.remove(eventType);
+  ---
+    375:                 synchronized (this) {
+    376:                     subscriptions = subscriptionsByEventType.get(clazz);
+    377:                 }
+  ---
+    385: 
+    386:     private void postSingleEvent(Object event, PostingThreadState postingState) throws Error {
+    387:         Class<?> eventClass = event.getClass();
+    388:         boolean subscriptionFound = false;
+  ---
+    393:                 Class<?> clazz = eventTypes.get(h);
+    394:                 subscriptionFound |= postSingleEventForEventType(event, postingState, clazz);
+    395:             }
+    396:         } else {
+    397:             subscriptionFound = postSingleEventForEventType(event, postingState, eventClass);
+    398:         }
+  ---
+    404:                     eventClass != SubscriberExceptionEvent.class) {
+    405:                 post(new NoSubscriberEvent(this, event));
+    406:             }
+  ---
+    409: 
+    410:     private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
+    411:         CopyOnWriteArrayList<Subscription> subscriptions;
+    412:         synchronized (this) {
+    413:             subscriptions = subscriptionsByEventType.get(eventClass);
+    414:         }
+    415:         if (subscriptions != null && !subscriptions.isEmpty()) {
+    416:             for (Subscription subscription : subscriptions) {
+    417:                 postingState.event = event;
+    418:                 postingState.subscription = subscription;
+    419:                 boolean aborted;
+    420:                 try {
+    421:                     postToSubscription(subscription, event, postingState.isMainThread);
+    422:                     aborted = postingState.canceled;
+    423:                 } finally {
+    424:                     postingState.event = null;
+    425:                     postingState.subscription = null;
+    426:                     postingState.canceled = false;
+    427:                 }
+  ---
+    436: 
+    437:     private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+    438:         switch (subscription.subscriberMethod.threadMode) {
+    439:             case POSTING:
+    440:                 invokeSubscriber(subscription, event);
+    441:                 break;
+    442:             case MAIN:
+    443:                 if (isMainThread) {
+    444:                     invokeSubscriber(subscription, event);
+    445:                 } else {
+    446:                     mainThreadPoster.enqueue(subscription, event);
+    447:                 }
+  ---
+    450:                 if (mainThreadPoster != null) {
+    451:                     mainThreadPoster.enqueue(subscription, event);
+    452:                 } else {
+    453:                     // temporary: technically not correct as poster not decoupled from subscriber
+    454:                     invokeSubscriber(subscription, event);
+    455:                 }
+  ---
+    457:             case BACKGROUND:
+    458:                 if (isMainThread) {
+    459:                     backgroundPoster.enqueue(subscription, event);
+    460:                 } else {
+    461:                     invokeSubscriber(subscription, event);
+    462:                 }
+  ---
+    464:             case ASYNC:
+    465:                 asyncPoster.enqueue(subscription, event);
+    466:                 break;
+    467:             default:
+    468:                 throw new IllegalStateException("Unknown thread mode: " + subscription.subscriberMethod.threadMode);
+    469:         }
+  ---
+    506:     void invokeSubscriber(PendingPost pendingPost) {
+    507:         Object event = pendingPost.event;
+    508:         Subscription subscription = pendingPost.subscription;
+    509:         PendingPost.releasePendingPost(pendingPost);
+    510:         if (subscription.active) {
+    511:             invokeSubscriber(subscription, event);
+    512:         }
+  ---
+    514: 
+    515:     void invokeSubscriber(Subscription subscription, Object event) {
+    516:         try {
+    517:             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
+    518:         } catch (InvocationTargetException e) {
+    519:             handleSubscriberException(subscription, event, e.getCause());
+    520:         } catch (IllegalAccessException e) {
+  ---
+    524: 
+    525:     private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+    526:         if (event instanceof SubscriberExceptionEvent) {
+    527:             if (logSubscriberExceptions) {
+    528:                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
+    529:                 logger.log(Level.SEVERE, "SubscriberExceptionEvent subscriber " + subscription.subscriber.getClass()
+    530:                         + " threw an exception", cause);
+    531:                 SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
+    532:                 logger.log(Level.SEVERE, "Initial event " + exEvent.causingEvent + " caused exception in "
+  ---
+    539:             if (logSubscriberExceptions) {
+    540:                 logger.log(Level.SEVERE, "Could not dispatch event: " + event.getClass() + " to subscribing class "
+    541:                         + subscription.subscriber.getClass(), cause);
+    542:             }
+    543:             if (sendSubscriberExceptionEvent) {
+    544:                 SubscriberExceptionEvent exEvent = new SubscriberExceptionEvent(this, cause, event,
+    545:                         subscription.subscriber);
+    546:                 post(exEvent);
+  ---

@@ -1,0 +1,70 @@
+### Annotation Decisions
+
+The following table presents the annotation decisions for each parameter, return type, and field in the provided code.
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| MainThreadSupport mainThreadSupport | @Nullable | NullAway warns that mainThreadSupport may be null. |
+| getMainThreadSupport() return type | @Nullable | The method may return null if mainThreadSupport is null and AndroidComponents are not available. |
+| AndroidComponents.defaultMainThreadSupport | @Nonnull | It is initialized in the constructor and marked as final, ensuring it is always non-null. |
+
+### Unsafe Dereferences
+
+Based on the provided NullAway warnings, the following are potential unsafe dereferences of @Nullable values:
+
+1. `AndroidComponents.get().defaultMainThreadSupport` could throw a NullPointerException if `AndroidComponents.get()` returns null.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/EventBusBuilder.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import org.greenrobot.eventbus.android.AndroidComponents;
+
+@SuppressWarnings("unused")
+public class EventBusBuilder {
+
+    @Nullable
+    MainThreadSupport mainThreadSupport;
+
+    @Nullable
+    MainThreadSupport getMainThreadSupport() {
+        if (mainThreadSupport != null) {
+            return mainThreadSupport;
+        } else if (AndroidComponents.areAvailable()) {
+            return AndroidComponents.get().defaultMainThreadSupport;
+        } else {
+            return null;
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/MainThreadSupport.java ===
+package org.greenrobot.eventbus;
+
+public interface MainThreadSupport {
+}
+
+// === org/greenrobot/eventbus/android/AndroidComponents.java ===
+package org.greenrobot.eventbus.android;
+
+import javax.annotation.Nonnull;
+import org.greenrobot.eventbus.MainThreadSupport;
+
+public abstract class AndroidComponents {
+
+    public static boolean areAvailable() {
+        throw new java.lang.Error();
+    }
+
+    @Nullable
+    public static AndroidComponents get() {
+        throw new java.lang.Error();
+    }
+
+    @Nonnull
+    public final MainThreadSupport defaultMainThreadSupport;
+}
+```

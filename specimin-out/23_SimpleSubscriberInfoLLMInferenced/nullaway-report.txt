@@ -1,0 +1,12 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/23_SimpleSubscriberInfoLLMInferenced/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:8: warning: [UnusedVariable] The field 'methodInfos' is never read.
+    private final @Nullable SubscriberMethodInfo[] methodInfos;
+                                                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+1 warning
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

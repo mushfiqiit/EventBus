@@ -1,0 +1,26 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_Builder/org/greenrobot/eventbus/util/AsyncExecutor.java:14: warning: [UnusedVariable] The field 'eventBus' is never read.
+        private EventBus eventBus;
+                         ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_Builder/org/greenrobot/eventbus/util/AsyncExecutor.java:12: warning: [UnusedVariable] The field 'failureEventType' is never read.
+        private Class<?> failureEventType;
+                         ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_Builder/org/greenrobot/eventbus/util/AsyncExecutor.java:10: warning: [UnusedVariable] The field 'threadPool' is never read.
+        private Executor threadPool;
+                         ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/19_Builder/org/greenrobot/eventbus/util/AsyncExecutor.java:16: warning: [NullAway] initializer method does not guarantee @NonNull fields threadPool (line 10), failureEventType (line 12), eventBus (line 14) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+        private Builder() {
+                ^
+    (see http://t.uber.com/nullaway )
+4 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

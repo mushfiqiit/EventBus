@@ -1,0 +1,265 @@
+### A) Annotation decisions
+Below are the annotation decisions for every parameter, return type, and field in the code:
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| EventBus.java:TAG | @Nonnull | Static variable, always initialized. |
+| EventBus.java:defaultInstance | @Nullable | Initialized lazily, can be null before initialization. |
+| EventBus.java:DEFAULT_BUILDER | @Nonnull | Final static variable, always initialized. |
+| EventBus.java:eventTypesCache | @Nonnull | Final static variable, always initialized. |
+| EventBus.java:subscriptionsByEventType | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:typesBySubscriber | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:stickyEvents | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:currentPostingThreadState | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:mainThreadSupport | @Nullable | Can be null if not set. |
+| EventBus.java:mainThreadPoster | @Nullable | Can be null if mainThreadSupport is null. |
+| EventBus.java:backgroundPoster | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:asyncPoster | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:subscriberMethodFinder | @Nonnull | Initialized in constructor, always non-null. |
+| EventBus.java:executorService | @Nullable | Can be null if not set. |
+| EventBus.java:throwSubscriberException | @Nonnull | Primitive boolean, always non-null. |
+| EventBus.java:logSubscriberExceptions | @Nonnull | Primitive boolean, always non-null. |
+| EventBus.java:logNoSubscriberMessages | @Nonnull | Primitive boolean, always non-null. |
+| EventBus.java:sendSubscriberExceptionEvent | @Nonnull | Primitive boolean, always non-null. |
+| EventBus.java:sendNoSubscriberEvent | @Nonnull | Primitive boolean, always non-null. |
+| EventBus.java:eventInheritance | @Nonnull | Primitive boolean, always non-null. |
+| EventBus.java:indexCount | @Nonnull | Primitive int, always non-null. |
+| EventBus.java:logger | @Nonnull | Initialized in constructor, always non-null. |
+| EventBusBuilder.java:logSubscriberExceptions | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:logNoSubscriberMessages | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:sendSubscriberExceptionEvent | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:sendNoSubscriberEvent | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:throwSubscriberException | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:eventInheritance | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:ignoreGeneratedIndex | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:strictMethodVerification | @Nonnull | Primitive boolean, always non-null. |
+| EventBusBuilder.java:executorService | @Nullable | Can be null if not set. |
+| EventBusBuilder.java:subscriberInfoIndexes | @Nullable | Can be null if not set. |
+| EventBusBuilder.java:getLogger() | @Nonnull | Method always returns a non-null logger. |
+| EventBusBuilder.java:getMainThreadSupport() | @Nullable | Method can return null if not set. |
+| MainThreadSupport.java:createPoster() | @Nullable | Can return null if not implemented. |
+| SubscriberMethodFinder.java:SubscriberMethodFinder() | - | Constructor, not applicable. |
+
+### B) Unsafe dereferences
+The following dereferences of @Nullable values in the code could throw a NullPointerException:
+
+* `mainThreadSupport.createPoster(this)` in `EventBus.java`: If `mainThreadSupport` is null, calling `createPoster(this)` will throw a NullPointerException.
+* `mainThreadPoster.enqueue(subscription, event)` in `EventBus.java`: If `mainThreadPoster` is null, calling `enqueue(subscription, event)` will throw a NullPointerException.
+* `backgroundPoster.enqueue(subscription, event)` in `EventBus.java`: This is safe because `backgroundPoster` is always non-null.
+* `asyncPoster.enqueue(subscription, event)` in `EventBus.java`: This is safe because `asyncPoster` is always non-null.
+* `executorService` in `EventBus.java`: This is safe because it is never dereferenced without a null check.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/AsyncPoster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+class AsyncPoster implements Poster {
+
+    @Nonnull
+    AsyncPoster(EventBus eventBus) {
+        throw new java.lang.Error();
+    }
+
+    @Override
+    public void run() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/BackgroundPoster.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+final class BackgroundPoster implements Poster {
+
+    @Nonnull
+    BackgroundPoster(EventBus eventBus) {
+        throw new java.lang.Error();
+    }
+
+    @Override
+    public void run() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+
+public class EventBus {
+
+    public static String TAG;
+
+    @Nullable
+    static volatile EventBus defaultInstance;
+
+    private static final EventBusBuilder DEFAULT_BUILDER;
+
+    private static final Map<Class<?>, List<Class<?>>> eventTypesCache;
+
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private final Map<Object, List<Class<?>>> typesBySubscriber;
+
+    private final Map<Class<?>, Object> stickyEvents;
+
+    private final ThreadLocal<PostingThreadState> currentPostingThreadState;
+
+    private final @Nullable MainThreadSupport mainThreadSupport;
+
+    private final @Nullable Poster mainThreadPoster;
+
+    private final @Nonnull BackgroundPoster backgroundPoster;
+
+    private final @Nonnull AsyncPoster asyncPoster;
+
+    private final @Nonnull SubscriberMethodFinder subscriberMethodFinder;
+
+    private final @Nullable ExecutorService executorService;
+
+    private final boolean throwSubscriberException;
+
+    private final boolean logSubscriberExceptions;
+
+    private final boolean logNoSubscriberMessages;
+
+    private final boolean sendSubscriberExceptionEvent;
+
+    private final boolean sendNoSubscriberEvent;
+
+    private final boolean eventInheritance;
+
+    private final int indexCount;
+
+    private final @Nonnull Logger logger;
+
+    @Nonnull
+    EventBus(EventBusBuilder builder) {
+        logger = builder.getLogger();
+        subscriptionsByEventType = new HashMap<>();
+        typesBySubscriber = new HashMap<>();
+        stickyEvents = new ConcurrentHashMap<>();
+        mainThreadSupport = builder.getMainThreadSupport();
+        mainThreadPoster = mainThreadSupport != null ? mainThreadSupport.createPoster(this) : null;
+        backgroundPoster = new BackgroundPoster(this);
+        asyncPoster = new AsyncPoster(this);
+        indexCount = builder.subscriberInfoIndexes != null ? builder.subscriberInfoIndexes.size() : 0;
+        subscriberMethodFinder = new SubscriberMethodFinder(builder.subscriberInfoIndexes, builder.strictMethodVerification, builder.ignoreGeneratedIndex);
+        logSubscriberExceptions = builder.logSubscriberExceptions;
+        logNoSubscriberMessages = builder.logNoSubscriberMessages;
+        sendSubscriberExceptionEvent = builder.sendSubscriberExceptionEvent;
+        sendNoSubscriberEvent = builder.sendNoSubscriberEvent;
+        throwSubscriberException = builder.throwSubscriberException;
+        eventInheritance = builder.eventInheritance;
+        executorService = builder.executorService;
+    }
+
+    final static class PostingThreadState {
+    }
+}
+
+// === org/greenrobot/eventbus/EventBusBuilder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+
+import javax.annotation.Nullable;
+
+public class EventBusBuilder {
+
+    boolean logSubscriberExceptions;
+
+    boolean logNoSubscriberMessages;
+
+    boolean sendSubscriberExceptionEvent;
+
+    boolean sendNoSubscriberEvent;
+
+    boolean throwSubscriberException;
+
+    boolean eventInheritance;
+
+    boolean ignoreGeneratedIndex;
+
+    boolean strictMethodVerification;
+
+    @Nullable
+    ExecutorService executorService;
+
+    @Nullable
+    List<SubscriberInfoIndex> subscriberInfoIndexes;
+
+    @Nonnull
+    Logger getLogger() {
+        throw new java.lang.Error();
+    }
+
+    @Nullable
+    MainThreadSupport getMainThreadSupport() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/Logger.java ===
+package org.greenrobot.eventbus;
+
+public interface Logger {
+}
+
+// === org/greenrobot/eventbus/MainThreadSupport.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+public interface MainThreadSupport {
+
+    @Nullable
+    default Poster createPoster(EventBus eventBus) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/Poster.java ===
+package org.greenrobot.eventbus;
+
+public interface Poster {
+}
+
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
+class SubscriberMethodFinder {
+
+    @Nonnull
+    SubscriberMethodFinder(@Nullable List<SubscriberInfoIndex> subscriberInfoIndexes, boolean strictMethodVerification, boolean ignoreGeneratedIndex) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfoIndex.java ===
+package org.greenrobot.eventbus;
+
+public interface SubscriberInfoIndex {
+}
+```

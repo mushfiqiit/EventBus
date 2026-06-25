@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/08_getMainThreadSupportLLMInferenced/org/greenrobot/eventbus/android/AndroidComponents.java:19: error: variable defaultMainThreadSupport not initialized in the default constructor

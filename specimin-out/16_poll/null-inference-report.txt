@@ -1,0 +1,56 @@
+### A) Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| PendingPost.next | @Nullable | NullAway warns about assigning a @Nullable expression to this field, and it's explicitly set to null in some cases. |
+| PendingPostQueue.head | @Nullable | NullAway warns about the field not being initialized, and it's checked for null before dereference, indicating it could be null. |
+| PendingPostQueue.tail | @Nullable | Similar reasoning to `head`, NullAway warns about initialization and it's checked for null in the context. |
+| PendingPostQueue.poll() return | @Nullable | Since `head` can be null, and this method returns `head` directly if it's not null, or null if it is, the return type should be @Nullable to reflect this possibility. |
+
+### B) Unsafe Dereferences
+
+Based on the provided context, potential unsafe dereferences that could throw a NullPointerException are:
+
+- In `org/greenrobot/eventbus/PendingPostQueue.java` at line 41, `head.next` could throw a NullPointerException if `head` is null. However, this is guarded by the `if (head != null)` check, so it is safe.
+- In `org/greenrobot/eventbus/PendingPostQueue.java`, the assignment `tail.next = pendingPost;` at line 28 could potentially throw a NullPointerException if `tail` is null, but this line is also guarded by `if (tail != null)` at line 27.
+
+However, directly from the warnings given and the code provided, there are no explicit lines mentioned in the warnings that directly point to unsafe dereferences without proper null checks in the code excerpt provided.
+
+### C) Corrected Annotated Code
+
+```java
+import javax.annotation.Nullable;
+
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+final class PendingPost {
+
+    @Nullable
+    PendingPost next;
+}
+
+// === org/greenrobot/eventbus/PendingPostQueue.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+
+final class PendingPostQueue {
+
+    private @Nullable PendingPost head;
+
+    private @Nullable PendingPost tail;
+
+    @Nullable
+    synchronized PendingPost poll() {
+        PendingPost pendingPost = head;
+        if (head != null) {
+            head = head.next;
+            if (head == null) {
+                tail = null;
+            }
+        }
+        return pendingPost;
+    }
+}
+```

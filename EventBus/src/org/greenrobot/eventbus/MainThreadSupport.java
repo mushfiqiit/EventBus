@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
+
 
 /**
  * Interface to the "main" thread, which can be whatever you like. Typically on Android, Android's main thread is used.
@@ -22,5 +24,6 @@ public interface MainThreadSupport {
 
     boolean isMainThread();
 
+    @Nullable
     Poster createPoster(EventBus eventBus);
 }

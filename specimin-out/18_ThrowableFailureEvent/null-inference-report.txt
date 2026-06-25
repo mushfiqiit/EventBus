@@ -1,0 +1,61 @@
+### Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `throwable` parameter in `ThrowableFailureEvent` constructor | `@Nonnull` | The constructor is flagged with no warnings related to this parameter, implying it's guaranteed non-null. |
+| `suppressErrorUi` parameter in `ThrowableFailureEvent` constructor | `@Nonnull` (primitive type, always non-null) | Primitive types are always non-null in Java. |
+| `throwable` field | `@Nonnull` | The constructor initializes this field with a non-null parameter. |
+| `suppressErrorUi` field | `@Nonnull` (primitive type, always non-null) | Primitive types are always non-null in Java. |
+| `executionContext` field | `@Nullable` | The NullAway warning indicates that the field's initialization is not guaranteed along all control-flow paths, suggesting it could be null. |
+
+### Unsafe Dereferences
+
+Based on the provided excerpt, there's no direct dereference of `@Nullable` values that could throw a `NullPointerException` within the given code snippet. However, the warning at line 11 suggests a potential issue with the `executionContext` field. In other parts of the code not shown here, dereferences of `executionContext` could potentially throw `NullPointerException` if this field is null.
+
+### Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/util/HasExecutionScope.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nonnull;
+
+public interface HasExecutionScope {
+}
+
+// === org/greenrobot/eventbus/util/ThrowableFailureEvent.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public class ThrowableFailureEvent implements HasExecutionScope {
+
+    protected final @Nonnull Throwable throwable;
+
+    protected final boolean suppressErrorUi;
+
+    private @Nullable Object executionContext;
+
+    public ThrowableFailureEvent(@Nonnull Throwable throwable, boolean suppressErrorUi) {
+        this.throwable = throwable;
+        this.suppressErrorUi = suppressErrorUi;
+    }
+
+    public @Nonnull Throwable getThrowable() {
+        return throwable;
+    }
+
+    public boolean isSuppressErrorUi() {
+        return suppressErrorUi;
+    }
+
+    public @Nullable Object getExecutionScope() {
+        return executionContext;
+    }
+
+    public void setExecutionScope(@Nullable Object executionContext) {
+        this.executionContext = executionContext;
+    }
+}
+```

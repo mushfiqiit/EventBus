@@ -1,0 +1,82 @@
+### A) Annotation decisions
+
+Here are the annotation decisions:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| SubscriberMethodFinder.FindState.subscriberMethods | @Nonnull | This is a final field initialized with a non-null expression in the FindState constructor. |
+| SubscriberMethodFinder.FindState.anyMethodByEventType | @Nonnull | This is a final field initialized with a non-null expression in the FindState constructor. |
+| SubscriberMethodFinder.FindState.subscriberClassByMethodKey | @Nonnull | This is a final field initialized with a non-null expression in the FindState constructor. |
+| SubscriberMethodFinder.FindState.methodKeyBuilder | @Nonnull | This is a final field initialized with a non-null expression in the FindState constructor. |
+| SubscriberMethodFinder.FindState.subscriberClass | @Nullable | This field is initialized to null in the recycle method and may hold null values. |
+| SubscriberMethodFinder.FindState.clazz | @Nullable | This field is initialized to null in the recycle method and may hold null values. |
+| SubscriberMethodFinder.FindState.skipSuperClasses | (unannotated) | This is a boolean field and can never be null. |
+| SubscriberMethodFinder.FindState.subscriberInfo | @Nullable | This field is initialized to null in the initForSubscriber method and may hold null values. |
+
+### B) Unsafe dereferences
+
+Here are the unsafe dereferences:
+
+* None, as the NullAway warnings indicate initialization issues, not dereference issues.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+public class SubscriberMethod {
+}
+
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import java.util.List;
+import java.util.Map;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+class SubscriberMethodFinder {
+
+    static class FindState {
+
+        final @Nonnull List<SubscriberMethod> subscriberMethods;
+
+        final @Nonnull Map<Class, Object> anyMethodByEventType;
+
+        final @Nonnull Map<String, Class> subscriberClassByMethodKey;
+
+        final @Nonnull StringBuilder methodKeyBuilder;
+
+        @Nullable Class<?> subscriberClass;
+
+        @Nullable Class<?> clazz;
+
+        boolean skipSuperClasses;
+
+        @Nullable SubscriberInfo subscriberInfo;
+
+        void recycle() {
+            subscriberMethods.clear();
+            anyMethodByEventType.clear();
+            subscriberClassByMethodKey.clear();
+            methodKeyBuilder.setLength(0);
+            subscriberClass = null;
+            clazz = null;
+            skipSuperClasses = false;
+            subscriberInfo = null;
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+import javax.annotation.Nullable;
+
+public interface SubscriberInfo {
+}
+```

@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:9: error: variable throwableToMsgIdMap not initialized in the default constructor

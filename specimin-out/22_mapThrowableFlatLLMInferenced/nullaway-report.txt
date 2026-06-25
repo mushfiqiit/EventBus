@@ -1,0 +1,20 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/22_mapThrowableFlatLLMInferenced/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:11: error: variable throwableToMsgIdMap not initialized in the default constructor
+    public final @Nonnull Map<Class<? extends Throwable>, Integer> throwableToMsgIdMap;
+                                                                   ^
+1 error
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

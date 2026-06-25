@@ -1,0 +1,37 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: method, subscriber, subscriberMethod
+
+# org/greenrobot/eventbus/SubscriberMethod.java
+     29: 
+     30:     public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
+     31:         this.method = method;
+     32:         this.threadMode = threadMode;
+  ---
+     56:             StringBuilder builder = new StringBuilder(64);
+     57:             builder.append(method.getDeclaringClass().getName());
+     58:             builder.append('#').append(method.getName());
+     59:             builder.append('(').append(eventType.getName());
+  ---
+     65:     public int hashCode() {
+     66:         return method.hashCode();
+     67:     }
+  ---
+
+# org/greenrobot/eventbus/Subscription.java
+     26: 
+     27:     Subscription(Object subscriber, SubscriberMethod subscriberMethod) {
+     28:         this.subscriber = subscriber;
+     29:         this.subscriberMethod = subscriberMethod;
+     30:         active = true;
+  ---
+     36:             Subscription otherSubscription = (Subscription) other;
+     37:             return subscriber == otherSubscription.subscriber
+     38:                     && subscriberMethod.equals(otherSubscription.subscriberMethod);
+     39:         } else {
+  ---
+     45:     public int hashCode() {
+     46:         return subscriber.hashCode() + subscriberMethod.methodString.hashCode();
+     47:     }
+  ---

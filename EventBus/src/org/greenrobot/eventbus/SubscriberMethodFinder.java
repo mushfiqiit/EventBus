@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 class SubscriberMethodFinder {
     /*
@@ -199,17 +201,24 @@ class SubscriberMethodFinder {
     }
 
     static class FindState {
+        @Nonnull
         final List<SubscriberMethod> subscriberMethods = new ArrayList<>();
+        @Nonnull
         final Map<Class, Object> anyMethodByEventType = new HashMap<>();
+        @Nonnull
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
+        @Nonnull
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
+@Nullable
         Class<?> subscriberClass;
+@Nullable
         Class<?> clazz;
         boolean skipSuperClasses;
+        @Nullable
         SubscriberInfo subscriberInfo;
 
-        void initForSubscriber(Class<?> subscriberClass) {
+        void initForSubscriber(@Nonnull Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;
             subscriberInfo = null;

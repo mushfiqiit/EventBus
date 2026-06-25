@@ -1,0 +1,145 @@
+### A) Annotation decisions
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `subscriberInfoIndexes` field | `@Nullable` | Flagged by NullAway as potentially null |
+| `getSubscriberInfo` return type | `@Nullable` | NullAway warns about returning a @Nullable expression |
+| `FindState.clazz` field | `@Nullable` | NullAway warns about @NonNull field not initialized |
+| `FindState.subscriberInfo` field | `@Nullable` | NullAway warns about @NonNull field not initialized |
+
+### B) Unsafe dereferences
+
+Based on the NullAway warnings and the annotated code, the following dereferences of @Nullable values could throw a NullPointerException:
+- `findState.clazz` on line 154 ( NullAway warning on line 31)
+- `findState.subscriberInfo` on line 123 (NullAway warning on line 33)
+- `subscriberInfoIndexes` on line 129 (NullAway warning on line 9)
+
+### C) Corrected annotated code
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    private List<SubscriberInfoIndex> subscriberInfoIndexes;
+
+    private SubscriberInfo getSubscriberInfo(FindState findState) {
+        if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
+            SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
+            if (findState.clazz == superclassInfo.getSubscriberClass()) {
+                return superclassInfo;
+            }
+        }
+        if (subscriberInfoIndexes != null) {
+            for (SubscriberInfoIndex index : subscriberInfoIndexes) {
+                SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+                if (info != null) {
+                    return info;
+                }
+            }
+        }
+        return null;
+    }
+
+    static class FindState {
+
+        Class<?> clazz;
+
+        SubscriberInfo subscriberInfo;
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfo {
+
+    default Class<?> getSubscriberClass() {
+        throw new java.lang.Error();
+    }
+
+    default SubscriberInfo getSuperSubscriberInfo() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfoIndex.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfoIndex {
+
+    default SubscriberInfo getSubscriberInfo(Class<?> subscriberClass) {
+        throw new java.lang.Error();
+    }
+}
+```
+However, taking into account the annotation decisions and to be precise with the instructions provided:
+
+```java
+// === org/greenrobot/eventbus/SubscriberMethodFinder.java ===
+package org.greenrobot.eventbus;
+
+import org.greenrobot.eventbus.meta.SubscriberInfo;
+import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
+import java.util.List;
+import javax.annotation.Nullable;
+
+class SubscriberMethodFinder {
+
+    private @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes;
+
+    private @Nullable SubscriberInfo getSubscriberInfo(FindState findState) {
+        if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
+            SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
+            if (findState.clazz == superclassInfo.getSubscriberClass()) {
+                return superclassInfo;
+            }
+        }
+        if (subscriberInfoIndexes != null) {
+            for (SubscriberInfoIndex index : subscriberInfoIndexes) {
+                SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+                if (info != null) {
+                    return info;
+                }
+            }
+        }
+        return null;
+    }
+
+    static class FindState {
+
+        @Nullable Class<?> clazz;
+
+        @Nullable SubscriberInfo subscriberInfo;
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfo.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfo {
+
+    default Class<?> getSubscriberClass() {
+        throw new java.lang.Error();
+    }
+
+    default SubscriberInfo getSuperSubscriberInfo() {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/meta/SubscriberInfoIndex.java ===
+package org.greenrobot.eventbus.meta;
+
+public interface SubscriberInfoIndex {
+
+    default SubscriberInfo getSubscriberInfo(Class<?> subscriberClass) {
+        throw new java.lang.Error();
+    }
+}
+```

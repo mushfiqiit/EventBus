@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 
 /**
@@ -32,6 +34,7 @@ import java.util.logging.Level;
  */
 public class ExceptionToResourceMapping {
 
+    @Nonnull
     public final Map<Class<? extends Throwable>, Integer> throwableToMsgIdMap;
 
     public ExceptionToResourceMapping() {
@@ -62,7 +65,8 @@ public class ExceptionToResourceMapping {
     }
 
     /** Mapping without checking the cause (done in mapThrowable). */
-    protected Integer mapThrowableFlat(Throwable throwable) {
+    @Nullable
+    protected Integer mapThrowableFlat(@Nonnull Throwable throwable) {
         Class<? extends Throwable> throwableClass = throwable.getClass();
         Integer resId = throwableToMsgIdMap.get(throwableClass);
         if (resId == null) {

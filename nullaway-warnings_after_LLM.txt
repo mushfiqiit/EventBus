@@ -1,0 +1,35 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/Subscription.java:50: warning: [NullAway] dereferenced expression subscriberMethod.methodString is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethod.java:52: warning: [NullAway] dereferenced expression methodString is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:136: warning: [NullAway] passing @Nullable parameter 'builder.subscriberInfoIndexes' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:313: warning: [NullAway] dereferenced expression postingState.subscription is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:460: warning: [NullAway] dereferenced expression mainThreadPoster is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:524: warning: [NullAway] dereferenced expression subscription is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:525: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:544: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:551: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:555: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:558: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:578: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:183: warning: [NullAway] dereferenced expression AndroidComponents.get() is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/BackgroundPoster.java:67: warning: [NullAway] dereferenced expression eventBus.getLogger() is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:133: warning: [NullAway] passing @Nullable parameter 'findState.clazz' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:139: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:156: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:160: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:162: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:279: warning: [NullAway] dereferenced expression clazz is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/Logger.java:66: warning: [NullAway] dereferenced expression AndroidComponents.get() is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:50: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:50: warning: [NullAway] passing @Nullable parameter 'subscription' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:58: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:56: warning: [NullAway] method returns @Nullable, but superclass method org.greenrobot.eventbus.util.HasExecutionScope.getExecutionScope() returns @NonNull
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:85: warning: [NullAway] passing @Nullable parameter 'executionContext' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:123: warning: [NullAway] dereferenced expression threadPool is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:131: warning: [NullAway] dereferenced expression eventBus.getLogger() is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:131: warning: [NullAway] dereferenced expression eventBus is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:137: warning: [NullAway] dereferenced expression eventBus is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:60: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:30: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:36: warning: [NullAway] dereferenced expression methodInfos is @Nullable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:10: warning: [NullAway] @NonNull static field implementation not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field

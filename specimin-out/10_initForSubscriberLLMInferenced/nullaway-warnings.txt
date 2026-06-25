@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriberLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:12: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberClass not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/10_initForSubscriberLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized

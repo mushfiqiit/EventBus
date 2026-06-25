@@ -1,0 +1,57 @@
+### A) Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `pendingPostPool` | `@Nonnull` | It is static and initialized by the class itself, and NullAway complains when it's not initialized. |
+| `event` | `@Nullable` | It is set to `null` in `releasePendingPost` method. |
+| `subscription` | `@Nullable` | It is set to `null` in `releasePendingPost` method. |
+| `next` | `@Nullable` | It is set to `null` in `obtainPendingPost` and `releasePendingPost` methods. |
+| `releasePendingPost(pendingPost)` parameter | `@Nonnull` | If `pendingPost` is `null`, it will throw a `NullPointerException` when trying to access its fields. |
+| `pendingPostPool.size()` return value | `@Nonnull` | The size of a collection is never `null`. |
+| `pendingPostPool.add(pendingPost)` return value | `@Nonnull` | The method does not return anything (void), but if it were to return a boolean, it would be `@Nonnull`. |
+
+### B) Unsafe Dereferences
+
+1. `pendingPostPool.size()` (NullAway warning at line 7) - The `pendingPostPool` is not initialized before using its `size()` method.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+final class PendingPost {
+
+    private final static @Nonnull List<PendingPost> pendingPostPool = new java.util.ArrayList<>(); // Initialize pendingPostPool
+
+    @Nullable
+    Object event;
+
+    @Nullable
+    Subscription subscription;
+
+    @Nullable
+    PendingPost next;
+
+    static void releasePendingPost(@Nonnull PendingPost pendingPost) {
+        pendingPost.event = null;
+        pendingPost.subscription = null;
+        pendingPost.next = null;
+        synchronized (pendingPostPool) {
+            if (pendingPostPool.size() < 10000) {
+                pendingPostPool.add(pendingPost);
+            }
+        }
+    }
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+}
+```

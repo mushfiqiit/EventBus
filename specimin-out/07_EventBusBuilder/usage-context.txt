@@ -1,0 +1,80 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: DEFAULT_EXECUTOR_SERVICE, eventInheritance, executorService, ignoreGeneratedIndex, logNoSubscriberMessages, logSubscriberExceptions, logger, mainThreadSupport, sendNoSubscriberEvent, sendSubscriberExceptionEvent, skipMethodVerificationForClasses, strictMethodVerification, subscriberInfoIndexes, throwSubscriberException
+
+# org/greenrobot/eventbus/EventBusBuilder.java
+     50:     /** Default: true */
+     51:     public EventBusBuilder logSubscriberExceptions(boolean logSubscriberExceptions) {
+     52:         this.logSubscriberExceptions = logSubscriberExceptions;
+     53:         return this;
+  ---
+     56:     /** Default: true */
+     57:     public EventBusBuilder logNoSubscriberMessages(boolean logNoSubscriberMessages) {
+     58:         this.logNoSubscriberMessages = logNoSubscriberMessages;
+     59:         return this;
+  ---
+     62:     /** Default: true */
+     63:     public EventBusBuilder sendSubscriberExceptionEvent(boolean sendSubscriberExceptionEvent) {
+     64:         this.sendSubscriberExceptionEvent = sendSubscriberExceptionEvent;
+     65:         return this;
+  ---
+     68:     /** Default: true */
+     69:     public EventBusBuilder sendNoSubscriberEvent(boolean sendNoSubscriberEvent) {
+     70:         this.sendNoSubscriberEvent = sendNoSubscriberEvent;
+     71:         return this;
+  ---
+     79:      */
+     80:     public EventBusBuilder throwSubscriberException(boolean throwSubscriberException) {
+     81:         this.throwSubscriberException = throwSubscriberException;
+     82:         return this;
+  ---
+     93:      */
+     94:     public EventBusBuilder eventInheritance(boolean eventInheritance) {
+     95:         this.eventInheritance = eventInheritance;
+     96:         return this;
+  ---
+    103:      */
+    104:     public EventBusBuilder executorService(ExecutorService executorService) {
+    105:         this.executorService = executorService;
+    106:         return this;
+  ---
+    114:     public EventBusBuilder skipMethodVerificationFor(Class<?> clazz) {
+    115:         if (skipMethodVerificationForClasses == null) {
+    116:             skipMethodVerificationForClasses = new ArrayList<>();
+    117:         }
+    118:         skipMethodVerificationForClasses.add(clazz);
+    119:         return this;
+  ---
+    122:     /** Forces the use of reflection even if there's a generated index (default: false). */
+    123:     public EventBusBuilder ignoreGeneratedIndex(boolean ignoreGeneratedIndex) {
+    124:         this.ignoreGeneratedIndex = ignoreGeneratedIndex;
+    125:         return this;
+  ---
+    128:     /** Enables strict method verification (default: false). */
+    129:     public EventBusBuilder strictMethodVerification(boolean strictMethodVerification) {
+    130:         this.strictMethodVerification = strictMethodVerification;
+    131:         return this;
+  ---
+    135:     public EventBusBuilder addIndex(SubscriberInfoIndex index) {
+    136:         if (subscriberInfoIndexes == null) {
+    137:             subscriberInfoIndexes = new ArrayList<>();
+    138:         }
+    139:         subscriberInfoIndexes.add(index);
+    140:         return this;
+  ---
+    147:      */
+    148:     public EventBusBuilder logger(Logger logger) {
+    149:         this.logger = logger;
+    150:         return this;
+  ---
+    153:     Logger getLogger() {
+    154:         if (logger != null) {
+    155:             return logger;
+    156:         } else {
+  ---
+    161:     MainThreadSupport getMainThreadSupport() {
+    162:         if (mainThreadSupport != null) {
+    163:             return mainThreadSupport;
+    164:         } else if (AndroidComponents.areAvailable()) {
+  ---

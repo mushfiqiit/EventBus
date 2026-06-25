@@ -1,0 +1,142 @@
+### A) Annotation decisions
+
+Here are the annotation decisions for every parameter, return type, and field in the code:
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| EventBus.subscriptionsByEventType | @NonNull | It's initialized in the constructor and never set to null. |
+| EventBus.typesBySubscriber | @NonNull | It's initialized in the constructor and never set to null. |
+| EventBus.stickyEvents | @NonNull | It's initialized in the constructor and never set to null. |
+| EventBus.eventInheritance | @NonNull | It's a primitive boolean value. |
+| EventBus.subscribe.subscriber | @NonNull | It's not annotated with @Nullable and there's no indication that it could be null. |
+| EventBus.subscribe.subscriberMethod | @NonNull | It's not annotated with @Nullable and there's no indication that it could be null. |
+| SubscriberMethod.eventType | @NonNull | It's not annotated with @Nullable and there's no indication that it could be null. |
+| SubscriberMethod.priority | @NonNull | It's a primitive int value. |
+| SubscriberMethod.sticky | @NonNull | It's a primitive boolean value. |
+| Subscription.subscriberMethod | @NonNull | It's not annotated with @Nullable and there's no indication that it could be null. |
+| EventBus.subscribe.newSubscription | @NonNull | It's created with a non-null subscriber and subscriberMethod. |
+| EventBus.subscribe.subscriptions | @Nullable | It's retrieved from a map and could be null if the eventType is not present. |
+| EventBus.subscribe.subscribedEvents | @Nullable | It's retrieved from a map and could be null if the subscriber is not present. |
+| EventBus.subscribe.stickyEvent | @Nullable | It's retrieved from a map and could be null if the eventType is not present. |
+
+### B) Unsafe dereferences
+
+Here are the dereferences of a @Nullable value in the code that could throw a NullPointerException:
+
+1. `subscriptions.contains(newSubscription)` (line 164) - The `subscriptions` variable could be null if the `eventType` is not present in the `subscriptionsByEventType` map.
+2. `subscriptions.add(i, newSubscription)` (line 166) - The `subscriptions` variable could be null if the `eventType` is not present in the `subscriptionsByEventType` map.
+3. `subscribedEvents.add(eventType)` (line 184) - The `subscribedEvents` variable could be null if the `subscriber` is not present in the `typesBySubscriber` map.
+4. `checkPostStickyEventToSubscription(newSubscription, stickyEvent)` (line 203) - The `stickyEvent` variable could be null if the `eventType` is not present in the `stickyEvents` map.
+5. `subscriptions.get(i).subscriberMethod.priority` (line 155) - The `subscriptions` variable could be null if the `eventType` is not present in the `subscriptionsByEventType` map, and the `get(i)` method could return null if the index is out of bounds.
+
+### C) Corrected annotated code
+
+Here is the fully annotated version of each file:
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public class EventBus {
+
+    private final @Nonnull Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private final @Nonnull Map<Object, List<Class<?>>> typesBySubscriber;
+
+    private final @Nonnull Map<Class<?>, Object> stickyEvents;
+
+    private final boolean eventInheritance = false;
+
+    private void subscribe(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
+        Class<?> eventType = subscriberMethod.eventType;
+        Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+        CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions == null) {
+            subscriptions = new CopyOnWriteArrayList<>();
+            subscriptionsByEventType.put(eventType, subscriptions);
+        } else {
+            if (subscriptions.contains(newSubscription)) {
+                throw new EventBusException("Subscriber " + subscriber.getClass() + " already registered to event " + eventType);
+            }
+        }
+        int size = subscriptions.size();
+        for (int i = 0; i <= size; i++) {
+            if (i == size || subscriberMethod.priority > subscriptions.get(i).subscriberMethod.priority) {
+                subscriptions.add(i, newSubscription);
+                break;
+            }
+        }
+        List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+        if (subscribedEvents == null) {
+            subscribedEvents = new ArrayList<>();
+            typesBySubscriber.put(subscriber, subscribedEvents);
+        }
+        subscribedEvents.add(eventType);
+        if (subscriberMethod.sticky) {
+            if (eventInheritance) {
+                Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+                for (Map.Entry<Class<?>, Object> entry : entries) {
+                    Class<?> candidateEventType = entry.getKey();
+                    if (eventType.isAssignableFrom(candidateEventType)) {
+                        Object stickyEvent = entry.getValue();
+                        checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                    }
+                }
+            } else {
+                Object stickyEvent = stickyEvents.get(eventType);
+                checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+            }
+        }
+    }
+
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/EventBusException.java ===
+package org.greenrobot.eventbus;
+
+public class EventBusException extends RuntimeException {
+
+    public EventBusException(@Nonnull String detailMessage) {
+        throw new java.lang.Error();
+    }
+}
+
+// === org/greenrobot/eventbus/SubscriberMethod.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+public class SubscriberMethod {
+
+    final @Nonnull Class<?> eventType;
+
+    final int priority = 0;
+
+    final boolean sticky = false;
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+
+final class Subscription {
+
+    final @Nonnull SubscriberMethod subscriberMethod;
+
+    Subscription(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
+        throw new java.lang.Error();
+    }
+}
+```

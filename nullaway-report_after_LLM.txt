@@ -1,0 +1,246 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/Subscription.java:50: warning: [NullAway] dereferenced expression subscriberMethod.methodString is @Nullable
+        return subscriber.hashCode() + subscriberMethod.methodString.hashCode();
+                                                                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethod.java:52: warning: [NullAway] dereferenced expression methodString is @Nullable
+            return methodString.equals(otherSubscriberMethod.methodString);
+                               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:61: warning: [ThreadLocalUsage] ThreadLocals should be stored in static fields
+    private final ThreadLocal<PostingThreadState> currentPostingThreadState = new ThreadLocal<PostingThreadState>() {
+                                                                              ^
+    (see https://errorprone.info/bugpattern/ThreadLocalUsage)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:136: warning: [NullAway] passing @Nullable parameter 'builder.subscriberInfoIndexes' where @NonNull is required
+        subscriberMethodFinder = new SubscriberMethodFinder(builder.subscriberInfoIndexes,
+                                                                   ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:313: warning: [NullAway] dereferenced expression postingState.subscription is @Nullable
+        } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+                                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:460: warning: [NullAway] dereferenced expression mainThreadPoster is @Nullable
+                    mainThreadPoster.enqueue(subscription, event);
+                                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:524: warning: [NullAway] dereferenced expression subscription is @Nullable
+        if (subscription.active) {
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:525: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+            invokeSubscriber(subscription, event);
+                                           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:544: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+                        + " threw an exception", cause);
+                                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:551: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+                throw new EventBusException("Invoking subscriber failed", cause);
+                                                                          ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:555: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+                        + subscription.subscriber.getClass(), cause);
+                                                              ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:558: warning: [NullAway] passing @Nullable parameter 'cause' where @NonNull is required
+                SubscriberExceptionEvent exEvent = new SubscriberExceptionEvent(this, cause, event,
+                                                                                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:578: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return executorService;
+        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:36: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:38: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:40: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:42: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:44: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:46: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:48: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:50: warning: [NullablePrimitive] Nullness annotations should not be used for primitive types since they cannot be null
+    @Nonnull
+    ^
+    (see https://errorprone.info/bugpattern/NullablePrimitive)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:183: warning: [NullAway] dereferenced expression AndroidComponents.get() is @Nullable
+            return AndroidComponents.get().defaultMainThreadSupport;
+                                          ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:196: warning: [LockOnNonEnclosingClassLiteral] Lock on the class other than the enclosing class of the code block can unintentionally prevent the locked class being used properly.
+        synchronized (EventBus.class) {
+        ^
+    (see https://errorprone.info/bugpattern/LockOnNonEnclosingClassLiteral)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/BackgroundPoster.java:37: warning: [MissingOverride] enqueue implements method in Poster; expected @Override
+    public void enqueue(Subscription subscription, Object event) {
+                ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public void enqueue(Subscription subscription, Object event) {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/BackgroundPoster.java:67: warning: [NullAway] dereferenced expression eventBus.getLogger() is @Nullable
+                eventBus.getLogger().log(Level.WARNING, Thread.currentThread().getName() + " was interrupted", e);
+                                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/AsyncPoster.java:34: warning: [MissingOverride] enqueue implements method in Poster; expected @Override
+    public void enqueue(Subscription subscription, Object event) {
+                ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public void enqueue(Subscription subscription, Object event) {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:133: warning: [NullAway] passing @Nullable parameter 'findState.clazz' where @NonNull is required
+                SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+                                                                       ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:139: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return null;
+        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:156: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+            methods = findState.clazz.getDeclaredMethods();
+                                     ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:160: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+                methods = findState.clazz.getMethods();
+                                         ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:162: warning: [NullAway] dereferenced expression findState.clazz is @Nullable
+                String msg = "Could not inspect methods of " + findState.clazz.getName();
+                                                                              ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:279: warning: [NullAway] dereferenced expression clazz is @Nullable
+                clazz = clazz.getSuperclass();
+                             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/Logger.java:66: warning: [NullAway] dereferenced expression AndroidComponents.get() is @Nullable
+                return AndroidComponents.get().logger;
+                                              ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:50: warning: [NullAway] passing @Nullable parameter 'event' where @NonNull is required
+        return new PendingPost(event, subscription);
+                               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:50: warning: [NullAway] passing @Nullable parameter 'subscription' where @NonNull is required
+        return new PendingPost(event, subscription);
+                                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:56: warning: [WaitNotInLoop] Because of spurious wakeups, wait(long) must always be called in a loop
+            wait(maxMillisToWait);
+                ^
+    (see https://errorprone.info/bugpattern/WaitNotInLoop)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:58: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return poll();
+        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:56: warning: [MissingOverride] getExecutionScope implements method in HasExecutionScope; expected @Override
+    public Object getExecutionScope() {
+                  ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override @Nullable'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:56: warning: [NullAway] method returns @Nullable, but superclass method org.greenrobot.eventbus.util.HasExecutionScope.getExecutionScope() returns @NonNull
+    public Object getExecutionScope() {
+                  ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:60: warning: [MissingOverride] setExecutionScope implements method in HasExecutionScope; expected @Override
+    public void setExecutionScope(@Nullable Object executionContext) {
+                ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public void setExecutionScope(@Nullable Object executionContext) {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:85: warning: [NullAway] passing @Nullable parameter 'executionContext' where @NonNull is required
+            return new AsyncExecutor(threadPool, eventBus, failureEventType, executionContext);
+                                                                             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:123: warning: [NullAway] dereferenced expression threadPool is @Nullable
+        threadPool.execute(() -> {
+                  ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:131: warning: [NullAway] dereferenced expression eventBus.getLogger() is @Nullable
+                    eventBus.getLogger().log(Level.SEVERE, "Original exception:", e);
+                                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:131: warning: [NullAway] dereferenced expression eventBus is @Nullable
+                    eventBus.getLogger().log(Level.SEVERE, "Original exception:", e);
+                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:137: warning: [NullAway] dereferenced expression eventBus is @Nullable
+                eventBus.post(event);
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:60: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+                    return null;
+                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:30: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+        super(subscriberClass, null, shouldCheckSuperclass);
+                               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:36: warning: [NullAway] dereferenced expression methodInfos is @Nullable
+        int length = methodInfos.length;
+                                ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:51: warning: [ClassNewInstance] Class.newInstance() bypasses exception checking; prefer getDeclaredConstructor().newInstance()
+            return superSubscriberInfoClass.newInstance();
+                                                       ^
+    (see https://errorprone.info/bugpattern/ClassNewInstance)
+  Did you mean 'return superSubscriberInfoClass.getDeclaredConstructor().newInstance();'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:10: warning: [NullAway] @NonNull static field implementation not initialized
+    private static final AndroidComponents implementation;
+                                           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        implementation = AndroidDependenciesDetector.isAndroidSDKAvailable()
+                       ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:19: warning: [EmptyCatch] Caught exceptions should not be ignored
+        catch (ClassNotFoundException ignored) {}
+        ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:20: warning: [EmptyCatch] Caught exceptions should not be ignored
+        catch (NoSuchMethodException ignored) {}
+        ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:21: warning: [EmptyCatch] Caught exceptions should not be ignored
+        catch (IllegalAccessException ignored) {}
+        ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:22: warning: [EmptyCatch] Caught exceptions should not be ignored
+        catch (InvocationTargetException ignored) {}
+        ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+Note: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+55 warnings
+
+BUILD SUCCESSFUL in 6s
+2 actionable tasks: 2 executed

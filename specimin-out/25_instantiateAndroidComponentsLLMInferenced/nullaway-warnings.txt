@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/25_instantiateAndroidComponentsLLMInferenced/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:10: error: variable ANDROID_COMPONENTS_IMPLEMENTATION_CLASS_NAME not initialized in the default constructor

@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/04_getStickyEventLLMInferenced/org/greenrobot/eventbus/EventBus.java:12: error: cannot find symbol

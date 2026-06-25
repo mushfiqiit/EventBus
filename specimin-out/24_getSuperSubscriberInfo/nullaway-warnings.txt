@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/24_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:5: error: variable superSubscriberInfoClass not initialized in the default constructor

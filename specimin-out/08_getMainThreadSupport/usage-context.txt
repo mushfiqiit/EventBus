@@ -1,0 +1,19 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: defaultMainThreadSupport, mainThreadSupport
+
+# org/greenrobot/eventbus/EventBusBuilder.java
+    161:     MainThreadSupport getMainThreadSupport() {
+    162:         if (mainThreadSupport != null) {
+    163:             return mainThreadSupport;
+    164:         } else if (AndroidComponents.areAvailable()) {
+  ---
+
+# org/greenrobot/eventbus/android/AndroidComponents.java
+     26: 
+     27:     public AndroidComponents(Logger logger, MainThreadSupport defaultMainThreadSupport) {
+     28:         this.logger = logger;
+     29:         this.defaultMainThreadSupport = defaultMainThreadSupport;
+     30:     }
+  ---

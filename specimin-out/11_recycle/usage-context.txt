@@ -1,0 +1,134 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: anyMethodByEventType, clazz, methodKeyBuilder, skipSuperClasses, subscriberClass, subscriberClassByMethodKey, subscriberInfo, subscriberMethods
+
+# org/greenrobot/eventbus/SubscriberMethodFinder.java
+     54: 
+     55:     List<SubscriberMethod> findSubscriberMethods(Class<?> subscriberClass) {
+     56:         List<SubscriberMethod> subscriberMethods = METHOD_CACHE.get(subscriberClass);
+     57:         if (subscriberMethods != null) {
+     58:             return subscriberMethods;
+     59:         }
+  ---
+     61:         if (ignoreGeneratedIndex) {
+     62:             subscriberMethods = findUsingReflection(subscriberClass);
+     63:         } else {
+     64:             subscriberMethods = findUsingInfo(subscriberClass);
+     65:         }
+     66:         if (subscriberMethods.isEmpty()) {
+     67:             throw new EventBusException("Subscriber " + subscriberClass
+     68:                     + " and its super classes have no public methods with the @Subscribe annotation");
+     69:         } else {
+     70:             METHOD_CACHE.put(subscriberClass, subscriberMethods);
+     71:             return subscriberMethods;
+     72:         }
+  ---
+     74: 
+     75:     private List<SubscriberMethod> findUsingInfo(Class<?> subscriberClass) {
+     76:         FindState findState = prepareFindState();
+     77:         findState.initForSubscriber(subscriberClass);
+     78:         while (findState.clazz != null) {
+     79:             findState.subscriberInfo = getSubscriberInfo(findState);
+     80:             if (findState.subscriberInfo != null) {
+     81:                 SubscriberMethod[] array = findState.subscriberInfo.getSubscriberMethods();
+     82:                 for (SubscriberMethod subscriberMethod : array) {
+     83:                     if (findState.checkAdd(subscriberMethod.method, subscriberMethod.eventType)) {
+     84:                         findState.subscriberMethods.add(subscriberMethod);
+     85:                     }
+  ---
+     95:     private List<SubscriberMethod> getMethodsAndRelease(FindState findState) {
+     96:         List<SubscriberMethod> subscriberMethods = new ArrayList<>(findState.subscriberMethods);
+     97:         findState.recycle();
+  ---
+    105:         }
+    106:         return subscriberMethods;
+    107:     }
+  ---
+    122:     private SubscriberInfo getSubscriberInfo(FindState findState) {
+    123:         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
+    124:             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
+    125:             if (findState.clazz == superclassInfo.getSubscriberClass()) {
+    126:                 return superclassInfo;
+  ---
+    130:             for (SubscriberInfoIndex index : subscriberInfoIndexes) {
+    131:                 SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+    132:                 if (info != null) {
+  ---
+    139: 
+    140:     private List<SubscriberMethod> findUsingReflection(Class<?> subscriberClass) {
+    141:         FindState findState = prepareFindState();
+    142:         findState.initForSubscriber(subscriberClass);
+    143:         while (findState.clazz != null) {
+    144:             findUsingReflectionInSingleClass(findState);
+  ---
+    153:             // This is faster than getMethods, especially when subscribers are fat classes like Activities
+    154:             methods = findState.clazz.getDeclaredMethods();
+    155:         } catch (Throwable th) {
+  ---
+    157:             try {
+    158:                 methods = findState.clazz.getMethods();
+    159:             } catch (LinkageError error) { // super class of NoClassDefFoundError to be a bit more broad...
+    160:                 String msg = "Could not inspect methods of " + findState.clazz.getName();
+    161:                 if (ignoreGeneratedIndex) {
+  ---
+    167:             }
+    168:             findState.skipSuperClasses = true;
+    169:         }
+  ---
+    179:                             ThreadMode threadMode = subscribeAnnotation.threadMode();
+    180:                             findState.subscriberMethods.add(new SubscriberMethod(method, eventType, threadMode,
+    181:                                     subscribeAnnotation.priority(), subscribeAnnotation.sticky()));
+  ---
+    211: 
+    212:         void initForSubscriber(Class<?> subscriberClass) {
+    213:             this.subscriberClass = clazz = subscriberClass;
+    214:             skipSuperClasses = false;
+    215:             subscriberInfo = null;
+    216:         }
+  ---
+    218:         void recycle() {
+    219:             subscriberMethods.clear();
+    220:             anyMethodByEventType.clear();
+    221:             subscriberClassByMethodKey.clear();
+    222:             methodKeyBuilder.setLength(0);
+    223:             subscriberClass = null;
+    224:             clazz = null;
+    225:             skipSuperClasses = false;
+    226:             subscriberInfo = null;
+    227:         }
+  ---
+    231:             // Usually a subscriber doesn't have methods listening to the same event type.
+    232:             Object existing = anyMethodByEventType.put(eventType, method);
+    233:             if (existing == null) {
+  ---
+    241:                     // Put any non-Method object to "consume" the existing Method
+    242:                     anyMethodByEventType.put(eventType, this);
+    243:                 }
+  ---
+    248:         private boolean checkAddWithMethodSignature(Method method, Class<?> eventType) {
+    249:             methodKeyBuilder.setLength(0);
+    250:             methodKeyBuilder.append(method.getName());
+    251:             methodKeyBuilder.append('>').append(eventType.getName());
+    252: 
+    253:             String methodKey = methodKeyBuilder.toString();
+    254:             Class<?> methodClass = method.getDeclaringClass();
+    255:             Class<?> methodClassOld = subscriberClassByMethodKey.put(methodKey, methodClass);
+    256:             if (methodClassOld == null || methodClassOld.isAssignableFrom(methodClass)) {
+  ---
+    260:                 // Revert the put, old class is further down the class hierarchy
+    261:                 subscriberClassByMethodKey.put(methodKey, methodClassOld);
+    262:                 return false;
+  ---
+    266:         void moveToSuperclass() {
+    267:             if (skipSuperClasses) {
+    268:                 clazz = null;
+    269:             } else {
+    270:                 clazz = clazz.getSuperclass();
+    271:                 String clazzName = clazz.getName();
+    272:                 // Skip system classes, this degrades performance.
+  ---
+    275:                         clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+    276:                     clazz = null;
+    277:                 }
+  ---

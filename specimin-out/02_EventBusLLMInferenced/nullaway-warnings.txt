@@ -1,0 +1,5 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/EventBusBuilder.java:4: error: package org.greenrobot.eventbus.meta does not exist
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/EventBus.java:23: error: cannot find symbol
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:4: error: package org.greenrobot.eventbus.meta does not exist
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/BackgroundPoster.java:12: error: method does not override or implement a method from a supertype
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/02_EventBusLLMInferenced/org/greenrobot/eventbus/AsyncPoster.java:12: error: method does not override or implement a method from a supertype

@@ -1,0 +1,133 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: eventInheritance, eventType, priority, sticky, stickyEvents, subscriberMethod, subscriptionsByEventType, typesBySubscriber
+
+# org/greenrobot/eventbus/EventBus.java
+    114:         logger = builder.getLogger();
+    115:         subscriptionsByEventType = new HashMap<>();
+    116:         typesBySubscriber = new HashMap<>();
+    117:         stickyEvents = new ConcurrentHashMap<>();
+    118:         mainThreadSupport = builder.getMainThreadSupport();
+  ---
+    129:         throwSubscriberException = builder.throwSubscriberException;
+    130:         eventInheritance = builder.eventInheritance;
+    131:         executorService = builder.executorService;
+  ---
+    161:         Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+    162:         CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+    163:         if (subscriptions == null) {
+    164:             subscriptions = new CopyOnWriteArrayList<>();
+    165:             subscriptionsByEventType.put(eventType, subscriptions);
+    166:         } else {
+  ---
+    180: 
+    181:         List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+    182:         if (subscribedEvents == null) {
+    183:             subscribedEvents = new ArrayList<>();
+    184:             typesBySubscriber.put(subscriber, subscribedEvents);
+    185:         }
+  ---
+    188:         if (subscriberMethod.sticky) {
+    189:             if (eventInheritance) {
+    190:                 // Existing sticky events of all subclasses of eventType have to be considered.
+  ---
+    193:                 // (e.g. an additional map storing sub classes of super classes: Class -> List<Class>).
+    194:                 Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+    195:                 for (Map.Entry<Class<?>, Object> entry : entries) {
+  ---
+    202:             } else {
+    203:                 Object stickyEvent = stickyEvents.get(eventType);
+    204:                 checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+  ---
+    227:     public synchronized boolean isRegistered(Object subscriber) {
+    228:         return typesBySubscriber.containsKey(subscriber);
+    229:     }
+  ---
+    232:     private void unsubscribeByEventType(Object subscriber, Class<?> eventType) {
+    233:         List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+    234:         if (subscriptions != null) {
+  ---
+    249:     public synchronized void unregister(Object subscriber) {
+    250:         List<Class<?>> subscribedTypes = typesBySubscriber.get(subscriber);
+    251:         if (subscribedTypes != null) {
+  ---
+    254:             }
+    255:             typesBySubscriber.remove(subscriber);
+    256:         } else {
+  ---
+    311:     public void postSticky(Object event) {
+    312:         synchronized (stickyEvents) {
+    313:             stickyEvents.put(event.getClass(), event);
+    314:         }
+  ---
+    324:     public <T> T getStickyEvent(Class<T> eventType) {
+    325:         synchronized (stickyEvents) {
+    326:             return eventType.cast(stickyEvents.get(eventType));
+    327:         }
+  ---
+    335:     public <T> T removeStickyEvent(Class<T> eventType) {
+    336:         synchronized (stickyEvents) {
+    337:             return eventType.cast(stickyEvents.remove(eventType));
+    338:         }
+  ---
+    346:     public boolean removeStickyEvent(Object event) {
+    347:         synchronized (stickyEvents) {
+    348:             Class<?> eventType = event.getClass();
+    349:             Object existingEvent = stickyEvents.get(eventType);
+    350:             if (event.equals(existingEvent)) {
+    351:                 stickyEvents.remove(eventType);
+    352:                 return true;
+  ---
+    362:     public void removeAllStickyEvents() {
+    363:         synchronized (stickyEvents) {
+    364:             stickyEvents.clear();
+    365:         }
+  ---
+    375:                 synchronized (this) {
+    376:                     subscriptions = subscriptionsByEventType.get(clazz);
+    377:                 }
+  ---
+    388:         boolean subscriptionFound = false;
+    389:         if (eventInheritance) {
+    390:             List<Class<?>> eventTypes = lookupAllEventTypes(eventClass);
+  ---
+    412:         synchronized (this) {
+    413:             subscriptions = subscriptionsByEventType.get(eventClass);
+    414:         }
+  ---
+    578:     public String toString() {
+    579:         return "EventBus[indexCount=" + indexCount + ", eventInheritance=" + eventInheritance + "]";
+    580:     }
+  ---
+
+# org/greenrobot/eventbus/SubscriberMethod.java
+     29: 
+     30:     public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
+     31:         this.method = method;
+     32:         this.threadMode = threadMode;
+     33:         this.eventType = eventType;
+     34:         this.priority = priority;
+     35:         this.sticky = sticky;
+     36:     }
+  ---
+     58:             builder.append('#').append(method.getName());
+     59:             builder.append('(').append(eventType.getName());
+     60:             methodString = builder.toString();
+  ---
+
+# org/greenrobot/eventbus/Subscription.java
+     26: 
+     27:     Subscription(Object subscriber, SubscriberMethod subscriberMethod) {
+     28:         this.subscriber = subscriber;
+     29:         this.subscriberMethod = subscriberMethod;
+     30:         active = true;
+  ---
+     37:             return subscriber == otherSubscription.subscriber
+     38:                     && subscriberMethod.equals(otherSubscription.subscriberMethod);
+     39:         } else {
+  ---
+     45:     public int hashCode() {
+     46:         return subscriber.hashCode() + subscriberMethod.methodString.hashCode();
+     47:     }
+  ---

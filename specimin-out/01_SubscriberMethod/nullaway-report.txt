@@ -1,0 +1,11 @@
+> Task :clean
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:19: warning: [NullAway] initializer method does not guarantee @NonNull field methodString (line 17) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
+           ^
+    (see http://t.uber.com/nullaway )
+1 warning
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 2 executed

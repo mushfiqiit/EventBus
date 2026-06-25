@@ -1,0 +1,37 @@
+### A) Annotation Decisions
+
+| Location | Inferred Annotation | One-sentence reason |
+| --- | --- | --- |
+| `build()` return type | `@Nonnull` | The return type is guaranteed non-null as build() returns the result of another build method. |
+| `buildForScope(Object executionContext)` return type | `@Nonnull` | The return type is guaranteed non-null as buildForScope() returns the result of its internal logic, which doesn't imply nullability. |
+| `buildForScope(Object executionContext)` parameter `executionContext` | `@Nullable` | The parameter `executionContext` is flagged by NullAway as potentially null, hence should be annotated as @Nullable. |
+
+### B) Unsafe Dereferences
+
+* Line 8: Passing `null` to `buildForScope(Object executionContext)` could potentially throw a NullPointerException if `executionContext` is dereferenced within the method without null checks.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/util/AsyncExecutor.java ===
+package org.greenrobot.eventbus.util;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+public class AsyncExecutor {
+
+    public static class Builder {
+
+        @Nonnull
+        public AsyncExecutor build() {
+            return buildForScope(null);
+        }
+
+        @Nonnull
+        public AsyncExecutor buildForScope(@Nullable Object executionContext) {
+            throw new java.lang.Error();
+        }
+    }
+}
+```

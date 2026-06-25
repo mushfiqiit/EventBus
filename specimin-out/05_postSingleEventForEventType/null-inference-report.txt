@@ -1,0 +1,82 @@
+### A) Annotation Decisions
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `subscriptionsByEventType` | `@Nullable` | Not initialized in the default constructor, NullAway warns it might be null. |
+| `postSingleEventForEventType` parameter `event` | `@Nonnull` | The method does not handle null events, and the code does not flag it as potentially null. |
+| `postSingleEventForEventType` parameter `postingState` | `@Nonnull` | The method does not handle null posting states, and the code does not flag it as potentially null. |
+| `postSingleEventForEventType` parameter `eventClass` | `@Nonnull` | The method does not handle null event classes, and the code does not flag it as potentially null. |
+| `postToSubscription` parameter `subscription` | `@Nonnull` | The method does not handle null subscriptions, and the code does not flag it as potentially null. |
+| `postToSubscription` parameter `event` | `@Nonnull` | The method does not handle null events, and the code does not flag it as potentially null. |
+| `postToSubscription` parameter `isMainThread` | `@Nonnull` | This is a primitive boolean, which can never be null. |
+| `PostingThreadState` field `isMainThread` | `@Nonnull` | This is a primitive boolean, which can never be null. |
+| `PostingThreadState` field `subscription` | `@Nullable` | It is set to null in some cases, so it could be null. |
+| `PostingThreadState` field `event` | `@Nullable` | It is set to null in some cases, so it could be null. |
+| `PostingThreadState` field `canceled` | `@Nonnull` | This is a primitive boolean, which can never be null. |
+
+### B) Unsafe Dereferences
+
+There are no explicit NullAway warnings about potential null pointer exceptions in the reduced code provided. However, we can identify that:
+- The `subscriptions` variable in the `postSingleEventForEventType` method could be null, and its `isEmpty()` method is called. If `subscriptions` is null, this would throw a `NullPointerException`.
+
+### C) Corrected Annotated Code
+
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class EventBus {
+
+    private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+
+    private boolean postSingleEventForEventType(@Nonnull Object event, @Nonnull PostingThreadState postingState, @Nonnull Class<?> eventClass) {
+        CopyOnWriteArrayList<Subscription> subscriptions;
+        synchronized (this) {
+            subscriptions = subscriptionsByEventType.get(eventClass);
+        }
+        if (subscriptions != null && !subscriptions.isEmpty()) {
+            for (Subscription subscription : subscriptions) {
+                postingState.event = event;
+                postingState.subscription = subscription;
+                boolean aborted;
+                try {
+                    postToSubscription(subscription, event, postingState.isMainThread);
+                    aborted = postingState.canceled;
+                } finally {
+                    postingState.event = null;
+                    postingState.subscription = null;
+                    postingState.canceled = false;
+                }
+                if (aborted) {
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
+        throw new java.lang.Error();
+    }
+
+    final static class PostingThreadState {
+        boolean isMainThread;
+        @Nullable Subscription subscription;
+        @Nullable Object event;
+        boolean canceled;
+    }
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+}
+```

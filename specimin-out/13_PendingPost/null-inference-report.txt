@@ -1,0 +1,55 @@
+### A) Annotation decisions
+
+The following table presents the annotation decisions:
+
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `pendingPostPool` | `@Nonnull` | Although NullAway flags it as potentially null, the field usage context suggests it is guaranteed to be non-null in the full codebase. |
+| `event` | `@Nullable` | The field usage context shows it is assigned and then set to null, indicating it can be null at some points. |
+| `subscription` | `@Nullable` | Similar to `event`, the field usage context suggests it can be null. |
+| `next` | `@Nullable` | The field usage context shows it is set to null, indicating it can be null. |
+| `PendingPost(Object event, Subscription subscription)` | - | Based on the reasoning for `event` and `subscription`, the constructor parameters should be `@Nullable`. |
+| `PendingPost` constructor return type | `@Nonnull` | The constructor always returns a non-null object. |
+
+### B) Unsafe dereferences
+
+The only potential unsafe dereference is in the field usage context, where `pendingPostPool` is synchronized on. However, since we've determined `pendingPostPool` should be `@Nonnull`, this is not an issue.
+
+### C) Corrected annotated code
+
+```java
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+final class PendingPost {
+
+    @Nonnull
+    private final static List<PendingPost> pendingPostPool = new java.util.ArrayList<>();
+
+    @Nullable
+    Object event;
+
+    @Nullable
+    Subscription subscription;
+
+    @Nullable
+    PendingPost next;
+
+    private PendingPost(@Nullable Object event, @Nullable Subscription subscription) {
+        this.event = event;
+        this.subscription = subscription;
+    }
+
+    // Additional methods and fields as needed...
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+}
+```

@@ -1,0 +1,68 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: clazz, subscriberInfo, subscriberInfoIndexes
+
+# org/greenrobot/eventbus/SubscriberMethodFinder.java
+     47: 
+     48:     SubscriberMethodFinder(List<SubscriberInfoIndex> subscriberInfoIndexes, boolean strictMethodVerification,
+     49:                            boolean ignoreGeneratedIndex) {
+     50:         this.subscriberInfoIndexes = subscriberInfoIndexes;
+     51:         this.strictMethodVerification = strictMethodVerification;
+  ---
+     77:         findState.initForSubscriber(subscriberClass);
+     78:         while (findState.clazz != null) {
+     79:             findState.subscriberInfo = getSubscriberInfo(findState);
+     80:             if (findState.subscriberInfo != null) {
+     81:                 SubscriberMethod[] array = findState.subscriberInfo.getSubscriberMethods();
+     82:                 for (SubscriberMethod subscriberMethod : array) {
+  ---
+    122:     private SubscriberInfo getSubscriberInfo(FindState findState) {
+    123:         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
+    124:             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
+    125:             if (findState.clazz == superclassInfo.getSubscriberClass()) {
+    126:                 return superclassInfo;
+  ---
+    128:         }
+    129:         if (subscriberInfoIndexes != null) {
+    130:             for (SubscriberInfoIndex index : subscriberInfoIndexes) {
+    131:                 SubscriberInfo info = index.getSubscriberInfo(findState.clazz);
+    132:                 if (info != null) {
+  ---
+    142:         findState.initForSubscriber(subscriberClass);
+    143:         while (findState.clazz != null) {
+    144:             findUsingReflectionInSingleClass(findState);
+  ---
+    153:             // This is faster than getMethods, especially when subscribers are fat classes like Activities
+    154:             methods = findState.clazz.getDeclaredMethods();
+    155:         } catch (Throwable th) {
+  ---
+    157:             try {
+    158:                 methods = findState.clazz.getMethods();
+    159:             } catch (LinkageError error) { // super class of NoClassDefFoundError to be a bit more broad...
+    160:                 String msg = "Could not inspect methods of " + findState.clazz.getName();
+    161:                 if (ignoreGeneratedIndex) {
+  ---
+    212:         void initForSubscriber(Class<?> subscriberClass) {
+    213:             this.subscriberClass = clazz = subscriberClass;
+    214:             skipSuperClasses = false;
+    215:             subscriberInfo = null;
+    216:         }
+  ---
+    223:             subscriberClass = null;
+    224:             clazz = null;
+    225:             skipSuperClasses = false;
+    226:             subscriberInfo = null;
+    227:         }
+  ---
+    267:             if (skipSuperClasses) {
+    268:                 clazz = null;
+    269:             } else {
+    270:                 clazz = clazz.getSuperclass();
+    271:                 String clazzName = clazz.getName();
+    272:                 // Skip system classes, this degrades performance.
+  ---
+    275:                         clazzName.startsWith("android.") || clazzName.startsWith("androidx.")) {
+    276:                     clazz = null;
+    277:                 }
+  ---

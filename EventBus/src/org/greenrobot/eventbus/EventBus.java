@@ -26,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * EventBus is a central publish/subscribe event system for Java and Android.
@@ -43,13 +45,17 @@ public class EventBus {
     /** Log tag, apps may override it. */
     public static String TAG = "EventBus";
 
+    @Nullable
     static volatile EventBus defaultInstance;
 
     private static final EventBusBuilder DEFAULT_BUILDER = new EventBusBuilder();
     private static final Map<Class<?>, List<Class<?>>> eventTypesCache = new HashMap<>();
 
+    @Nonnull
     private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
+    @Nonnull
     private final Map<Object, List<Class<?>>> typesBySubscriber;
+    @Nonnull
     private final Map<Class<?>, Object> stickyEvents;
 
     private final ThreadLocal<PostingThreadState> currentPostingThreadState = new ThreadLocal<PostingThreadState>() {
@@ -60,12 +66,18 @@ public class EventBus {
     };
 
     // @Nullable
+    @Nullable
     private final MainThreadSupport mainThreadSupport;
     // @Nullable
+    @Nullable
     private final Poster mainThreadPoster;
+    @Nonnull
     private final BackgroundPoster backgroundPoster;
+    @Nonnull
     private final AsyncPoster asyncPoster;
+    @Nonnull
     private final SubscriberMethodFinder subscriberMethodFinder;
+    @Nullable
     private final ExecutorService executorService;
 
     private final boolean throwSubscriberException;
@@ -76,6 +88,7 @@ public class EventBus {
     private final boolean eventInheritance;
 
     private final int indexCount;
+    @Nonnull
     private final Logger logger;
 
     /** Convenience singleton for apps using a process-wide EventBus instance. */
@@ -156,7 +169,7 @@ public class EventBus {
     }
 
     // Must be called in synchronized block
-    private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
+    private void subscribe(@Nonnull Object subscriber, @Nonnull SubscriberMethod subscriberMethod) {
         Class<?> eventType = subscriberMethod.eventType;
         Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
         CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
@@ -206,7 +219,7 @@ public class EventBus {
         }
     }
 
-    private void checkPostStickyEventToSubscription(Subscription newSubscription, Object stickyEvent) {
+    private void checkPostStickyEventToSubscription(@Nonnull Subscription newSubscription, @Nullable Object stickyEvent) {
         if (stickyEvent != null) {
             // If the subscriber is trying to abort the event, it will fail (event is not tracked in posting state)
             // --> Strange corner case, which we don't take care of here.
@@ -259,7 +272,7 @@ public class EventBus {
     }
 
     /** Posts the given event to the event bus. */
-    public void post(Object event) {
+    public void post(@Nullable Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();
         List<Object> eventQueue = postingState.eventQueue;
         eventQueue.add(event);
@@ -321,7 +334,8 @@ public class EventBus {
      *
      * @see #postSticky(Object)
      */
-    public <T> T getStickyEvent(Class<T> eventType) {
+    @Nullable
+    public <T> T getStickyEvent(@Nonnull Class<T> eventType) {
         synchronized (stickyEvents) {
             return eventType.cast(stickyEvents.get(eventType));
         }
@@ -407,7 +421,7 @@ public class EventBus {
         }
     }
 
-    private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
+    private boolean postSingleEventForEventType(@Nonnull Object event, @Nonnull PostingThreadState postingState, @Nonnull Class<?> eventClass) {
         CopyOnWriteArrayList<Subscription> subscriptions;
         synchronized (this) {
             subscriptions = subscriptionsByEventType.get(eventClass);
@@ -434,7 +448,7 @@ public class EventBus {
         return false;
     }
 
-    private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+    private void postToSubscription(@Nonnull Subscription subscription, @Nonnull Object event, boolean isMainThread) {
         switch (subscription.subscriberMethod.threadMode) {
             case POSTING:
                 invokeSubscriber(subscription, event);
@@ -512,7 +526,7 @@ public class EventBus {
         }
     }
 
-    void invokeSubscriber(Subscription subscription, Object event) {
+    void invokeSubscriber(@Nonnull Subscription subscription, @Nonnull Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
         } catch (InvocationTargetException e) {
@@ -522,7 +536,7 @@ public class EventBus {
         }
     }
 
-    private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+    private void handleSubscriberException(@Nonnull Subscription subscription, @Nonnull Object event, @Nullable Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
@@ -553,7 +567,9 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
+        @Nullable
         Subscription subscription;
+        @Nullable
         Object event;
         boolean canceled;
     }
@@ -565,6 +581,7 @@ public class EventBus {
     /**
      * For internal use only.
      */
+    @Nullable
     public Logger getLogger() {
         return logger;
     }

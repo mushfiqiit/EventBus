@@ -1,0 +1,21 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: superSubscriberInfoClass
+
+# org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java
+     29: 
+     30:     protected AbstractSubscriberInfo(Class subscriberClass, Class<? extends SubscriberInfo> superSubscriberInfoClass,
+     31:                                      boolean shouldCheckSuperclass) {
+     32:         this.subscriberClass = subscriberClass;
+     33:         this.superSubscriberInfoClass = superSubscriberInfoClass;
+     34:         this.shouldCheckSuperclass = shouldCheckSuperclass;
+  ---
+     43:     public SubscriberInfo getSuperSubscriberInfo() {
+     44:         if(superSubscriberInfoClass == null) {
+     45:             return null;
+  ---
+     47:         try {
+     48:             return superSubscriberInfoClass.newInstance();
+     49:         } catch (InstantiationException e) {
+  ---

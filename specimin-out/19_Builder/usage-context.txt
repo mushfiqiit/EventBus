@@ -1,0 +1,55 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: eventBus, failureEventType, threadPool
+
+# org/greenrobot/eventbus/util/AsyncExecutor.java
+     48: 
+     49:         public Builder threadPool(Executor threadPool) {
+     50:             this.threadPool = threadPool;
+     51:             return this;
+  ---
+     53: 
+     54:         public Builder failureEventType(Class<?> failureEventType) {
+     55:             this.failureEventType = failureEventType;
+     56:             return this;
+  ---
+     58: 
+     59:         public Builder eventBus(EventBus eventBus) {
+     60:             this.eventBus = eventBus;
+     61:             return this;
+  ---
+     68:         public AsyncExecutor buildForScope(Object executionContext) {
+     69:             if (eventBus == null) {
+     70:                 eventBus = EventBus.getDefault();
+     71:             }
+     72:             if (threadPool == null) {
+     73:                 threadPool = Executors.newCachedThreadPool();
+     74:             }
+     75:             if (failureEventType == null) {
+     76:                 failureEventType = ThrowableFailureEvent.class;
+     77:             }
+     78:             return new AsyncExecutor(threadPool, eventBus, failureEventType, executionContext);
+     79:         }
+  ---
+     99: 
+    100:     private AsyncExecutor(Executor threadPool, EventBus eventBus, Class<?> failureEventType, Object scope) {
+    101:         this.threadPool = threadPool;
+    102:         this.eventBus = eventBus;
+    103:         this.scope = scope;
+    104:         try {
+    105:             failureEventConstructor = failureEventType.getConstructor(Throwable.class);
+    106:         } catch (NoSuchMethodException e) {
+  ---
+    113:     public void execute(final RunnableEx runnable) {
+    114:         threadPool.execute(() -> {
+    115:             try {
+  ---
+    121:                 } catch (Exception e1) {
+    122:                     eventBus.getLogger().log(Level.SEVERE, "Original exception:", e);
+    123:                     throw new RuntimeException("Could not create failure event", e1);
+  ---
+    127:                 }
+    128:                 eventBus.post(event);
+    129:             }
+  ---

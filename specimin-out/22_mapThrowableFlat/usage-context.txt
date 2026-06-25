@@ -1,0 +1,21 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: throwableToMsgIdMap
+
+# org/greenrobot/eventbus/util/ExceptionToResourceMapping.java
+     37:     public ExceptionToResourceMapping() {
+     38:         throwableToMsgIdMap = new HashMap<>();
+     39:     }
+  ---
+     66:         Class<? extends Throwable> throwableClass = throwable.getClass();
+     67:         Integer resId = throwableToMsgIdMap.get(throwableClass);
+     68:         if (resId == null) {
+     69:             Class<? extends Throwable> closestClass = null;
+     70:             Set<Entry<Class<? extends Throwable>, Integer>> mappings = throwableToMsgIdMap.entrySet();
+     71:             for (Entry<Class<? extends Throwable>, Integer> mapping : mappings) {
+  ---
+     85:     public ExceptionToResourceMapping addMapping(Class<? extends Throwable> clazz, int msgId) {
+     86:         throwableToMsgIdMap.put(clazz, msgId);
+     87:         return this;
+  ---

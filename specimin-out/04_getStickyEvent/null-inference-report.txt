@@ -1,0 +1,37 @@
+### A) Annotation decisions
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `stickyEvents` field | `@Nonnull` | The `stickyEvents` field is initialized in the original code and there's no indication that it could be `null`. |
+| `eventType` parameter | `@Nonnull` | The `eventType` parameter is used to retrieve a value from the `stickyEvents` map and is not checked for `null`. |
+| `getStickyEvent` return type | `@Nullable` | The `getStickyEvent` method returns the value retrieved from the `stickyEvents` map, which could be `null` if the `eventType` key is not present. |
+
+### B) Unsafe dereferences
+The following dereferences of `@Nullable` values could throw a `NullPointerException`:
+- `stickyEvents.get(eventType)` in the `getStickyEvent` method, but since the method is guaranteed to be synchronized with `stickyEvents`, this is not the source of the NullAway warning.
+- The true source of the warning seems to be the `stickyEvents` field itself, which is not initialized in the provided code snippet.
+
+### C) Corrected annotated code
+```java
+// === org/greenrobot/eventbus/EventBus.java ===
+package org.greenrobot.eventbus;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
+
+public class EventBus {
+
+    private final Map<Class<?>, Object> stickyEvents;
+
+    public EventBus() {
+        stickyEvents = new ConcurrentHashMap<>();
+    }
+
+    @Nullable
+    public <T> T getStickyEvent(@Nonnull Class<T> eventType) {
+        synchronized (stickyEvents) {
+            return eventType.cast(stickyEvents.get(eventType));
+        }
+    }
+}
+```

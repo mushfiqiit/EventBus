@@ -1,0 +1,19 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: methodInfos
+
+# org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java
+     26: 
+     27:     public SimpleSubscriberInfo(Class subscriberClass, boolean shouldCheckSuperclass, SubscriberMethodInfo[] methodInfos) {
+     28:         super(subscriberClass, null, shouldCheckSuperclass);
+     29:         this.methodInfos = methodInfos;
+     30:     }
+  ---
+     33:     public synchronized SubscriberMethod[] getSubscriberMethods() {
+     34:         int length = methodInfos.length;
+     35:         SubscriberMethod[] methods = new SubscriberMethod[length];
+     36:         for (int i = 0; i < length; i++) {
+     37:             SubscriberMethodInfo info = methodInfos[i];
+     38:             methods[i] = createSubscriberMethod(info.methodName, info.eventType, info.threadMode,
+  ---

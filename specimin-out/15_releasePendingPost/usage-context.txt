@@ -1,0 +1,36 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: event, next, pendingPostPool, subscription
+
+# org/greenrobot/eventbus/PendingPost.java
+     27: 
+     28:     private PendingPost(Object event, Subscription subscription) {
+     29:         this.event = event;
+     30:         this.subscription = subscription;
+     31:     }
+     32: 
+     33:     static PendingPost obtainPendingPost(Subscription subscription, Object event) {
+     34:         synchronized (pendingPostPool) {
+     35:             int size = pendingPostPool.size();
+     36:             if (size > 0) {
+     37:                 PendingPost pendingPost = pendingPostPool.remove(size - 1);
+     38:                 pendingPost.event = event;
+     39:                 pendingPost.subscription = subscription;
+     40:                 pendingPost.next = null;
+     41:                 return pendingPost;
+  ---
+     43:         }
+     44:         return new PendingPost(event, subscription);
+     45:     }
+  ---
+     47:     static void releasePendingPost(PendingPost pendingPost) {
+     48:         pendingPost.event = null;
+     49:         pendingPost.subscription = null;
+     50:         pendingPost.next = null;
+     51:         synchronized (pendingPostPool) {
+     52:             // Don't let the pool grow indefinitely
+     53:             if (pendingPostPool.size() < 10000) {
+     54:                 pendingPostPool.add(pendingPost);
+     55:             }
+  ---

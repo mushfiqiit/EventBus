@@ -1,0 +1,16 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/13_PendingPostLLMInferenced/org/greenrobot/eventbus/PendingPost.java:21: warning: [UnusedMethod] Constructor 'PendingPost' is never used.
+    private PendingPost(@Nullable Object event, @Nullable Subscription subscription) {
+            ^
+    (see https://errorprone.info/bugpattern/UnusedMethod)
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/13_PendingPostLLMInferenced/org/greenrobot/eventbus/PendingPost.java:10: warning: [UnusedVariable] The field 'pendingPostPool' is never read.
+    private final static List<PendingPost> pendingPostPool = new java.util.ArrayList<>();
+                                           ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line or 'static { new java.util.ArrayList<>(); }'?
+2 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

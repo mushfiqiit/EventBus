@@ -1,0 +1,63 @@
+### A) Annotation decisions
+| location | inferred annotation | one-sentence reason |
+| --- | --- | --- |
+| `pendingPostPool` | `@Nullable` | NullAway warns that `pendingPostPool` might not have been initialized. |
+| `event` | `@Nullable` | The `event` can be `null` as seen in the `releasePendingPost` method. |
+| `subscription` | `@Nullable` | The `subscription` can be `null` as seen in the `releasePendingPost` method. |
+| `next` | `@Nullable` | The `next` can be `null` as assigned in the `obtainPendingPost` method. |
+| `obtainPendingPost(Subscription subscription, Object event)` - `subscription` parameter | `@Nullable` | The `subscription` can be `null` as seen in the `releasePendingPost` method. |
+| `obtainPendingPost(Subscription subscription, Object event)` - `event` parameter | `@Nullable` | The `event` can be `null` as seen in the `releasePendingPost` method. |
+| `obtainPendingPost(Subscription subscription, Object event)` return type | `@Nonnull` | The method will always return a non-null `PendingPost`. |
+
+### B) Unsafe dereferences
+1. `synchronized (pendingPostPool)` (line 17) - could throw a `NullPointerException` if `pendingPostPool` is `null`.
+2. `pendingPostPool.size()` (line 18) - could throw a `NullPointerException` if `pendingPostPool` is `null`.
+3. `pendingPostPool.remove(size - 1)` (line 19) - could throw a `NullPointerException` if `pendingPostPool` is `null`.
+
+### C) Corrected annotated code
+```java
+// === org/greenrobot/eventbus/PendingPost.java ===
+package org.greenrobot.eventbus;
+
+import java.util.List;
+import javax.annotation.Nullable;
+
+final class PendingPost {
+
+    private final static List<PendingPost> pendingPostPool;
+
+    @Nullable
+    Object event;
+
+    @Nullable
+    Subscription subscription;
+
+    @Nullable
+    PendingPost next;
+
+    private PendingPost(Object event, Subscription subscription) {
+        throw new java.lang.Error();
+    }
+
+    static PendingPost obtainPendingPost(@Nullable Subscription subscription, @Nullable Object event) {
+        synchronized (pendingPostPool) {
+            int size = pendingPostPool.size();
+            if (size > 0) {
+                PendingPost pendingPost = pendingPostPool.remove(size - 1);
+                pendingPost.event = event;
+                pendingPost.subscription = subscription;
+                pendingPost.next = null;
+                return pendingPost;
+            }
+        }
+        return new PendingPost(event, subscription);
+    }
+
+}
+
+// === org/greenrobot/eventbus/Subscription.java ===
+package org.greenrobot.eventbus;
+
+final class Subscription {
+}
+```

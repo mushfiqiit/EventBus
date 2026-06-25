@@ -1,0 +1,28 @@
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:12: warning: [UnusedMethod] Method 'getSubscriberInfo' is never used.
+    private SubscriberInfo getSubscriberInfo(FindState findState) {
+                           ^
+    (see https://errorprone.info/bugpattern/UnusedMethod)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:10: warning: [NullAway] @NonNull field subscriberInfoIndexes not initialized
+    private List<SubscriberInfoIndex> subscriberInfoIndexes;
+                                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return null;
+        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:32: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+        Class<?> clazz;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/specimin-out/09_getSubscriberInfoLLMInferenced/org/greenrobot/eventbus/SubscriberMethodFinder.java:34: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+        SubscriberInfo subscriberInfo;
+                       ^
+    (see http://t.uber.com/nullaway )
+5 warnings
+
+BUILD SUCCESSFUL in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

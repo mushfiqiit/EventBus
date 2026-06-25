@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * Creates EventBus instances with custom parameters and also allows to install a custom default EventBus instance.
@@ -28,20 +30,34 @@ import java.util.concurrent.Executors;
  */
 @SuppressWarnings("unused")
 public class EventBusBuilder {
+    @Nonnull
     private final static ExecutorService DEFAULT_EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
+    @Nonnull
     boolean logSubscriberExceptions = true;
+    @Nonnull
     boolean logNoSubscriberMessages = true;
+    @Nonnull
     boolean sendSubscriberExceptionEvent = true;
+    @Nonnull
     boolean sendNoSubscriberEvent = true;
+    @Nonnull
     boolean throwSubscriberException;
+    @Nonnull
     boolean eventInheritance = true;
+    @Nonnull
     boolean ignoreGeneratedIndex;
+    @Nonnull
     boolean strictMethodVerification;
+    @Nullable
     ExecutorService executorService = DEFAULT_EXECUTOR_SERVICE;
+    @Nullable
     List<Class<?>> skipMethodVerificationForClasses;
+    @Nullable
     List<SubscriberInfoIndex> subscriberInfoIndexes;
+    @Nullable
     Logger logger;
+    @Nullable
     MainThreadSupport mainThreadSupport;
 
     EventBusBuilder() {
@@ -150,6 +166,7 @@ public class EventBusBuilder {
         return this;
     }
 
+    @Nonnull
     Logger getLogger() {
         if (logger != null) {
             return logger;
@@ -158,6 +175,7 @@ public class EventBusBuilder {
         }
     }
 
+    @Nullable
     MainThreadSupport getMainThreadSupport() {
         if (mainThreadSupport != null) {
             return mainThreadSupport;

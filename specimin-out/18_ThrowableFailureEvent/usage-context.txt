@@ -1,0 +1,34 @@
+The following are read-only excerpts from the ORIGINAL program showing how the
+relevant field(s) are used, guarded, and assigned outside this slice. Use them as
+evidence for nullability/type inference. Do NOT annotate or modify these excerpts.
+Fields of interest: executionContext, suppressErrorUi, throwable
+
+# org/greenrobot/eventbus/util/ThrowableFailureEvent.java
+     26: 
+     27:     public ThrowableFailureEvent(Throwable throwable) {
+     28:         this.throwable = throwable;
+     29:         suppressErrorUi = false;
+     30:     }
+  ---
+     35:      */
+     36:     public ThrowableFailureEvent(Throwable throwable, boolean suppressErrorUi) {
+     37:         this.throwable = throwable;
+     38:         this.suppressErrorUi = suppressErrorUi;
+     39:     }
+  ---
+     41:     public Throwable getThrowable() {
+     42:         return throwable;
+     43:     }
+  ---
+     45:     public boolean isSuppressErrorUi() {
+     46:         return suppressErrorUi;
+     47:     }
+  ---
+     49:     public Object getExecutionScope() {
+     50:         return executionContext;
+     51:     }
+     52: 
+     53:     public void setExecutionScope(Object executionContext) {
+     54:         this.executionContext = executionContext;
+     55:     }
+  ---
