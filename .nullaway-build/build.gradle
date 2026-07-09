@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'net.ltgt.errorprone' version '3.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    errorprone           'com.google.errorprone:error_prone_core:2.26.1'
+    annotationProcessor  'com.uber.nullaway:nullaway:0.10.10'
+    compileOnly          'com.uber.nullaway:nullaway-annotations:0.10.10'
+    compileOnly          'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly          'org.jspecify:jspecify:0.3.0'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src']
+            include 'org/**/*.java'
+        }
+    }
+}
+
+// EventBus core targets Java 8 source level.
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.errorprone {
+        check('NullAway', net.ltgt.gradle.errorprone.CheckSeverity.WARN)
+        option('NullAway:AnnotatedPackages', 'org.greenrobot.eventbus')
+    }
+    // Don't let a flood of warnings get truncated, and don't fail the build on them.
+    options.compilerArgs << '-Xmaxwarns' << '100000'
+}
