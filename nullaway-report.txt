@@ -1,0 +1,29 @@
+
+> Configure project :
+nexusPublishing credentials NOT supplied.
+
+> Configure project :eventbus-android
+WARNING: signing properties NOT set, will not sign artifacts.
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Script '/Users/mushfiqurrahmanchowdhury/Documents/EventBus/gradle/nullaway.gradle' line: 13
+
+* What went wrong:
+Could not compile script '/Users/mushfiqurrahmanchowdhury/Documents/EventBus/gradle/nullaway.gradle'.
+> startup failed:
+  script '/Users/mushfiqurrahmanchowdhury/Documents/EventBus/gradle/nullaway.gradle': 13: unable to resolve class net.ltgt.gradle.errorprone.CheckSeverity
+   @ line 13, column 1.
+     import net.ltgt.gradle.errorprone.CheckSeverity
+     ^
+  
+  1 error
+
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 832ms
