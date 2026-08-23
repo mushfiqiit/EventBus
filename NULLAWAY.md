@@ -67,6 +67,5 @@ Each finding looks like:
   `build.gradle`.
 - **Add another annotated package**: edit the `annotatedPackages` set in
   `gradle/nullaway.gradle`.
-- **Fail the build on findings**: change
-  `check("NullAway", CheckSeverity.WARN)` to
-  `check("NullAway", CheckSeverity.ERROR)` in `gradle/nullaway.gradle`.
+- **Fail the build on findings**: change `warn("NullAway")` to
+  `error("NullAway")` in `gradle/nullaway.gradle`.

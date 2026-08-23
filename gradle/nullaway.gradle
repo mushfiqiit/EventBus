@@ -10,8 +10,6 @@
 //
 // See gradle/nullaway.md for usage instructions.
 
-import net.ltgt.gradle.errorprone.CheckSeverity
-
 dependencies {
     errorprone "com.google.errorprone:error_prone_core:2.18.0"
     errorprone "com.uber.nullaway:nullaway:0.10.10"
@@ -33,6 +31,6 @@ tasks.withType(JavaCompile).configureEach {
 tasks.named("compileJava").configure {
     options.errorprone {
         disableAllChecks = true
-        check("NullAway", CheckSeverity.WARN)
+        warn("NullAway")
     }
 }
