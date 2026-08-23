@@ -12,7 +12,7 @@ WARNING: signing properties NOT set, will not sign artifacts.
 WARNING: signing properties NOT set, will not sign artifacts.
 
 > Task :eventbus-android:clean UP-TO-DATE
-> Task :eventbus-annotation-processor:clean UP-TO-DATE
+> Task :eventbus-annotation-processor:clean
 > Task :eventbus-java:clean
 > Task :EventBusPerformance:clean UP-TO-DATE
 > Task :EventBusTest:clean UP-TO-DATE
@@ -227,5 +227,5 @@ Note: Recompile with -Xlint:unchecked for details.
 
 > Task :nullAwayCheck
 
-BUILD SUCCESSFUL in 5s
-10 actionable tasks: 4 executed, 6 up-to-date
+BUILD SUCCESSFUL in 2s
+10 actionable tasks: 5 executed, 5 up-to-date
