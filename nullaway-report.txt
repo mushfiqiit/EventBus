@@ -5,25 +5,227 @@ nexusPublishing credentials NOT supplied.
 > Configure project :eventbus-android
 WARNING: signing properties NOT set, will not sign artifacts.
 
-FAILURE: Build failed with an exception.
+> Configure project :eventbus-annotation-processor
+WARNING: signing properties NOT set, will not sign artifacts.
 
-* Where:
-Script '/Users/mushfiqurrahmanchowdhury/Documents/EventBus/gradle/nullaway.gradle' line: 13
+> Configure project :eventbus-java
+WARNING: signing properties NOT set, will not sign artifacts.
 
-* What went wrong:
-Could not compile script '/Users/mushfiqurrahmanchowdhury/Documents/EventBus/gradle/nullaway.gradle'.
-> startup failed:
-  script '/Users/mushfiqurrahmanchowdhury/Documents/EventBus/gradle/nullaway.gradle': 13: unable to resolve class net.ltgt.gradle.errorprone.CheckSeverity
-   @ line 13, column 1.
-     import net.ltgt.gradle.errorprone.CheckSeverity
-     ^
-  
-  1 error
+> Task :eventbus-android:clean UP-TO-DATE
+> Task :eventbus-annotation-processor:clean UP-TO-DATE
+> Task :eventbus-java:clean
+> Task :EventBusPerformance:clean UP-TO-DATE
+> Task :EventBusTest:clean UP-TO-DATE
+> Task :EventBusTestJava:clean UP-TO-DATE
+> Task :EventBusTestSubscriberInJar:clean UP-TO-DATE
 
+> Task :eventbus-java:compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethod.java:30: warning: [NullAway] initializer method does not guarantee @NonNull field methodString (line 28) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
+           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:46: warning: [NullAway] @NonNull static field defaultInstance not initialized
+    static volatile EventBus defaultInstance;
+                             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:119: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        mainThreadPoster = mainThreadSupport != null ? mainThreadSupport.createPoster(this) : null;
+                         ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:204: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
+                checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                                                                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:326: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+            return eventType.cast(stickyEvents.get(eventType));
+            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:424: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                    postingState.event = null;
+                                       ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:425: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                    postingState.subscription = null;
+                                              ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:519: warning: [NullAway] passing @Nullable parameter 'e.getCause()' where @NonNull is required
+            handleSubscriberException(subscription, event, e.getCause());
+                                                                     ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:556: warning: [NullAway] @NonNull field EventBus$PostingThreadState.subscription not initialized
+        Subscription subscription;
+                     ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:557: warning: [NullAway] @NonNull field EventBus$PostingThreadState.event not initialized
+        Object event;
+               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:47: warning: [NullAway] initializer method does not guarantee @NonNull fields skipMethodVerificationForClasses (line 42), subscriberInfoIndexes (line 43), logger (line 44), mainThreadSupport (line 45) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+    EventBusBuilder() {
+    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:167: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+            return null;
+            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:137: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return null;
+        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:207: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberClass not initialized
+        Class<?> subscriberClass;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:208: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+        Class<?> clazz;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:210: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+        SubscriberInfo subscriberInfo;
+                       ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:215: warning: [NullAway] assigning @Nullable expression to @NonNull field
+            subscriberInfo = null;
+                           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:223: warning: [NullAway] assigning @Nullable expression to @NonNull field
+            subscriberClass = null;
+                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:224: warning: [NullAway] assigning @Nullable expression to @NonNull field
+            clazz = null;
+                  ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:226: warning: [NullAway] assigning @Nullable expression to @NonNull field
+            subscriberInfo = null;
+                           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:268: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                clazz = null;
+                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:276: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                    clazz = null;
+                          ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:28: warning: [NullAway] initializer method does not guarantee @NonNull field next (line 26) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    private PendingPost(Object event, Subscription subscription) {
+            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:40: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                pendingPost.next = null;
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:48: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        pendingPost.event = null;
+                          ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:49: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        pendingPost.subscription = null;
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:50: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        pendingPost.next = null;
+                         ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:20: warning: [NullAway] @NonNull field head not initialized
+    private PendingPost head;
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:21: warning: [NullAway] @NonNull field tail not initialized
+    private PendingPost tail;
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:43: warning: [NullAway] assigning @Nullable expression to @NonNull field
+                tail = null;
+                     ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:27: warning: [NullAway] initializer method does not guarantee @NonNull field executionContext (line 25) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    public ThrowableFailureEvent(Throwable throwable) {
+           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:36: warning: [NullAway] initializer method does not guarantee @NonNull field executionContext (line 25) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    public ThrowableFailureEvent(Throwable throwable, boolean suppressErrorUi) {
+           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:46: warning: [NullAway] initializer method does not guarantee @NonNull fields threadPool (line 42), failureEventType (line 43), eventBus (line 44) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+        private Builder() {
+                ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:65: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+            return buildForScope(null);
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:57: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+                    return null;
+                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:82: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+        return resId;
+        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:28: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+        super(subscriberClass, null, shouldCheckSuperclass);
+                               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:45: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+            return null;
+            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:8: warning: [NullAway] @NonNull static field implementation not initialized
+    private static final AndroidComponents implementation;
+                                           ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        implementation = AndroidDependenciesDetector.isAndroidSDKAvailable()
+                       ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:45: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+            return null;
+            ^
+    (see http://t.uber.com/nullaway )
+Note: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+41 warnings
 
-* Try:
-Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+> Task :eventbus-java:processResources NO-SOURCE
+> Task :eventbus-java:classes
+> Task :eventbus-java:jar
 
-* Get more help at https://help.gradle.org
+> Task :eventbus-annotation-processor:compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:113: warning: [NullAway] passing @Nullable parameter 'indexPackage' where @NonNull is required
+            checkForSubscribersToSkip(messager, indexPackage);
+                                                ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:242: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+                return null;
+                ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:247: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+            return null;
+            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:278: warning: [NullAway] dereferenced expression candidate is @Nullable
+            candidate = candidate.getEnclosingElement();
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:287: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+            TypeMirror paramType = getParamTypeMirror(parameters.get(0), null);
+                                                                         ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:313: warning: [NullAway] dereferenced expression method.getEnclosingElement() is @Nullable
+                        method.getEnclosingElement().getSimpleName() + "." + methodName +
+                                                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:343: warning: [NullAway] passing @Nullable parameter 'myPackage' where @NonNull is required
+            writeIndexLines(writer, myPackage);
+                                    ^
+    (see http://t.uber.com/nullaway )
+7 warnings
 
-BUILD FAILED in 832ms
+> Task :nullAwayCheck
+
+BUILD SUCCESSFUL in 5s
+10 actionable tasks: 4 executed, 6 up-to-date
