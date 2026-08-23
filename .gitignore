@@ -30,3 +30,7 @@ local.properties
 
 # Misc
 .DS_Store
+
+# NullAway output (see NULLAWAY.md)
+nullaway-report.txt
+nullaway-warnings.txt
