@@ -33,7 +33,26 @@ and is applied from each module's `build.gradle`.
 
 ## Running it
 
-From the repo root:
+From the repo root, the easiest way is:
+
+```bash
+./run-nullaway.sh
+```
+
+This does a clean build of both modules and writes two files:
+
+- `nullaway-report.txt` — the full Gradle build log.
+- `nullaway-warnings.txt` — just the NullAway findings, one per line, e.g.:
+
+  ```
+  /path/to/File.java:42: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  ```
+
+The script exits non-zero if the Gradle build itself fails (as opposed to
+just reporting warnings, which don't fail the build — see above), so it's
+safe to use in a script or CI step.
+
+If you'd rather run Gradle directly:
 
 ```bash
 # Run on both configured modules
@@ -45,18 +64,7 @@ From the repo root:
 ```
 
 Gradle only re-runs `compileJava` (and reprints warnings) when something
-changed. To force a full re-check and dump every current warning to a file:
-
-```bash
-./gradlew clean nullAwayCheck --console=plain > nullaway-report.txt 2>&1
-grep '\[NullAway\]' nullaway-report.txt
-```
-
-Each finding looks like:
-
-```
-/path/to/File.java:42: warning: [NullAway] assigning @Nullable expression to @NonNull field
-```
+changed, so pass `clean` first if you want to see every warning again.
 
 ## Adjusting scope
 
