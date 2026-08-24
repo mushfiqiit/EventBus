@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:204: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
