@@ -30,7 +30,6 @@ tasks.withType(JavaCompile).configureEach {
         check('NullAway', net.ltgt.gradle.errorprone.CheckSeverity.WARN)
         option('NullAway:AnnotatedPackages', 'org.greenrobot.eventbus')
         option('NullAway:JSpecifyMode', 'false')
-        check('RequireExplicitNullMarking', net.ltgt.gradle.errorprone.CheckSeverity.OFF)
     }
     options.compilerArgs << '-Xmaxwarns' << '10000'
 }

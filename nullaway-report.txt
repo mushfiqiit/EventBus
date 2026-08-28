@@ -227,5 +227,5 @@ Note: Recompile with -Xlint:unchecked for details.
 
 > Task :nullAwayCheck
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 3s
 10 actionable tasks: 5 executed, 5 up-to-date
