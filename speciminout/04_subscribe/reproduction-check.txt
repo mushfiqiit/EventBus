@@ -1,0 +1,17 @@
+Slice: 04_subscribe
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:204: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
+
+nullaway-warnings.txt: 6 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/SubscriberMethod.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:56: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:56: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
+  file name matches : EventBus.java == EventBus.java
+  message matches   : yes
+  line differs      : 204 -> 56
+VERDICT: REPRODUCED

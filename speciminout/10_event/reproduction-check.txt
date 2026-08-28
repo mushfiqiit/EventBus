@@ -1,0 +1,12 @@
+Slice: 10_event
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:557: warning: [NullAway] @NonNull field EventBus$PostingThreadState.event not initialized
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/10_event/org/greenrobot/eventbus/EventBus.java:7: warning: [NullAway] @NonNull field EventBus$PostingThreadState.event not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/10_event/org/greenrobot/eventbus/EventBus.java:7: warning: [NullAway] @NonNull field EventBus$PostingThreadState.event not initialized
+  file name matches : EventBus.java == EventBus.java
+  message matches   : yes
+  line differs      : 557 -> 7
+VERDICT: REPRODUCED

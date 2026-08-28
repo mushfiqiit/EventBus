@@ -1,0 +1,14 @@
+Slice: 12_getMainThreadSupport
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java:167: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+nullaway-warnings.txt: 3 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/android/AndroidComponents.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:8: warning: [NullAway] @NonNull field mainThreadSupport not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:16: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:16: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+  file name matches : EventBusBuilder.java == EventBusBuilder.java
+  message matches   : yes
+  line differs      : 167 -> 16
+VERDICT: REPRODUCED

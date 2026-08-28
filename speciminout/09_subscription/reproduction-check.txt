@@ -1,0 +1,12 @@
+Slice: 09_subscription
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:556: warning: [NullAway] @NonNull field EventBus$PostingThreadState.subscription not initialized
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/09_subscription/org/greenrobot/eventbus/EventBus.java:7: warning: [NullAway] @NonNull field EventBus$PostingThreadState.subscription not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/09_subscription/org/greenrobot/eventbus/EventBus.java:7: warning: [NullAway] @NonNull field EventBus$PostingThreadState.subscription not initialized
+  file name matches : EventBus.java == EventBus.java
+  message matches   : yes
+  line differs      : 556 -> 7
+VERDICT: REPRODUCED

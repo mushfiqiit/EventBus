@@ -1,0 +1,14 @@
+Slice: 21_moveToSuperclass
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:268: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+nullaway-warnings.txt: 3 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:7: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:18: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  file name matches : SubscriberMethodFinder.java == SubscriberMethodFinder.java
+  message matches   : yes
+  line differs      : 268 -> 13
+VERDICT: REPRODUCED

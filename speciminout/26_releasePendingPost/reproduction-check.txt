@@ -1,0 +1,18 @@
+Slice: 26_releasePendingPost
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:49: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+nullaway-warnings.txt: 7 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:9: warning: [NullAway] @NonNull field event not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:11: warning: [NullAway] @NonNull field subscription not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:13: warning: [NullAway] @NonNull field next not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:16: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:17: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:18: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/26_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  file name matches : PendingPost.java == PendingPost.java
+  message matches   : yes
+  line differs      : 49 -> 7
+VERDICT: REPRODUCED

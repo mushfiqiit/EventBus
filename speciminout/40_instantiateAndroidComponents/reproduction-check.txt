@@ -1,0 +1,13 @@
+Slice: 40_instantiateAndroidComponents
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:45: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+nullaway-warnings.txt: 2 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:6: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:13: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:13: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+  file name matches : AndroidDependenciesDetector.java == AndroidDependenciesDetector.java
+  message matches   : yes
+  line differs      : 45 -> 13
+VERDICT: REPRODUCED

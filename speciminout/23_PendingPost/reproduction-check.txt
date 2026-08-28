@@ -1,0 +1,10 @@
+Slice: 23_PendingPost
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPost.java:28: warning: [NullAway] initializer method does not guarantee @NonNull field next (line 26) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+
+nullaway-warnings.txt: 2 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/23_PendingPost/org/greenrobot/eventbus/PendingPost.java:15: warning: [NullAway] initializer method does not guarantee @NonNull field next (line 13) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/23_PendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+No finding in this slice matches the original warning's file name + message.
+VERDICT: NOT REPRODUCED

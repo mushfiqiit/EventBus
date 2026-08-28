@@ -1,0 +1,12 @@
+Slice: 28_head
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:20: warning: [NullAway] @NonNull field head not initialized
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/28_head/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field head not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/28_head/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field head not initialized
+  file name matches : PendingPostQueue.java == PendingPostQueue.java
+  message matches   : yes
+  line differs      : 20 -> 5
+VERDICT: REPRODUCED

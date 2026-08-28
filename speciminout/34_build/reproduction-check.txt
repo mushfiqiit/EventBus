@@ -1,0 +1,12 @@
+Slice: 34_build
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:65: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/34_build/org/greenrobot/eventbus/util/AsyncExecutor.java:8: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/34_build/org/greenrobot/eventbus/util/AsyncExecutor.java:8: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+  file name matches : AsyncExecutor.java == AsyncExecutor.java
+  message matches   : yes
+  line differs      : 65 -> 8
+VERDICT: REPRODUCED

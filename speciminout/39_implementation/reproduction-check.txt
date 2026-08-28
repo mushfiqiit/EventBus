@@ -1,0 +1,7 @@
+Slice: 39_implementation
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidComponents.java:8: warning: [NullAway] @NonNull static field implementation not initialized
+
+nullaway-warnings.txt: 0 finding(s)
+
+VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice

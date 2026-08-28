@@ -1,0 +1,7 @@
+Slice: 03_EventBus
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:119: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+nullaway-warnings.txt: 0 finding(s)
+
+VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
