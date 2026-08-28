@@ -10,6 +10,6 @@ nullaway-warnings.txt: 4 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:14: warning: [NullAway] assigning @Nullable expression to @NonNull field
   file name matches : PendingPostQueue.java == PendingPostQueue.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 43 -> 14
 VERDICT: REPRODUCED

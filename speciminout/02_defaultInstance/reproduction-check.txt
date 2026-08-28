@@ -7,6 +7,6 @@ nullaway-warnings.txt: 1 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/02_defaultInstance/org/greenrobot/eventbus/EventBus.java:5: warning: [NullAway] @NonNull static field defaultInstance not initialized
   file name matches : EventBus.java == EventBus.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 46 -> 5
 VERDICT: REPRODUCED

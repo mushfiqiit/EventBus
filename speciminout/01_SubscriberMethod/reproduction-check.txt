@@ -5,5 +5,11 @@ Original warning (warning.txt):
 nullaway-warnings.txt: 1 finding(s)
   /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:19: warning: [NullAway] initializer method does not guarantee @NonNull field methodString (line 17) is initialized along all control-flow paths (remember to check for exceptions or early returns).
 
-No finding in this slice matches the original warning's file name + message.
-VERDICT: NOT REPRODUCED
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:19: warning: [NullAway] initializer method does not guarantee @NonNull field methodString (line 17) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+  file name matches : SubscriberMethod.java == SubscriberMethod.java
+  message matches   : yes, after normalizing embedded "(line N)" references
+    original message   : initializer method does not guarantee @NonNull field methodString (line 28) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    slice message       : initializer method does not guarantee @NonNull field methodString (line 17) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    normalized (both)   : initializer method does not guarantee @NonNull field methodString (line #) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+  line differs      : 30 -> 19
+VERDICT: REPRODUCED

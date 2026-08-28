@@ -11,6 +11,6 @@ nullaway-warnings.txt: 5 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/07_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:8: warning: [NullAway] assigning @Nullable expression to @NonNull field
   file name matches : EventBus.java == EventBus.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 425 -> 8
 VERDICT: REPRODUCED

@@ -7,6 +7,6 @@ nullaway-warnings.txt: 1 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/28_head/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field head not initialized
   file name matches : PendingPostQueue.java == PendingPostQueue.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 20 -> 5
 VERDICT: REPRODUCED

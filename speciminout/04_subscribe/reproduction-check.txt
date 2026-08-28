@@ -12,6 +12,6 @@ nullaway-warnings.txt: 6 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:56: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
   file name matches : EventBus.java == EventBus.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 204 -> 56
 VERDICT: REPRODUCED

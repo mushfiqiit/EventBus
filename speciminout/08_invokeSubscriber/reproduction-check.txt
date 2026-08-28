@@ -10,6 +10,6 @@ nullaway-warnings.txt: 4 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] passing @Nullable parameter 'e.getCause()' where @NonNull is required
   file name matches : EventBus.java == EventBus.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 519 -> 11
 VERDICT: REPRODUCED

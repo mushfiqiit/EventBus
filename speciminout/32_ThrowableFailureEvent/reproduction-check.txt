@@ -5,5 +5,11 @@ Original warning (warning.txt):
 nullaway-warnings.txt: 1 finding(s)
   /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/32_ThrowableFailureEvent/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:11: warning: [NullAway] initializer method does not guarantee @NonNull field executionContext (line 9) is initialized along all control-flow paths (remember to check for exceptions or early returns).
 
-No finding in this slice matches the original warning's file name + message.
-VERDICT: NOT REPRODUCED
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/32_ThrowableFailureEvent/org/greenrobot/eventbus/util/ThrowableFailureEvent.java:11: warning: [NullAway] initializer method does not guarantee @NonNull field executionContext (line 9) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+  file name matches : ThrowableFailureEvent.java == ThrowableFailureEvent.java
+  message matches   : yes, after normalizing embedded "(line N)" references
+    original message   : initializer method does not guarantee @NonNull field executionContext (line 25) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    slice message       : initializer method does not guarantee @NonNull field executionContext (line 9) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+    normalized (both)   : initializer method does not guarantee @NonNull field executionContext (line #) is initialized along all control-flow paths (remember to check for exceptions or early returns).
+  line differs      : 36 -> 11
+VERDICT: REPRODUCED

@@ -5,5 +5,11 @@ Original warning (warning.txt):
 nullaway-warnings.txt: 1 finding(s)
   /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/33_Builder/org/greenrobot/eventbus/util/AsyncExecutor.java:16: warning: [NullAway] initializer method does not guarantee @NonNull fields threadPool (line 10), failureEventType (line 12), eventBus (line 14) are initialized along all control-flow paths (remember to check for exceptions or early returns).
 
-No finding in this slice matches the original warning's file name + message.
-VERDICT: NOT REPRODUCED
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/33_Builder/org/greenrobot/eventbus/util/AsyncExecutor.java:16: warning: [NullAway] initializer method does not guarantee @NonNull fields threadPool (line 10), failureEventType (line 12), eventBus (line 14) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+  file name matches : AsyncExecutor.java == AsyncExecutor.java
+  message matches   : yes, after normalizing embedded "(line N)" references
+    original message   : initializer method does not guarantee @NonNull fields threadPool (line 42), failureEventType (line 43), eventBus (line 44) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+    slice message       : initializer method does not guarantee @NonNull fields threadPool (line 10), failureEventType (line 12), eventBus (line 14) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+    normalized (both)   : initializer method does not guarantee @NonNull fields threadPool (line #), failureEventType (line #), eventBus (line #) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+  line differs      : 46 -> 16
+VERDICT: REPRODUCED

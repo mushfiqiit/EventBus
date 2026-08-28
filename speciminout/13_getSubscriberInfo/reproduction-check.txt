@@ -10,6 +10,6 @@ nullaway-warnings.txt: 4 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/13_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:26: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
   file name matches : SubscriberMethodFinder.java == SubscriberMethodFinder.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 137 -> 26
 VERDICT: REPRODUCED

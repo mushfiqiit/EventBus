@@ -1,0 +1,162 @@
+SPECIMIN_OUT : /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout
+
+────────────────────────────────────────────────────────────
+01_SubscriberMethod: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+02_defaultInstance: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+03_EventBus: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+04_subscribe: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+05_getStickyEvent: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+06_postSingleEventForEventType: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+07_postSingleEventForEventType: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+08_invokeSubscriber: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+09_subscription: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+10_event: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+11_EventBusBuilder: VERDICT: NOT REPRODUCED
+
+────────────────────────────────────────────────────────────
+12_getMainThreadSupport: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+13_getSubscriberInfo: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+14_subscriberClass: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+15_clazz: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+16_subscriberInfo: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+17_initForSubscriber: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+18_recycle: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+19_recycle: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+20_recycle: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+21_moveToSuperclass: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+22_moveToSuperclass: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+23_PendingPost: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+24_obtainPendingPost: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+25_releasePendingPost: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+26_releasePendingPost: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+27_releasePendingPost: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+28_head: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+29_tail: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+30_poll: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+31_ThrowableFailureEvent: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+32_ThrowableFailureEvent: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+33_Builder: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+34_build: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+35_mapThrowable: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+36_mapThrowableFlat: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+37_SimpleSubscriberInfo: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+38_getSuperSubscriberInfo: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+39_implementation: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+40_instantiateAndroidComponents: VERDICT: REPRODUCED
+
+────────────────────────────────────────────────────────────
+41_process: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+42_getSuperclass: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+43_getSuperclass: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+44_getPackageElement: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+45_writeCreateSubscriberMethods: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+46_writeCreateSubscriberMethods: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+────────────────────────────────────────────────────────────
+47_createInfoIndexFile: VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice
+
+════════════════════════════════════════════════════════════
+Summary: 47 slice folder(s) checked
+  Reproduced     : 37
+  Not reproduced : 10
+  Skipped        : 0
+
+Not reproduced:
+  - 03_EventBus
+  - 11_EventBusBuilder
+  - 39_implementation
+  - 41_process
+  - 42_getSuperclass
+  - 43_getSuperclass
+  - 44_getPackageElement
+  - 45_writeCreateSubscriberMethods
+  - 46_writeCreateSubscriberMethods
+  - 47_createInfoIndexFile
+
+Per-slice details written to each folder's reproduction-check.txt

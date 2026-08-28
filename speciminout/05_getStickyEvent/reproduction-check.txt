@@ -8,6 +8,6 @@ nullaway-warnings.txt: 2 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/05_getStickyEvent/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
   file name matches : EventBus.java == EventBus.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 326 -> 11
 VERDICT: REPRODUCED

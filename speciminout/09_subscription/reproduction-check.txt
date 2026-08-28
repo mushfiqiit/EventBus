@@ -7,6 +7,6 @@ nullaway-warnings.txt: 1 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/09_subscription/org/greenrobot/eventbus/EventBus.java:7: warning: [NullAway] @NonNull field EventBus$PostingThreadState.subscription not initialized
   file name matches : EventBus.java == EventBus.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 556 -> 7
 VERDICT: REPRODUCED

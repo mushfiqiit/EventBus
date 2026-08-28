@@ -8,6 +8,6 @@ nullaway-warnings.txt: 2 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
   file name matches : ExceptionToResourceMapping.java == ExceptionToResourceMapping.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 82 -> 27
 VERDICT: REPRODUCED

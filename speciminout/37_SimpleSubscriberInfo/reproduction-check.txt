@@ -7,6 +7,6 @@ nullaway-warnings.txt: 1 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/37_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:8: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
   file name matches : SimpleSubscriberInfo.java == SimpleSubscriberInfo.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 28 -> 8
 VERDICT: REPRODUCED

@@ -7,6 +7,6 @@ nullaway-warnings.txt: 1 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/15_clazz/org/greenrobot/eventbus/SubscriberMethodFinder.java:7: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
   file name matches : SubscriberMethodFinder.java == SubscriberMethodFinder.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 208 -> 7
 VERDICT: REPRODUCED

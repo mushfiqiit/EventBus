@@ -16,6 +16,6 @@ nullaway-warnings.txt: 10 finding(s)
 
 Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/20_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
   file name matches : SubscriberMethodFinder.java == SubscriberMethodFinder.java
-  message matches   : yes
+  message matches   : yes (exact)
   line differs      : 226 -> 11
 VERDICT: REPRODUCED
