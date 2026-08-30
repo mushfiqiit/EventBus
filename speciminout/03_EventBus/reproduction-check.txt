@@ -1,0 +1,19 @@
+Slice: 03_EventBus
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:119: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+nullaway-warnings.txt: 8 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:12: warning: [NullAway] @NonNull static field TAG not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:14: warning: [NullAway] @NonNull static field defaultInstance not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:16: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:18: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:26: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:62: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBusBuilder.java:26: warning: [NullAway] @NonNull field executorService not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBusBuilder.java:28: warning: [NullAway] @NonNull field subscriberInfoIndexes not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:16: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  file name matches : EventBus.java == EventBus.java
+  message matches   : yes (exact)
+  line differs      : 119 -> 16
+VERDICT: REPRODUCED

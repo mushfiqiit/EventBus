@@ -1,0 +1,12 @@
+Slice: 37_SimpleSubscriberInfo
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:28: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/37_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:9: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/37_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:9: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required
+  file name matches : SimpleSubscriberInfo.java == SimpleSubscriberInfo.java
+  message matches   : yes (exact)
+  line differs      : 28 -> 9
+VERDICT: REPRODUCED

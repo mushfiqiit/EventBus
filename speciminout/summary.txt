@@ -1,0 +1,17 @@
+Summary: 47 slice folder(s) checked
+  Reproduced     : 38
+  Not reproduced : 9
+  Skipped        : 0
+
+Not reproduced:
+  - 11_EventBusBuilder
+  - 39_implementation
+  - 41_process
+  - 42_getSuperclass
+  - 43_getSuperclass
+  - 44_getPackageElement
+  - 45_writeCreateSubscriberMethods
+  - 46_writeCreateSubscriberMethods
+  - 47_createInfoIndexFile
+
+Per-slice details written to each folder's reproduction-check.txt

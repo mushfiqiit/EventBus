@@ -1,0 +1,12 @@
+Slice: 16_subscriberInfo
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:210: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/16_subscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/16_subscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+  file name matches : SubscriberMethodFinder.java == SubscriberMethodFinder.java
+  message matches   : yes (exact)
+  line differs      : 210 -> 9
+VERDICT: REPRODUCED

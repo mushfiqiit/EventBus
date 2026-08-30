@@ -1,0 +1,15 @@
+Slice: 13_getSubscriberInfo
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:137: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+nullaway-warnings.txt: 4 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/13_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field subscriberInfoIndexes not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/13_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/13_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:32: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/13_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:34: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/13_getSubscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+  file name matches : SubscriberMethodFinder.java == SubscriberMethodFinder.java
+  message matches   : yes (exact)
+  line differs      : 137 -> 27
+VERDICT: REPRODUCED

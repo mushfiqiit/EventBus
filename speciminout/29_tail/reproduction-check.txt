@@ -1,0 +1,12 @@
+Slice: 29_tail
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:21: warning: [NullAway] @NonNull field tail not initialized
+
+nullaway-warnings.txt: 1 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/29_tail/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field tail not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/29_tail/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field tail not initialized
+  file name matches : PendingPostQueue.java == PendingPostQueue.java
+  message matches   : yes (exact)
+  line differs      : 21 -> 5
+VERDICT: REPRODUCED

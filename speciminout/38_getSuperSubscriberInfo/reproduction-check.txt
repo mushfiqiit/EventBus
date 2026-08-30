@@ -1,0 +1,13 @@
+Slice: 38_getSuperSubscriberInfo
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:45: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+nullaway-warnings.txt: 2 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:9: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:9: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+  file name matches : AbstractSubscriberInfo.java == AbstractSubscriberInfo.java
+  message matches   : yes (exact)
+  line differs      : 45 -> 9
+VERDICT: REPRODUCED

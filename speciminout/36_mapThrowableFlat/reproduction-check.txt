@@ -1,0 +1,13 @@
+Slice: 36_mapThrowableFlat
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:82: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+nullaway-warnings.txt: 2 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:9: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+  file name matches : ExceptionToResourceMapping.java == ExceptionToResourceMapping.java
+  message matches   : yes (exact)
+  line differs      : 82 -> 27
+VERDICT: REPRODUCED

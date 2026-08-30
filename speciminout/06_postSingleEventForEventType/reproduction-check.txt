@@ -1,0 +1,16 @@
+Slice: 06_postSingleEventForEventType
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:424: warning: [NullAway] assigning @Nullable expression to @NonNull field
+
+nullaway-warnings.txt: 5 finding(s)
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:8: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:25: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:26: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:46: warning: [NullAway] @NonNull field EventBus$PostingThreadState.subscription not initialized
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:48: warning: [NullAway] @NonNull field EventBus$PostingThreadState.event not initialized
+
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:8: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  file name matches : EventBus.java == EventBus.java
+  message matches   : yes (exact)
+  line differs      : 424 -> 8
+VERDICT: REPRODUCED
