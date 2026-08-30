@@ -34,6 +34,14 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+// Runs the NullAway nullability check across the modules it's configured on
+// (see gradle/nullaway.gradle). Findings are printed as compiler warnings.
+task nullAwayCheck {
+    group = "verification"
+    description = "Runs the NullAway nullability checker on eventbus-java and eventbus-annotation-processor."
+    dependsOn ":eventbus-java:compileJava", ":eventbus-annotation-processor:compileJava"
+}
+
 // Plugin to publish to Central https://github.com/gradle-nexus/publish-plugin/
 // This plugin ensures a separate, named staging repo is created for each build when publishing.
 apply plugin: "io.github.gradle-nexus.publish-plugin"

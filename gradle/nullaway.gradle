@@ -1,0 +1,36 @@
+// Shared NullAway configuration, applied to individual subprojects.
+//
+// Requires the applying build.gradle to declare, as the very first block in
+// the file (before any other `apply`), the plugin versions:
+//
+//   plugins {
+//       id 'net.ltgt.errorprone' version '3.1.0'
+//       id 'net.ltgt.nullaway' version '1.6.0'
+//   }
+//
+// See gradle/nullaway.md for usage instructions.
+
+dependencies {
+    errorprone "com.google.errorprone:error_prone_core:2.18.0"
+    errorprone "com.uber.nullaway:nullaway:0.10.10"
+}
+
+nullaway {
+    annotatedPackages.add("org.greenrobot.eventbus")
+}
+
+// NullAway (via Error Prone) only runs on main/production sources, and only
+// the NullAway check is enabled -- every other Error Prone bug check is
+// switched off so the output is exclusively nullability findings. Findings
+// are reported as warnings (not build-breaking errors) so `./gradlew build`
+// still succeeds while surfacing every issue.
+tasks.withType(JavaCompile).configureEach {
+    options.errorprone.enabled = (name == "compileJava")
+}
+
+tasks.named("compileJava").configure {
+    options.errorprone {
+        disableAllChecks = true
+        warn("NullAway")
+    }
+}
