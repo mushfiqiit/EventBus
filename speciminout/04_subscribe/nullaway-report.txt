@@ -1,0 +1,48 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/SubscriberMethod.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  final Class<?> eventType = null;
+                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:19: warning: [UnusedMethod] Method 'subscribe' is never used.
+  private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
+               ^
+    (see https://errorprone.info/bugpattern/UnusedMethod)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'stickyEvent' is never read.
+      Subscription newSubscription, Object stickyEvent) {
+                                           ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'checkPostStickyEventToSubscription(newSubscription);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'newSubscription' is never read.
+      Subscription newSubscription, Object stickyEvent) {
+                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'checkPostStickyEventToSubscription(stickyEvent);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType = null;
+                                                                  ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  private final Map<Object, List<Class<?>>> typesBySubscriber = null;
+                                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  private final Map<Class<?>, Object> stickyEvents = null;
+                                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:57: warning: [NullAway] passing @Nullable parameter 'stickyEvent' where @NonNull is required
+        checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+                                                            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  final SubscriberMethod subscriberMethod = null;
+                         ^
+    (see http://t.uber.com/nullaway )
+9 warnings
+
+BUILD SUCCESSFUL in 5s
+2 actionable tasks: 1 executed, 1 up-to-date

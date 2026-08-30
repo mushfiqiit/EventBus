@@ -1,0 +1,29 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  private final Class<? extends SubscriberInfo> superSubscriberInfoClass = null;
+                                                ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:7: warning: [MissingOverride] getSuperSubscriberInfo implements method in SubscriberInfo; expected @Override
+  public SubscriberInfo getSuperSubscriberInfo() {
+                        ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public SubscriberInfo getSuperSubscriberInfo() {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:9: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+      return null;
+      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:12: warning: [ClassNewInstance] Class.newInstance() bypasses exception checking; prefer getDeclaredConstructor().newInstance()
+      return superSubscriberInfoClass.newInstance();
+                                                 ^
+    (see https://errorprone.info/bugpattern/ClassNewInstance)
+  Did you mean 'return superSubscriberInfoClass.getDeclaredConstructor().newInstance();'?
+Note: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+4 warnings
+
+BUILD SUCCESSFUL in 5s
+2 actionable tasks: 1 executed, 1 up-to-date

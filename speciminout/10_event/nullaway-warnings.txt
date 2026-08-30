@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/10_event/org/greenrobot/eventbus/EventBus.java:7: warning: [NullAway] @NonNull field EventBus$PostingThreadState.event not initialized

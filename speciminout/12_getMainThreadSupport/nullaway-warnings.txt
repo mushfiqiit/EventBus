@@ -1,0 +1,3 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/android/AndroidComponents.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:8: warning: [NullAway] @NonNull field mainThreadSupport not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:16: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

@@ -1,0 +1,7 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:9: warning: [NullAway] @NonNull field event not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:11: warning: [NullAway] @NonNull field subscription not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:13: warning: [NullAway] @NonNull field next not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:16: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:17: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/25_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:18: warning: [NullAway] assigning @Nullable expression to @NonNull field

@@ -1,0 +1,49 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:19: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberClass not initialized
+    Class<?> subscriberClass;
+             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:21: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+    Class<?> clazz;
+             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:25: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+    SubscriberInfo subscriberInfo;
+                   ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    final List<SubscriberMethod> subscriberMethods = null;
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    final Map<Class, Object> anyMethodByEventType = null;
+                             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    final Map<String, Class> subscriberClassByMethodKey = null;
+                             ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    final StringBuilder methodKeyBuilder = null;
+                        ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:32: warning: [NullAway] assigning @Nullable expression to @NonNull field
+      subscriberClass = null;
+                      ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:33: warning: [NullAway] assigning @Nullable expression to @NonNull field
+      clazz = null;
+            ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:35: warning: [NullAway] assigning @Nullable expression to @NonNull field
+      subscriberInfo = null;
+                     ^
+    (see http://t.uber.com/nullaway )
+10 warnings
+
+BUILD SUCCESSFUL in 5s
+2 actionable tasks: 1 executed, 1 up-to-date

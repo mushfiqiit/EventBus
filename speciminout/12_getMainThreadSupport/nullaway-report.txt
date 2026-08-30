@@ -1,0 +1,31 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/android/AndroidComponents.java:7: warning: [DoNotCallSuggester] Methods that always throw an exception should be annotated with @DoNotCall to prevent calls at compilation time vs. at runtime (note that adding @DoNotCall will break any existing callers of this API).
+  public static boolean areAvailable() {
+                        ^
+    (see https://errorprone.info/bugpattern/DoNotCallSuggester)
+  Did you mean '@DoNotCall("Always throws java.lang.Error") public static boolean areAvailable() {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/android/AndroidComponents.java:11: warning: [DoNotCallSuggester] Methods that always throw an exception should be annotated with @DoNotCall to prevent calls at compilation time vs. at runtime (note that adding @DoNotCall will break any existing callers of this API).
+  public static AndroidComponents get() {
+                                  ^
+    (see https://errorprone.info/bugpattern/DoNotCallSuggester)
+  Did you mean '@DoNotCall("Always throws java.lang.Error") public static AndroidComponents get() {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/android/AndroidComponents.java:15: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  public final MainThreadSupport defaultMainThreadSupport = null;
+                                 ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:8: warning: [NullAway] @NonNull field mainThreadSupport not initialized
+  MainThreadSupport mainThreadSupport;
+                    ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/12_getMainThreadSupport/org/greenrobot/eventbus/EventBusBuilder.java:16: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+      return null;
+      ^
+    (see http://t.uber.com/nullaway )
+5 warnings
+
+BUILD SUCCESSFUL in 4s
+2 actionable tasks: 1 executed, 1 up-to-date

@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/39_implementation/org/greenrobot/eventbus/android/AndroidComponents.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field

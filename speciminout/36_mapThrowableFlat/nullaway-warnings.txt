@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:9: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:27: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

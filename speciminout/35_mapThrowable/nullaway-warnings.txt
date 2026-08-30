@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/35_mapThrowable/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:21: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

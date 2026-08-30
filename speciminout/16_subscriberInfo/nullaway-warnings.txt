@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/16_subscriberInfo/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized

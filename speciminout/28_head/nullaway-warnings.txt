@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/28_head/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [NullAway] @NonNull field head not initialized

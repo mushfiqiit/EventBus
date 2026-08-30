@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/17_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:9: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberClass not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/17_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/17_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.subscriberInfo not initialized
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/17_initForSubscriber/org/greenrobot/eventbus/SubscriberMethodFinder.java:20: warning: [NullAway] assigning @Nullable expression to @NonNull field

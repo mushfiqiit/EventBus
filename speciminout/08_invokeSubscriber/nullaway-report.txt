@@ -1,0 +1,40 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/SubscriberMethod.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  final Method method = null;
+               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:17: warning: [UnusedVariable] The parameter 'subscription' is never read.
+  private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+                                                      ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'handleSubscriberException(event, e.getCause());'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:17: warning: [UnusedVariable] The parameter 'cause' is never read.
+  private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+                                                                                            ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'handleSubscriberException(subscription, event);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:17: warning: [UnusedVariable] The parameter 'event' is never read.
+  private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+                                                                           ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'handleSubscriberException(subscription, e.getCause());'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] passing @Nullable parameter 'e.getCause()' where @NonNull is required
+      handleSubscriberException(subscription, event, e.getCause());
+                                                               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  final Object subscriber = null;
+               ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  final SubscriberMethod subscriberMethod = null;
+                         ^
+    (see http://t.uber.com/nullaway )
+7 warnings
+
+BUILD SUCCESSFUL in 5s
+2 actionable tasks: 1 executed, 1 up-to-date

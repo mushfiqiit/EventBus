@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/37_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:9: warning: [NullAway] passing @Nullable parameter 'null' where @NonNull is required

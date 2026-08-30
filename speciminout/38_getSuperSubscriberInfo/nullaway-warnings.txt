@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:9: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

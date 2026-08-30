@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/SubscriberMethod.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] passing @Nullable parameter 'e.getCause()' where @NonNull is required
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:5: warning: [NullAway] assigning @Nullable expression to @NonNull field
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field

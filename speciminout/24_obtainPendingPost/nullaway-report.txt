@@ -1,0 +1,31 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean UP-TO-DATE
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:15: warning: [UnusedVariable] The parameter 'event' is never read.
+  private PendingPost(Object event, Subscription subscription) {
+                             ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'private PendingPost(Subscription subscription) {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:15: warning: [UnusedVariable] The parameter 'subscription' is never read.
+  private PendingPost(Object event, Subscription subscription) {
+                                                 ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'private PendingPost(Object event) {'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:15: warning: [NullAway] initializer method does not guarantee @NonNull fields event (line 9), subscription (line 11), next (line 13) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+  private PendingPost(Object event, Subscription subscription) {
+          ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [NullAway] assigning @Nullable expression to @NonNull field
+  private static final List<PendingPost> pendingPostPool = null;
+                                         ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:26: warning: [NullAway] assigning @Nullable expression to @NonNull field
+        pendingPost.next = null;
+                         ^
+    (see http://t.uber.com/nullaway )
+5 warnings
+
+BUILD SUCCESSFUL in 4s
+2 actionable tasks: 1 executed, 1 up-to-date
