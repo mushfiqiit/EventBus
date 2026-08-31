@@ -1,10 +1,9 @@
 Summary: 47 slice folder(s) checked
-  Reproduced     : 38
-  Not reproduced : 9
+  Reproduced     : 39
+  Not reproduced : 8
   Skipped        : 0
 
 Not reproduced:
-  - 11_EventBusBuilder
   - 39_implementation
   - 41_process
   - 42_getSuperclass

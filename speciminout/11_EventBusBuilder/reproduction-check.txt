@@ -6,5 +6,14 @@ nullaway-warnings.txt: 2 finding(s)
   /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/11_EventBusBuilder/org/greenrobot/eventbus/EventBusBuilder.java:38: warning: [NullAway] initializer method does not guarantee @NonNull fields executorService (line 28), skipMethodVerificationForClasses (line 30), subscriberInfoIndexes (line 32), logger (line 34), mainThreadSupport (line 36) are initialized along all control-flow paths (remember to check for exceptions or early returns).
   /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/11_EventBusBuilder/org/greenrobot/eventbus/EventBusBuilder.java:10: warning: [NullAway] assigning @Nullable expression to @NonNull field
 
-No finding in this slice matches the original warning's file name + message.
-VERDICT: NOT REPRODUCED
+Matched finding: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/11_EventBusBuilder/org/greenrobot/eventbus/EventBusBuilder.java:38: warning: [NullAway] initializer method does not guarantee @NonNull fields executorService (line 28), skipMethodVerificationForClasses (line 30), subscriberInfoIndexes (line 32), logger (line 34), mainThreadSupport (line 36) are initialized along all control-flow paths (remember to check for exceptions or early returns).
+  file name matches : EventBusBuilder.java == EventBusBuilder.java
+  message matches   : yes -- same 'initializer does not guarantee @NonNull
+                       fields' diagnostic; slice also flags additional
+                       field(s) not in the original (likely a side effect
+                       of Specimin's stubbing removing another field's
+                       initializer): executorService
+    original fields    : skipMethodVerificationForClasses, subscriberInfoIndexes, logger, mainThreadSupport
+    slice fields       : executorService, skipMethodVerificationForClasses, subscriberInfoIndexes, logger, mainThreadSupport
+  line differs      : 47 -> 38
+VERDICT: REPRODUCED
