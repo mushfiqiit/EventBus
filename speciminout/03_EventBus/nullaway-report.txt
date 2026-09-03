@@ -1,11 +1,11 @@
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
-> Task :clean UP-TO-DATE
+> Task :clean
 
 > Task :compileJava
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The field 'executorService' is never read.
-  private final ExecutorService executorService;
-                                ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:18: warning: [UnusedVariable] The field 'eventTypesCache' is never read.
+  private static final Map<Class<?>, List<Class<?>>> eventTypesCache = null;
+                                                     ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:32: warning: [UnusedVariable] The field 'backgroundPoster' is never read.
@@ -13,48 +13,23 @@ Daemon will be stopped at the end of the build
                                  ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:24: warning: [UnusedVariable] The field 'stickyEvents' is never read.
-  private final Map<Class<?>, Object> stickyEvents;
-                                      ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:44: warning: [UnusedVariable] The field 'logNoSubscriberMessages' is never read.
-  private final boolean logNoSubscriberMessages;
-                        ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:36: warning: [UnusedVariable] The field 'subscriberMethodFinder' is never read.
-  private final SubscriberMethodFinder subscriberMethodFinder;
-                                       ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:42: warning: [UnusedVariable] The field 'logSubscriberExceptions' is never read.
-  private final boolean logSubscriberExceptions;
-                        ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:16: warning: [UnusedVariable] The field 'DEFAULT_BUILDER' is never read.
-  private static final EventBusBuilder DEFAULT_BUILDER = null;
-                                       ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:48: warning: [UnusedVariable] The field 'sendNoSubscriberEvent' is never read.
-  private final boolean sendNoSubscriberEvent;
-                        ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:54: warning: [UnusedVariable] The field 'logger' is never read.
-  private final Logger logger;
-                       ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line or to remove this line?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:22: warning: [UnusedVariable] The field 'typesBySubscriber' is never read.
   private final Map<Object, List<Class<?>>> typesBySubscriber;
                                             ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:50: warning: [UnusedVariable] The field 'eventInheritance' is never read.
-  private final boolean eventInheritance;
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:34: warning: [UnusedVariable] The field 'asyncPoster' is never read.
+  private final AsyncPoster asyncPoster;
+                            ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line or to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:36: warning: [UnusedVariable] The field 'subscriberMethodFinder' is never read.
+  private final SubscriberMethodFinder subscriberMethodFinder;
+                                       ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line or to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:40: warning: [UnusedVariable] The field 'throwSubscriberException' is never read.
+  private final boolean throwSubscriberException;
                         ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line?
@@ -63,19 +38,39 @@ Daemon will be stopped at the end of the build
                     ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:46: warning: [UnusedVariable] The field 'sendSubscriberExceptionEvent' is never read.
-  private final boolean sendSubscriberExceptionEvent;
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:26: warning: [UnusedVariable] The field 'currentPostingThreadState' is never read.
+  private final ThreadLocal<PostingThreadState> currentPostingThreadState = null;
+                                                ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:54: warning: [UnusedVariable] The field 'logger' is never read.
+  private final Logger logger;
+                       ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line or to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:16: warning: [UnusedVariable] The field 'DEFAULT_BUILDER' is never read.
+  private static final EventBusBuilder DEFAULT_BUILDER = null;
+                                       ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:44: warning: [UnusedVariable] The field 'logNoSubscriberMessages' is never read.
+  private final boolean logNoSubscriberMessages;
                         ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:34: warning: [UnusedVariable] The field 'asyncPoster' is never read.
-  private final AsyncPoster asyncPoster;
-                            ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:50: warning: [UnusedVariable] The field 'eventInheritance' is never read.
+  private final boolean eventInheritance;
+                        ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:18: warning: [UnusedVariable] The field 'eventTypesCache' is never read.
-  private static final Map<Class<?>, List<Class<?>>> eventTypesCache = null;
-                                                     ^
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The field 'executorService' is never read.
+  private final ExecutorService executorService;
+                                ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:42: warning: [UnusedVariable] The field 'logSubscriberExceptions' is never read.
+  private final boolean logSubscriberExceptions;
+                        ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:30: warning: [UnusedVariable] The field 'mainThreadPoster' is never read.
@@ -83,18 +78,23 @@ Daemon will be stopped at the end of the build
                        ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line or to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:48: warning: [UnusedVariable] The field 'sendNoSubscriberEvent' is never read.
+  private final boolean sendNoSubscriberEvent;
+                        ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:20: warning: [UnusedVariable] The field 'subscriptionsByEventType' is never read.
   private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType;
                                                                   ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line or to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:26: warning: [UnusedVariable] The field 'currentPostingThreadState' is never read.
-  private final ThreadLocal<PostingThreadState> currentPostingThreadState = null;
-                                                ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:24: warning: [UnusedVariable] The field 'stickyEvents' is never read.
+  private final Map<Class<?>, Object> stickyEvents;
+                                      ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:40: warning: [UnusedVariable] The field 'throwSubscriberException' is never read.
-  private final boolean throwSubscriberException;
+  Did you mean to remove this line or to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/03_EventBus/org/greenrobot/eventbus/EventBus.java:46: warning: [UnusedVariable] The field 'sendSubscriberExceptionEvent' is never read.
+  private final boolean sendSubscriberExceptionEvent;
                         ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean to remove this line?
@@ -142,5 +142,5 @@ Daemon will be stopped at the end of the build
   Did you mean '@Override public void run() {'?
 29 warnings
 
-BUILD SUCCESSFUL in 5s
-2 actionable tasks: 1 executed, 1 up-to-date
+BUILD SUCCESSFUL in 6s
+2 actionable tasks: 2 executed

@@ -1,6 +1,6 @@
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
 Daemon will be stopped at the end of the build 
-> Task :clean UP-TO-DATE
+> Task :clean
 
 > Task :compileJava
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:10: warning: [UnusedMethod] Method 'postSingleEventForEventType' is never used.
@@ -8,21 +8,21 @@ Daemon will be stopped at the end of the build
                   ^
     (see https://errorprone.info/bugpattern/UnusedMethod)
   Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'event' is never read.
-  private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
-                                                                    ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean 'postToSubscription(subscription, postingState.isMainThread);'?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'isMainThread' is never read.
-  private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
-                                                                                   ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean 'postToSubscription(subscription, event);'?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'subscription' is never read.
   private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
                                                ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean 'postToSubscription(event, postingState.isMainThread);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'isMainThread' is never read.
+  private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+                                                                                   ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'postToSubscription(subscription, event);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'event' is never read.
+  private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+                                                                    ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'postToSubscription(subscription, postingState.isMainThread);'?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:8: warning: [NullAway] assigning @Nullable expression to @NonNull field
   private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType = null;
                                                                   ^
@@ -46,4 +46,4 @@ Daemon will be stopped at the end of the build
 9 warnings
 
 BUILD SUCCESSFUL in 5s
-2 actionable tasks: 1 executed, 1 up-to-date
+2 actionable tasks: 2 executed
