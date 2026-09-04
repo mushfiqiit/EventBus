@@ -8,16 +8,16 @@ Daemon will be stopped at the end of the build
                   ^
     (see https://errorprone.info/bugpattern/UnusedMethod)
   Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'subscription' is never read.
-  private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
-                                               ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean 'postToSubscription(event, postingState.isMainThread);'?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'isMainThread' is never read.
   private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
                                                                                    ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean 'postToSubscription(subscription, event);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'subscription' is never read.
+  private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+                                               ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'postToSubscription(event, postingState.isMainThread);'?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/06_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:38: warning: [UnusedVariable] The parameter 'event' is never read.
   private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
                                                                     ^

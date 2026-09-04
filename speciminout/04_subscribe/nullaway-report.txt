@@ -12,16 +12,16 @@ Daemon will be stopped at the end of the build
                ^
     (see https://errorprone.info/bugpattern/UnusedMethod)
   Did you mean to remove this line?
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'stickyEvent' is never read.
-      Subscription newSubscription, Object stickyEvent) {
-                                           ^
-    (see https://errorprone.info/bugpattern/UnusedVariable)
-  Did you mean 'checkPostStickyEventToSubscription(newSubscription);'?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'newSubscription' is never read.
       Subscription newSubscription, Object stickyEvent) {
                    ^
     (see https://errorprone.info/bugpattern/UnusedVariable)
   Did you mean 'checkPostStickyEventToSubscription(stickyEvent);'?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:63: warning: [UnusedVariable] The parameter 'stickyEvent' is never read.
+      Subscription newSubscription, Object stickyEvent) {
+                                           ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean 'checkPostStickyEventToSubscription(newSubscription);'?
 /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:11: warning: [NullAway] assigning @Nullable expression to @NonNull field
   private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType = null;
                                                                   ^

@@ -2,21 +2,21 @@ To honour the JVM settings for this build a single-use Daemon process will be fo
 Daemon will be stopped at the end of the build 
 > Task :clean
 
-> Task :compileJava FAILED
-/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/39_implementation/org/greenrobot/eventbus/android/AndroidComponents.java:5: error: variable implementation not initialized in the default constructor
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/39_implementation/org/greenrobot/eventbus/android/AndroidComponents.java:5: warning: [UnusedVariable] The field 'implementation' is never read.
   private static final AndroidComponents implementation;
                                          ^
-1 error
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line?
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/39_implementation/org/greenrobot/eventbus/android/AndroidComponents.java:5: warning: [NullAway] @NonNull static field implementation not initialized
+  private static final AndroidComponents implementation;
+                                         ^
+    (see http://t.uber.com/nullaway )
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/39_implementation/org/greenrobot/eventbus/android/AndroidComponents.java:8: warning: [NullAway] assigning @Nullable expression to @NonNull field
+    implementation = null;
+                   ^
+    (see http://t.uber.com/nullaway )
+3 warnings
 
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':compileJava'.
-> Compilation failed; see the compiler error output for details.
-
-* Try:
-> Run with --info option to get more log output.
-> Run with --scan to get full insights.
-
-BUILD FAILED in 4s
+BUILD SUCCESSFUL in 5s
 2 actionable tasks: 2 executed
