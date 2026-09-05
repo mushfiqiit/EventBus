@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'net.ltgt.errorprone' version '3.1.0'
+    id 'org.checkerframework' version '1.0.2'
 }
 
 repositories {
@@ -8,12 +8,7 @@ repositories {
 }
 
 dependencies {
-    errorprone           'com.google.errorprone:error_prone_core:2.18.0'
-    annotationProcessor  'com.uber.nullaway:nullaway:0.10.10'
-    compileOnly          'com.uber.nullaway:nullaway-annotations:0.10.10'
-    compileOnly          'com.google.code.findbugs:jsr305:3.0.2'
-    compileOnly          'org.jspecify:jspecify:0.3.0'
-    compileOnly          fileTree(dir: '/Users/mushfiqurrahmanchowdhury/eventbus-deps', include: '*.jar')
+    compileOnly fileTree(dir: '/Users/mushfiqurrahmanchowdhury/eventbus-deps', include: '*.jar')
 }
 
 sourceSets {
@@ -25,11 +20,13 @@ sourceSets {
     }
 }
 
+checkerFramework {
+    checkers = ['org.checkerframework.checker.nullness.NullnessChecker']
+    extraJavacArgs = ['-Xmaxwarns', '10000', '-Awarns']
+    version = '4.2.0'
+}
+
 tasks.withType(JavaCompile).configureEach {
-    options.errorprone {
-        check('NullAway', net.ltgt.gradle.errorprone.CheckSeverity.WARN)
-        option('NullAway:AnnotatedPackages', 'org.greenrobot.eventbus')
-        option('NullAway:JSpecifyMode', 'false')
-    }
-    options.compilerArgs << '-Xmaxwarns' << '10000'
+    options.fork = true
+    options.forkOptions.memoryMaximumSize = '4g'
 }
