@@ -1,0 +1,24 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPost.java:5: warning: [initialization.field.uninitialized] the default constructor does not initialize field next
+  PendingPost next;
+              ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [initialization.field.uninitialized] the default constructor does not initialize field head
+  private PendingPost head;
+                      ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:7: warning: [initialization.field.uninitialized] the default constructor does not initialize field tail
+  private PendingPost tail;
+                      ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:14: warning: [assignment] incompatible types in assignment.
+        tail = null;
+               ^
+  found   : null (NullType)
+  required: @Initialized @NonNull PendingPost
+4 warnings
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed

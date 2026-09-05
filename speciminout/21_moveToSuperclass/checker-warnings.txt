@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:7: warning: [initialization.field.uninitialized] the default constructor does not initialize field clazz
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/21_moveToSuperclass/org/greenrobot/eventbus/SubscriberMethodFinder.java:21: warning: [assignment] incompatible types in assignment.

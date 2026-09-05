@@ -1,0 +1,25 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:9: warning: [assignment] incompatible types in assignment.
+  public final Map<Class<? extends Throwable>, Integer> throwableToMsgIdMap = null;
+                                                                              ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Map<@Initialized @NonNull Class<? extends @Initialized @NonNull Throwable>, @Initialized @NonNull Integer>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:16: warning: [assignment] incompatible types in assignment.
+      Set<Entry<Class<? extends Throwable>, Integer>> mappings = throwableToMsgIdMap.entrySet();
+                                                                                             ^
+  found   : Set<Entry<@KeyFor("this.throwableToMsgIdMap") Class<? extends Throwable>, Integer>>
+  required: Set<Entry<Class<? extends Throwable>, Integer>>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:27: warning: [return] incompatible types in return.
+    return resId;
+           ^
+  type of expression: @Initialized @Nullable Integer
+  method return type: @Initialized @NonNull Integer
+3 warnings
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed

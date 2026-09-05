@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPost.java:5: warning: [initialization.field.uninitialized] the default constructor does not initialize field next
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:5: warning: [initialization.field.uninitialized] the default constructor does not initialize field head
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:7: warning: [initialization.field.uninitialized] the default constructor does not initialize field tail
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/30_poll/org/greenrobot/eventbus/PendingPostQueue.java:14: warning: [assignment] incompatible types in assignment.

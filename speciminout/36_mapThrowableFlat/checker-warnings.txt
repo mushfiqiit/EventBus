@@ -1,0 +1,3 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:9: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:16: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/36_mapThrowableFlat/org/greenrobot/eventbus/util/ExceptionToResourceMapping.java:27: warning: [return] incompatible types in return.

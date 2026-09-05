@@ -1,0 +1,22 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:5: warning: [assignment] incompatible types in assignment.
+  private final Class<? extends SubscriberInfo> superSubscriberInfoClass = null;
+                                                                           ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Class<? extends @Initialized @NonNull SubscriberInfo>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:9: warning: [return] incompatible types in return.
+      return null;
+             ^
+  type of expression: null (NullType)
+  method return type: @Initialized @NonNull SubscriberInfo
+Note: /Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+2 warnings
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed

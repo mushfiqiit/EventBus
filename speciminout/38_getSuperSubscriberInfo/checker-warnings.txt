@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:5: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/38_getSuperSubscriberInfo/org/greenrobot/eventbus/meta/AbstractSubscriberInfo.java:9: warning: [return] incompatible types in return.

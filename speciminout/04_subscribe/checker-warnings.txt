@@ -1,0 +1,7 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/SubscriberMethod.java:5: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:11: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:13: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:15: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:47: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/EventBus.java:57: warning: [argument] incompatible argument for parameter stickyEvent of EventBus.checkPostStickyEventToSubscription.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/04_subscribe/org/greenrobot/eventbus/Subscription.java:5: warning: [assignment] incompatible types in assignment.

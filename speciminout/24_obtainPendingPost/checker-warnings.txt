@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/24_obtainPendingPost/org/greenrobot/eventbus/PendingPost.java:26: warning: [assignment] incompatible types in assignment.

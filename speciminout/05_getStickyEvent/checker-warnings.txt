@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/05_getStickyEvent/org/greenrobot/eventbus/EventBus.java:7: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/05_getStickyEvent/org/greenrobot/eventbus/EventBus.java:11: warning: [return] incompatible types in return.

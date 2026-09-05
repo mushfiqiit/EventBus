@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/39_implementation/org/greenrobot/eventbus/android/AndroidComponents.java:8: warning: [assignment] incompatible types in assignment.

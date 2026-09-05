@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/15_clazz/org/greenrobot/eventbus/SubscriberMethodFinder.java:7: warning: [initialization.field.uninitialized] the default constructor does not initialize field clazz

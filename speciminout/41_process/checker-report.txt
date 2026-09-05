@@ -1,0 +1,45 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava FAILED
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:3: error: package net.ltgt.gradle.incap does not exist
+import static net.ltgt.gradle.incap.IncrementalAnnotationProcessorType.AGGREGATING;
+                                   ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:3: error: static import only from classes and interfaces
+import static net.ltgt.gradle.incap.IncrementalAnnotationProcessorType.AGGREGATING;
+^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:5: error: package de.greenrobot.common does not exist
+import de.greenrobot.common.ListMap;
+                           ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:15: error: package net.ltgt.gradle.incap does not exist
+import net.ltgt.gradle.incap.IncrementalAnnotationProcessor;
+                            ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:19: error: cannot find symbol
+@IncrementalAnnotationProcessor(AGGREGATING)
+ ^
+  symbol: class IncrementalAnnotationProcessor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:26: error: cannot find symbol
+  private final ListMap<TypeElement, ExecutableElement> methodsByClass = null;
+                ^
+  symbol:   class ListMap
+  location: class EventBusAnnotationProcessor
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/41_process/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:19: error: cannot find symbol
+@IncrementalAnnotationProcessor(AGGREGATING)
+                                ^
+  symbol: variable AGGREGATING
+7 errors
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 5s
+3 actionable tasks: 3 executed

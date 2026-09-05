@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/01_SubscriberMethod/org/greenrobot/eventbus/SubscriberMethod.java:19: warning: [initialization.fields.uninitialized] the constructor does not initialize fields: methodString

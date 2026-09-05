@@ -1,0 +1,4 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/SubscriberMethod.java:7: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:11: warning: [argument] incompatible argument for parameter cause of EventBus.handleSubscriberException.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:5: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:7: warning: [assignment] incompatible types in assignment.

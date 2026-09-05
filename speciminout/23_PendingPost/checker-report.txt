@@ -1,0 +1,18 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/23_PendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [assignment] incompatible types in assignment.
+  private static final List<PendingPost> pendingPostPool = null;
+                                                           ^
+  found   : null (NullType)
+  required: @Initialized @NonNull List<@Initialized @NonNull PendingPost>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/23_PendingPost/org/greenrobot/eventbus/PendingPost.java:15: warning: [initialization.fields.uninitialized] the constructor does not initialize fields: next
+  private PendingPost(Object event, Subscription subscription) {
+          ^
+2 warnings
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed

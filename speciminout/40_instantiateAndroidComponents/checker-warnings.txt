@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:6: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:13: warning: [return] incompatible types in return.

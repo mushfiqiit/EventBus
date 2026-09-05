@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/37_SimpleSubscriberInfo/org/greenrobot/eventbus/meta/SimpleSubscriberInfo.java:9: warning: [argument] incompatible argument for parameter superSubscriberInfoClass of AbstractSubscriberInfo constructor.

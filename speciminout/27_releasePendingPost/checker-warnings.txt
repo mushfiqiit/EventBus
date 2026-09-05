@@ -1,0 +1,7 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:9: warning: [initialization.field.uninitialized] the default constructor does not initialize field event
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:11: warning: [initialization.field.uninitialized] the default constructor does not initialize field subscription
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:13: warning: [initialization.field.uninitialized] the default constructor does not initialize field next
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:16: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:17: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/27_releasePendingPost/org/greenrobot/eventbus/PendingPost.java:18: warning: [assignment] incompatible types in assignment.

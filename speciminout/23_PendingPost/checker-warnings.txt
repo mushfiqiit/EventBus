@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/23_PendingPost/org/greenrobot/eventbus/PendingPost.java:7: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/23_PendingPost/org/greenrobot/eventbus/PendingPost.java:15: warning: [initialization.fields.uninitialized] the constructor does not initialize fields: next

@@ -1,0 +1,2 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/11_EventBusBuilder/org/greenrobot/eventbus/EventBusBuilder.java:10: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/11_EventBusBuilder/org/greenrobot/eventbus/EventBusBuilder.java:38: warning: [initialization.fields.uninitialized] the constructor does not initialize fields: executorService, skipMethodVerificationForClasses, subscriberInfoIndexes, logger, mainThreadSupport

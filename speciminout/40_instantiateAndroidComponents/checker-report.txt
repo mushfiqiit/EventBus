@@ -1,0 +1,20 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:6: warning: [assignment] incompatible types in assignment.
+  private static final String ANDROID_COMPONENTS_IMPLEMENTATION_CLASS_NAME = null;
+                                                                             ^
+  found   : null (NullType)
+  required: @Initialized @NonNull String
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/40_instantiateAndroidComponents/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:13: warning: [return] incompatible types in return.
+      return null;
+             ^
+  type of expression: null (NullType)
+  method return type: @Initialized @NonNull AndroidComponents
+2 warnings
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed

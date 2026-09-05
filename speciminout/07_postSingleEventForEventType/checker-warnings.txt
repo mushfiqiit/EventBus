@@ -1,0 +1,5 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/07_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:8: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/07_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:25: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/07_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:26: warning: [assignment] incompatible types in assignment.
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/07_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:46: warning: [initialization.field.uninitialized] the default constructor does not initialize field subscription
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/07_postSingleEventForEventType/org/greenrobot/eventbus/EventBus.java:48: warning: [initialization.field.uninitialized] the default constructor does not initialize field event

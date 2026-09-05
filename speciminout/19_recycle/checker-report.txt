@@ -1,0 +1,54 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:11: warning: [assignment] incompatible types in assignment.
+    final List<SubscriberMethod> subscriberMethods = null;
+                                                     ^
+  found   : null (NullType)
+  required: @Initialized @NonNull List<@Initialized @NonNull SubscriberMethod>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:13: warning: [assignment] incompatible types in assignment.
+    final Map<Class, Object> anyMethodByEventType = null;
+                                                    ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Map<@Initialized @NonNull Class</*RAW*/>, @Initialized @NonNull Object>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:15: warning: [assignment] incompatible types in assignment.
+    final Map<String, Class> subscriberClassByMethodKey = null;
+                                                          ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Map<@Initialized @NonNull String, @Initialized @NonNull Class</*RAW*/>>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:17: warning: [assignment] incompatible types in assignment.
+    final StringBuilder methodKeyBuilder = null;
+                                           ^
+  found   : null (NullType)
+  required: @Initialized @NonNull StringBuilder
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:19: warning: [initialization.field.uninitialized] the default constructor does not initialize field subscriberClass
+    Class<?> subscriberClass;
+             ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:21: warning: [initialization.field.uninitialized] the default constructor does not initialize field clazz
+    Class<?> clazz;
+             ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:25: warning: [initialization.field.uninitialized] the default constructor does not initialize field subscriberInfo
+    SubscriberInfo subscriberInfo;
+                   ^
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:32: warning: [assignment] incompatible types in assignment.
+      subscriberClass = null;
+                        ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Class<? extends @Initialized @Nullable Object>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:33: warning: [assignment] incompatible types in assignment.
+      clazz = null;
+              ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Class<? extends @Initialized @Nullable Object>
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/19_recycle/org/greenrobot/eventbus/SubscriberMethodFinder.java:35: warning: [assignment] incompatible types in assignment.
+      subscriberInfo = null;
+                       ^
+  found   : null (NullType)
+  required: @Initialized @NonNull SubscriberInfo
+10 warnings
+
+BUILD SUCCESSFUL in 6s
+3 actionable tasks: 3 executed

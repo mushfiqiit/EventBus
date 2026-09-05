@@ -1,1 +1,30 @@
 To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.7/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :clean
+> Task :writeCheckerManifest
+
+> Task :compileJava
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/SubscriberMethod.java:7: warning: [assignment] incompatible types in assignment.
+  final Method method = null;
+                        ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Method
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/EventBus.java:11: warning: [argument] incompatible argument for parameter cause of EventBus.handleSubscriberException.
+      handleSubscriberException(subscription, event, e.getCause());
+                                                               ^
+  found   : @Initialized @Nullable Throwable
+  required: @Initialized @NonNull Throwable
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:5: warning: [assignment] incompatible types in assignment.
+  final Object subscriber = null;
+                            ^
+  found   : null (NullType)
+  required: @Initialized @NonNull Object
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/speciminout/08_invokeSubscriber/org/greenrobot/eventbus/Subscription.java:7: warning: [assignment] incompatible types in assignment.
+  final SubscriberMethod subscriberMethod = null;
+                                            ^
+  found   : null (NullType)
+  required: @Initialized @NonNull SubscriberMethod
+4 warnings
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed
