@@ -1,7 +1,7 @@
 Summary: 47 slice folder(s) checked
-  Reproduced     : 39
+  Reproduced     : 40
   Not reproduced : 7
-  Skipped        : 1
+  Skipped        : 0
 
 Not reproduced:
   - 41_process
@@ -11,8 +11,5 @@ Not reproduced:
   - 45_writeCreateSubscriberMethods
   - 46_writeCreateSubscriberMethods
   - 47_createInfoIndexFile
-
-Skipped:
-  - 01_SubscriberMethod
 
 Per-slice details written to each folder's reproduction-check.txt
