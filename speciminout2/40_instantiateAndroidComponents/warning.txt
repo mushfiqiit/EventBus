@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/android/AndroidDependenciesDetector.java:45: warning: [NullAway] returning @Nullable expression from method with @NonNull return type

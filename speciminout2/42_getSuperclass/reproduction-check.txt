@@ -1,0 +1,7 @@
+Slice: 42_getSuperclass
+Original warning (warning.txt):
+  /Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBusAnnotationProcessor/src/org/greenrobot/eventbus/annotationprocessor/EventBusAnnotationProcessor.java:242: warning: [NullAway] returning @Nullable expression from method with @NonNull return type
+
+nullaway-warnings.txt: 0 finding(s)
+
+VERDICT: NOT REPRODUCED -- no NullAway warnings found in this slice

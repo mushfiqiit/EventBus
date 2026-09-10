@@ -1,0 +1,66 @@
+package org.greenrobot.eventbus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public class EventBus {
+
+  private final Map<Class<?>, CopyOnWriteArrayList<Subscription>> subscriptionsByEventType = null;
+
+  private final Map<Object, List<Class<?>>> typesBySubscriber = null;
+
+  private final Map<Class<?>, Object> stickyEvents = null;
+
+  private final boolean eventInheritance = false;
+
+  private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
+    Class<?> eventType = subscriberMethod.eventType;
+    Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
+    CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+    if (subscriptions == null) {
+      subscriptions = new CopyOnWriteArrayList<>();
+      subscriptionsByEventType.put(eventType, subscriptions);
+    } else {
+      if (subscriptions.contains(newSubscription)) {
+        throw new EventBusException(
+            "Subscriber " + subscriber.getClass() + " already registered to event " + eventType);
+      }
+    }
+    int size = subscriptions.size();
+    for (int i = 0; i <= size; i++) {
+      if (i == size || subscriberMethod.priority > subscriptions.get(i).subscriberMethod.priority) {
+        subscriptions.add(i, newSubscription);
+        break;
+      }
+    }
+    List<Class<?>> subscribedEvents = typesBySubscriber.get(subscriber);
+    if (subscribedEvents == null) {
+      subscribedEvents = new ArrayList<>();
+      typesBySubscriber.put(subscriber, subscribedEvents);
+    }
+    subscribedEvents.add(eventType);
+    if (subscriberMethod.sticky) {
+      if (eventInheritance) {
+        Set<Map.Entry<Class<?>, Object>> entries = stickyEvents.entrySet();
+        for (Map.Entry<Class<?>, Object> entry : entries) {
+          Class<?> candidateEventType = entry.getKey();
+          if (eventType.isAssignableFrom(candidateEventType)) {
+            Object stickyEvent = entry.getValue();
+            checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+          }
+        }
+      } else {
+        Object stickyEvent = stickyEvents.get(eventType);
+        checkPostStickyEventToSubscription(newSubscription, stickyEvent);
+      }
+    }
+  }
+
+  private void checkPostStickyEventToSubscription(
+      Subscription newSubscription, Object stickyEvent) {
+    throw new java.lang.Error();
+  }
+}

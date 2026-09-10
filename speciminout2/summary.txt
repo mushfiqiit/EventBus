@@ -1,0 +1,18 @@
+Summary: 47 slice folder(s) checked
+  Reproduced     : 39
+  Not reproduced : 7
+  Skipped        : 1
+
+Not reproduced:
+  - 41_process
+  - 42_getSuperclass
+  - 43_getSuperclass
+  - 44_getPackageElement
+  - 45_writeCreateSubscriberMethods
+  - 46_writeCreateSubscriberMethods
+  - 47_createInfoIndexFile
+
+Skipped:
+  - 01_SubscriberMethod
+
+Per-slice details written to each folder's reproduction-check.txt

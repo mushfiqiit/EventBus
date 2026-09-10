@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java:208: warning: [NullAway] @NonNull field SubscriberMethodFinder$FindState.clazz not initialized

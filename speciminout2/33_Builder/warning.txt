@@ -1,0 +1,1 @@
+/Users/mushfiqurrahmanchowdhury/Documents/EventBus/EventBus/src/org/greenrobot/eventbus/util/AsyncExecutor.java:46: warning: [NullAway] initializer method does not guarantee @NonNull fields threadPool (line 42), failureEventType (line 43), eventBus (line 44) are initialized along all control-flow paths (remember to check for exceptions or early returns).
